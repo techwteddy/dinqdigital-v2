@@ -574,7 +574,7 @@ Distributed under the **MIT License**. See [LICENSE](./LICENSE) for full text.
 MIT means you can use it commercially, modify it, distribute it, and use it privately. The only requirement is keeping the copyright notice.
 
 ```
-Copyright (c) 2025 Omar S. M. Abdelfatah
+Copyright (c) 2026 Omar S. M. Abdelfatah
 ```
 
 ---
