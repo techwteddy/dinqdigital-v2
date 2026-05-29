@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ForgotPasswordForm } from '@/components/auth/forgot-password-form'
+import { APP_NAME } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Reset Password',
-  description: 'Reset your LaunchKit account password.',
+  description: `Reset your ${APP_NAME} account password.`,
 }
 
+/** Password reset flow — user gets an email with a magic link from Supabase. */
 export default function ForgotPasswordPage() {
   return (
     <div className="flex flex-col gap-6">

@@ -1,10 +1,8 @@
-import { createServerClient } from '@supabase/ssr'
+import { createServerClient, type CookieOptions } from '@supabase/ssr'
+import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
 
-/**
- * Creates a Supabase client for use in Server Components, Server Actions,
- * and Route Handlers. Reads/writes auth cookies via next/headers.
- */
+/** Server-side Supabase — session lives in HTTP-only cookies */
 export async function createClient() {
   const cookieStore = await cookies()
 
@@ -16,14 +14,13 @@ export async function createClient() {
         getAll() {
           return cookieStore.getAll()
         },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet: { name: string; value: string; options: CookieOptions }[]) {
           try {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options)
             )
           } catch {
-            // The `setAll` method is called from a Server Component.
-            // This can be ignored if you have middleware refreshing sessions.
+            // Server Components can't always write cookies — middleware refreshes the session instead
           }
         },
       },
@@ -36,8 +33,7 @@ export async function createClient() {
  * Use ONLY on the server — NEVER expose the service role key to the browser.
  */
 export function createAdminClient() {
-  const { createClient } = require('@supabase/supabase-js')
-  return createClient(
+  return createSupabaseClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
     {

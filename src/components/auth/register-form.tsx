@@ -1,15 +1,18 @@
 'use client'
 
+/**
+ * Registration form — creates a Supabase auth user and shows a "check your email" state.
+ * full_name in user_metadata is synced to Prisma on the auth callback route.
+ */
+
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { signUpSchema, type SignUpInput } from '@/lib/validations'
 
 export function RegisterForm() {
-  const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
   const [success, setSuccess] = useState(false)
 
@@ -42,6 +45,7 @@ export function RegisterForm() {
     setSuccess(true)
   }
 
+  // Supabase requires email confirmation before the user can sign in
   if (success) {
     return (
       <div className="rounded-xl border border-border bg-card p-6 text-center">

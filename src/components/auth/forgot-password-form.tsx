@@ -1,5 +1,7 @@
 'use client'
 
+/** Sends a password reset email via Supabase — same UX pattern as RegisterForm success state. */
+
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'

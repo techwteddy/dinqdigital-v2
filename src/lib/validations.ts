@@ -1,8 +1,9 @@
 import { z } from 'zod'
 
-// ─────────────────────────────────────────────
-// AUTH
-// ─────────────────────────────────────────────
+/**
+ * Zod schemas shared between forms and (eventually) API routes.
+ * Keeping messages here means we don't duplicate copy in every input.
+ */
 
 export const signUpSchema = z
   .object({

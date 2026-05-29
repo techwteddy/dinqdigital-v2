@@ -12,5 +12,13 @@
     "import/order": "off",
     "no-console": ["warn", { "allow": ["warn", "error", "info"] }]
   },
-  "ignorePatterns": ["node_modules/", ".next/", "out/", "build/"]
+  "ignorePatterns": [
+    "node_modules/",
+    ".next/",
+    "out/",
+    "build/",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "src/test-utils/**"
+  ]
 }

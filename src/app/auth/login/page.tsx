@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { LoginForm } from '@/components/auth/login-form'
+import { APP_NAME } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Sign In',
-  description: 'Sign in to your LaunchKit account.',
+  description: `Sign in to your ${APP_NAME} account.`,
 }
 
+/** Email/password + OAuth sign-in. Redirect after login is handled in LoginForm. */
 export default function LoginPage() {
   return (
     <div className="flex flex-col gap-6">

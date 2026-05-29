@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { prisma } from '@/lib/prisma'
 
@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (data.user) {
-      // Sync user to database
+      // Supabase owns auth; Prisma owns app data — keep them in sync on every login
       await prisma.user.upsert({
         where: { id: data.user.id },
         create: {
@@ -62,6 +62,7 @@ export async function GET(request: NextRequest) {
       })
     }
 
+    // Vercel/proxy sets x-forwarded-host — localhost can use origin as-is
     const forwardedHost = request.headers.get('x-forwarded-host')
     const isLocalEnv = process.env.NODE_ENV === 'development'
 

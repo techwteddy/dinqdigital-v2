@@ -1,11 +1,12 @@
 import Stripe from 'stripe'
 
 /**
- * Server-side Stripe client.
- * Only import this in Server Components, API routes, or Server Actions.
+ * Stripe server SDK — never import this from client components.
+ * Webhooks and checkout routes live under src/app/api/stripe/*.
  */
+
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-11-20.acacia',
+  apiVersion: '2025-02-24.acacia',
   typescript: true,
 })
 

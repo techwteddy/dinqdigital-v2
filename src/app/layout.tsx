@@ -3,10 +3,13 @@ import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { Toaster } from '@/components/ui/toaster'
+import {
+  APP_DESCRIPTION,
+  APP_NAME,
+  APP_URL,
+  DEVELOPER_NAME,
+} from '@/lib/site'
 import '@/styles/globals.css'
-
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://launchkit.dev'
-const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME ?? 'LaunchKit'
 
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
@@ -14,37 +17,31 @@ export const metadata: Metadata = {
     default: `${APP_NAME} — Ship Your SaaS Faster`,
     template: `%s | ${APP_NAME}`,
   },
-  description:
-    'Production-ready SaaS boilerplate with Next.js 15, Supabase, Prisma, and Stripe. Everything you need to go from idea to paying customers — fast.',
+  description: APP_DESCRIPTION,
   keywords: [
     'saas boilerplate',
+    'saas starter kit',
     'nextjs starter',
     'supabase starter',
     'stripe billing',
     'multi-tenant saas',
     'typescript boilerplate',
+    'marketing landing page',
   ],
-  authors: [
-    {
-      name: 'Omar S. M. Abdelfatah',
-      url: 'https://www.omarsharaf.me',
-    },
-  ],
-  creator: 'Omar S. M. Abdelfatah',
+  authors: [{ name: DEVELOPER_NAME, url: 'https://www.omarsharaf.me' }],
+  creator: DEVELOPER_NAME,
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: APP_URL,
     title: `${APP_NAME} — Ship Your SaaS Faster`,
-    description:
-      'Production-ready SaaS boilerplate with Next.js 15, Supabase, Prisma, and Stripe.',
+    description: APP_DESCRIPTION,
     siteName: APP_NAME,
   },
   twitter: {
     card: 'summary_large_image',
     title: `${APP_NAME} — Ship Your SaaS Faster`,
-    description:
-      'Production-ready SaaS boilerplate with Next.js 15, Supabase, Prisma, and Stripe.',
+    description: APP_DESCRIPTION,
     creator: '@OmarSharaf',
   },
   robots: {

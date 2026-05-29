@@ -1,12 +1,16 @@
-import { createServerClient } from '@supabase/ssr'
+import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 /**
- * Route access rules:
- * - /dashboard/* and /org/*  → requires authentication
- * - /auth/*                  → requires NO authentication (redirects logged-in users)
- * - Everything else          → public
+ * Runs on every matched request before the page loads.
+ *
+ * Two jobs:
+ * 1. Refresh the Supabase session cookie (so Server Components see the user)
+ * 2. Redirect guests away from /dashboard and signed-in users away from /auth
+ *
+ * @author Omar S. M. Abdelfatah
  */
+// /demo is public — full dashboard preview without login
 const PROTECTED_PREFIXES = ['/dashboard', '/org', '/settings', '/billing']
 const AUTH_PREFIXES = ['/auth']
 
@@ -21,7 +25,7 @@ export async function middleware(request: NextRequest) {
         getAll() {
           return request.cookies.getAll()
         },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet: { name: string; value: string; options: CookieOptions }[]) {
           cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           )
@@ -41,18 +45,17 @@ export async function middleware(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname
 
-  // Redirect unauthenticated users away from protected routes
   const isProtected = PROTECTED_PREFIXES.some((prefix) =>
     pathname.startsWith(prefix)
   )
   if (isProtected && !user) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/login'
-    url.searchParams.set('redirectTo', pathname)
+    url.searchParams.set('redirectTo', pathname) // send them back after login
     return NextResponse.redirect(url)
   }
 
-  // Redirect authenticated users away from auth routes
+  // already logged in? no point showing login again
   const isAuthRoute = AUTH_PREFIXES.some((prefix) =>
     pathname.startsWith(prefix)
   )

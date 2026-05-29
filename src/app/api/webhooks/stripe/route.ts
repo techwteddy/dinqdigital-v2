@@ -1,7 +1,28 @@
-import { NextRequest, NextResponse } from 'next/server'
-import Stripe from 'stripe'
+import { type NextRequest, NextResponse } from 'next/server'
+import type { SubscriptionStatus } from '@prisma/client'
+import type Stripe from 'stripe'
 import { constructStripeEvent } from '@/lib/stripe'
 import { prisma } from '@/lib/prisma'
+
+const STRIPE_TO_SUBSCRIPTION_STATUS: Record<
+  Stripe.Subscription.Status,
+  SubscriptionStatus
+> = {
+  active: 'ACTIVE',
+  canceled: 'CANCELED',
+  incomplete: 'INCOMPLETE',
+  incomplete_expired: 'INCOMPLETE_EXPIRED',
+  past_due: 'PAST_DUE',
+  paused: 'PAUSED',
+  trialing: 'TRIALING',
+  unpaid: 'UNPAID',
+}
+
+function mapStripeSubscriptionStatus(
+  status: Stripe.Subscription.Status
+): SubscriptionStatus {
+  return STRIPE_TO_SUBSCRIPTION_STATUS[status]
+}
 
 /**
  * Stripe Webhook Handler
@@ -35,7 +56,7 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  console.log(`✅ Stripe webhook received: ${event.type}`)
+  console.info(`✅ Stripe webhook received: ${event.type}`)
 
   try {
     switch (event.type) {
@@ -62,7 +83,7 @@ export async function POST(request: NextRequest) {
         break
       }
       default:
-        console.log(`ℹ️  Unhandled event type: ${event.type}`)
+        console.info(`ℹ️  Unhandled event type: ${event.type}`)
     }
   } catch (err) {
     console.error(`❌ Error handling ${event.type}:`, err)
@@ -98,7 +119,7 @@ async function handleCheckoutSessionCompleted(
 
   const priceId = subscription.items.data[0].price.id
 
-  // Find matching plan
+  // We store both monthly and yearly price IDs — match whichever they picked
   const plan = await prisma.plan.findFirst({
     where: {
       OR: [
@@ -119,7 +140,7 @@ async function handleCheckoutSessionCompleted(
       organizationId,
       planId: plan.id,
       stripeSubscriptionId: subscription.id,
-      status: subscription.status.toUpperCase() as any,
+      status: mapStripeSubscriptionStatus(subscription.status),
       currentPeriodStart: new Date(subscription.current_period_start * 1000),
       currentPeriodEnd: new Date(subscription.current_period_end * 1000),
       cancelAtPeriodEnd: subscription.cancel_at_period_end,
@@ -130,7 +151,7 @@ async function handleCheckoutSessionCompleted(
     update: {
       planId: plan.id,
       stripeSubscriptionId: subscription.id,
-      status: subscription.status.toUpperCase() as any,
+      status: mapStripeSubscriptionStatus(subscription.status),
       currentPeriodStart: new Date(subscription.current_period_start * 1000),
       currentPeriodEnd: new Date(subscription.current_period_end * 1000),
       cancelAtPeriodEnd: subscription.cancel_at_period_end,
@@ -140,14 +161,14 @@ async function handleCheckoutSessionCompleted(
     },
   })
 
-  console.log(`✅ Subscription created for org: ${organizationId}`)
+  console.info(`✅ Subscription created for org: ${organizationId}`)
 }
 
 async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
   await prisma.subscription.update({
     where: { stripeSubscriptionId: subscription.id },
     data: {
-      status: subscription.status.toUpperCase() as any,
+      status: mapStripeSubscriptionStatus(subscription.status),
       currentPeriodStart: new Date(subscription.current_period_start * 1000),
       currentPeriodEnd: new Date(subscription.current_period_end * 1000),
       cancelAtPeriodEnd: subscription.cancel_at_period_end,
@@ -156,7 +177,7 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
         : null,
     },
   })
-  console.log(`✅ Subscription updated: ${subscription.id}`)
+  console.info(`✅ Subscription updated: ${subscription.id}`)
 }
 
 async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
@@ -167,7 +188,7 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
       cancelAtPeriodEnd: false,
     },
   })
-  console.log(`✅ Subscription canceled: ${subscription.id}`)
+  console.info(`✅ Subscription canceled: ${subscription.id}`)
 }
 
 async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
@@ -177,5 +198,5 @@ async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
     where: { stripeSubscriptionId: invoice.subscription as string },
     data: { status: 'PAST_DUE' },
   })
-  console.log(`⚠️  Payment failed for subscription: ${invoice.subscription}`)
+  console.info(`⚠️  Payment failed for subscription: ${invoice.subscription}`)
 }

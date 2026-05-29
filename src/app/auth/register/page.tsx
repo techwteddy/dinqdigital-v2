@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { RegisterForm } from '@/components/auth/register-form'
+import { APP_NAME } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Create Account',
-  description: 'Create your LaunchKit account and start building.',
+  description: `Create your ${APP_NAME} account and start building.`,
 }
 
+/** New user signup — Supabase sends a confirmation email before first login. */
 export default function RegisterPage() {
   return (
     <div className="flex flex-col gap-6">

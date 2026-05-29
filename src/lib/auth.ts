@@ -4,9 +4,10 @@ import { redirect } from 'next/navigation'
 import { cache } from 'react'
 
 /**
- * Returns the current authenticated Supabase user, or null.
- * Cached per-request using React cache().
+ * Auth helpers for Server Components and Server Actions.
+ * cache() dedupes calls within a single request — handy when layout + page both need the user.
  */
+
 export const getUser = cache(async () => {
   const supabase = await createClient()
   const {

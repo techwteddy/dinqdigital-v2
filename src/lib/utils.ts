@@ -1,16 +1,12 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
-/**
- * Merges Tailwind CSS classes intelligently, resolving conflicts.
- */
+/** shadcn-style className merge — later classes win when Tailwind conflicts */
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-/**
- * Generates a URL-safe slug from a string.
- */
+/** "My Cool Org" → "my-cool-org" for organization URLs */
 export function slugify(str: string): string {
   return str
     .toLowerCase()
@@ -56,9 +52,7 @@ export function getInitials(name: string): string {
     .slice(0, 2)
 }
 
-/**
- * Checks if a given subscription status is considered active.
- */
+/** Stripe statuses that mean the customer still has access */
 export function isSubscriptionActive(status: string): boolean {
   return ['active', 'trialing'].includes(status.toLowerCase())
 }

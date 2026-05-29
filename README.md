@@ -11,7 +11,7 @@
 ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝   ╚═╝
 ```
 
-### The production-ready SaaS boilerplate. Ship in days, not months.
+### Production-ready SaaS boilerplate — ship in days, not months.
 
 <br />
 
@@ -26,12 +26,11 @@
 
 <br />
 
-**[🚀 Live Demo](https://www.omarsharaf.me)** &nbsp;·&nbsp; **[📖 Docs](https://github.com/OmarSharaf/launchkit/wiki)** &nbsp;·&nbsp; **[🐛 Report Bug](https://github.com/OmarSharaf/launchkit/issues/new?template=bug_report.md)** &nbsp;·&nbsp; **[✨ Request Feature](https://github.com/OmarSharaf/launchkit/issues/new?template=feature_request.md)**
+**[🚀 Live Demo](https://www.omarsharaf.me)** &nbsp;·&nbsp; **[📖 Docs](https://github.com/OmarSharaf/launchkit#-table-of-contents)** &nbsp;·&nbsp; **[🐛 Report Bug](https://github.com/OmarSharaf/launchkit/issues)** &nbsp;·&nbsp; **[✨ Request Feature](https://github.com/OmarSharaf/launchkit/issues)**
 
 <br />
 
-> Every SaaS needs auth, billing, multi-tenancy, a database, CI/CD, and a clean UI.
-> LaunchKit gives you all of it — wired together, tested, and ready to ship.
+> Auth, billing, multi-tenancy, a polished marketing site, a no-login demo dashboard, and a fully tested codebase — wired together and ready to customize.
 
 <br />
 
@@ -42,14 +41,20 @@
 ## 📋 Table of Contents
 
 - [What's Included](#-whats-included)
-- [Tech Stack](#%EF%B8%8F-tech-stack)
+- [Tech Stack](#️-tech-stack)
 - [Quickstart](#-quickstart)
+- [Live Demo](#-live-demo)
+- [Customize Your Product](#-customize-your-product)
 - [Project Structure](#-project-structure)
+- [Routes & API](#-routes--api)
 - [Authentication Flow](#-authentication-flow)
 - [Billing Flow](#-billing-flow)
-- [Database Schema](#%EF%B8%8F-database-schema)
+- [Database Schema](#️-database-schema)
+- [Testing](#-testing)
+- [CI/CD](#-cicd)
+- [npm Scripts](#-npm-scripts)
 - [Deployment](#-deployment)
-- [Roadmap](#%EF%B8%8F-roadmap)
+- [Roadmap](#️-roadmap)
 - [Contributing](#-contributing)
 - [Author](#-author)
 - [License](#-license)
@@ -58,96 +63,42 @@
 
 ## ✨ What's Included
 
-Everything you need to go from idea to paying customers:
-
-| Feature | Details |
-|---|---|
-| 🔐 **Authentication** | Email/password, magic links, Google OAuth, GitHub OAuth via Supabase Auth |
-| 🏢 **Multi-tenancy** | Organizations with roles (`SUPER_ADMIN` / `ADMIN` / `MEMBER`) + team invitations |
-| 💳 **Stripe Billing** | Checkout sessions, subscription webhooks, billing portal, free trials |
-| 🛡️ **Route Protection** | Middleware-based auth guards — no boilerplate per page |
-| 🗄️ **Type-safe DB** | PostgreSQL via Supabase + Prisma ORM — fully typed, zero runtime surprises |
-| 📧 **Transactional Email** | Resend integration — ready to send invites, receipts, notifications |
-| 🎨 **UI Components** | shadcn/ui + Radix UI + Tailwind CSS — accessible, customizable, beautiful |
-| 🌗 **Dark Mode** | System-aware theme switching via next-themes, no flash |
-| 📋 **Audit Logs** | Track every important action across your organization |
-| ✅ **End-to-end Validation** | Zod schemas shared between client forms and server handlers |
-| 🧪 **Testing Setup** | Jest + React Testing Library — configured and ready |
-| 🔄 **CI/CD Pipeline** | GitHub Actions — lint → type-check → test → build on every PR |
-| 🔒 **Security Headers** | X-Frame-Options, X-Content-Type-Options, Referrer-Policy — set by default |
-| 📦 **Developer Experience** | ESLint, Prettier, Husky, lint-staged, conventional commits |
+| Area | What you get |
+| ---- | ------------ |
+| 🔐 **Authentication** | Email/password, Google OAuth, GitHub OAuth, password reset — Supabase Auth + Prisma user sync |
+| 🏢 **Multi-tenancy** | Organizations, members, roles (`SUPER_ADMIN` / `ADMIN` / `MEMBER`), invitations in Prisma |
+| 💳 **Stripe billing** | Checkout sessions, webhooks, billing portal helpers, seeded plans |
+| 🛡️ **Route protection** | Middleware session refresh + redirects for `/dashboard` and `/auth` |
+| 🎭 **Live demo** | Public `/demo` dashboard with mock data — no sign-in required |
+| 🌐 **Marketing site** | Full landing page: hero, stats, features, showcase, integrations, pricing, FAQ, testimonials |
+| 🎨 **UI system** | shadcn/ui + Radix UI + Tailwind CSS + dark mode (`next-themes`) |
+| 🧩 **Dashboard shell** | Shared sidebar layout for real app and demo (`DashboardShell`) |
+| 🏷️ **White-label branding** | App name, tagline, URLs, and developer credit via environment variables |
+| 🗄️ **Type-safe database** | PostgreSQL + Prisma — migrations, seed script, composed TypeScript types |
+| 📧 **Email (Resend)** | API key wired in env — ready for transactional email |
+| ✅ **Validation** | Zod schemas shared for forms (`src/lib/validations.ts`) |
+| 🧪 **Tests** | Jest + React Testing Library with **100% enforced coverage** on `src/` |
+| 🔄 **CI/CD** | GitHub Actions (lint, type-check, test, build) + optional Vercel deploy |
+| 🔒 **Security defaults** | Webhook verification, security headers, server-only service role usage |
+| 📦 **DX** | ESLint, Prettier, Husky, lint-staged, strict TypeScript |
 
 ---
 
 ## 🖥️ Tech Stack
 
-<table>
-  <tr>
-    <td><strong>Layer</strong></td>
-    <td><strong>Technology</strong></td>
-    <td><strong>Why</strong></td>
-  </tr>
-  <tr>
-    <td>Framework</td>
-    <td>Next.js 15 (App Router)</td>
-    <td>Server Components, Server Actions, edge-ready, Vercel-optimized</td>
-  </tr>
-  <tr>
-    <td>Language</td>
-    <td>TypeScript 5.6 (strict)</td>
-    <td>End-to-end type safety, fewer runtime errors, better DX</td>
-  </tr>
-  <tr>
-    <td>Auth</td>
-    <td>Supabase Auth</td>
-    <td>JWT, OAuth, magic links, SSR-safe cookie management</td>
-  </tr>
-  <tr>
-    <td>Database</td>
-    <td>PostgreSQL + Prisma ORM</td>
-    <td>Relational, type-safe queries, migrations, seed scripts</td>
-  </tr>
-  <tr>
-    <td>Hosting DB</td>
-    <td>Supabase</td>
-    <td>Managed Postgres, connection pooling, Storage, Realtime</td>
-  </tr>
-  <tr>
-    <td>Payments</td>
-    <td>Stripe</td>
-    <td>Checkout, subscriptions, billing portal, webhooks</td>
-  </tr>
-  <tr>
-    <td>Email</td>
-    <td>Resend</td>
-    <td>Reliable transactional email with a great developer API</td>
-  </tr>
-  <tr>
-    <td>UI</td>
-    <td>Tailwind CSS + shadcn/ui + Radix UI</td>
-    <td>Accessible, unstyled primitives — fully yours to customize</td>
-  </tr>
-  <tr>
-    <td>Forms</td>
-    <td>React Hook Form + Zod</td>
-    <td>Performant forms with schema-driven validation</td>
-  </tr>
-  <tr>
-    <td>State</td>
-    <td>Zustand</td>
-    <td>Lightweight, flexible client-side state management</td>
-  </tr>
-  <tr>
-    <td>Testing</td>
-    <td>Jest + React Testing Library</td>
-    <td>Unit and integration tests — configured out of the box</td>
-  </tr>
-  <tr>
-    <td>Deployment</td>
-    <td>Vercel (recommended)</td>
-    <td>Zero-config Next.js deployment; works on any Node.js host</td>
-  </tr>
-</table>
+| Layer | Technology | Why |
+| ----- | ---------- | --- |
+| Framework | **Next.js 15** (App Router) | Server Components, Server Actions, Turbopack dev |
+| Language | **TypeScript 5.6** (strict) | End-to-end type safety |
+| Auth | **Supabase Auth** + `@supabase/ssr` | OAuth, sessions, cookie handling for SSR |
+| Database | **PostgreSQL** + **Prisma** | Relational model, migrations, typed queries |
+| Payments | **Stripe** | Checkout, subscriptions, webhooks, portal |
+| Email | **Resend** | Transactional email API |
+| UI | **Tailwind CSS**, **shadcn/ui**, **Radix UI** | Accessible, customizable components |
+| Forms | **React Hook Form** + **Zod** | Client validation aligned with server schemas |
+| State | **Zustand** | Lightweight client state (where needed) |
+| Testing | **Jest** + **React Testing Library** | Unit/integration tests with coverage gates |
+| Fonts | **Geist** | Sans + mono via `geist` package |
 
 ---
 
@@ -157,13 +108,11 @@ Everything you need to go from idea to paying customers:
 
 - **Node.js** `>=18.17`
 - **npm** `>=9.0`
-- A [**Supabase**](https://supabase.com) project (free tier works perfectly)
-- A [**Stripe**](https://stripe.com) account (test mode is fine to start)
-- A [**Resend**](https://resend.com) account (free tier included)
+- [**Supabase**](https://supabase.com) project
+- [**Stripe**](https://stripe.com) account (test mode is fine)
+- [**Resend**](https://resend.com) account (when you send email)
 
----
-
-### 1. Clone & Install
+### 1. Clone and install
 
 ```bash
 git clone https://github.com/OmarSharaf/launchkit.git
@@ -171,89 +120,111 @@ cd launchkit
 npm install
 ```
 
----
-
-### 2. Configure Environment Variables
+### 2. Environment variables
 
 ```bash
 cp .env.example .env.local
 ```
 
-Open `.env.local` and fill in your values:
+See [.env.example](./.env.example) for the full list. Minimum required for local dev:
 
-```env
-# ── App ──────────────────────────────────────────────
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-NEXT_PUBLIC_APP_NAME="LaunchKit"
+| Variable | Purpose |
+| -------- | ------- |
+| `NEXT_PUBLIC_APP_URL` | Site URL (e.g. `http://localhost:3000`) |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key (public) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server-only admin operations |
+| `DATABASE_URL` | Pooled Postgres connection (PgBouncer) |
+| `DIRECT_URL` | Direct Postgres connection for migrations |
+| `STRIPE_SECRET_KEY` | Server-side Stripe API |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Client-side Stripe |
+| `STRIPE_WEBHOOK_SECRET` | Webhook signature verification |
+| `RESEND_API_KEY` | Email sending |
+| `EMAIL_FROM` | Sender address for Resend |
 
-# ── Supabase (project Settings > API) ────────────────
-NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
-SUPABASE_SERVICE_ROLE_KEY=eyJ...
+Branding and marketing URLs (`NEXT_PUBLIC_APP_NAME`, tagline, docs link, developer credit, etc.) are documented in `.env.example`.
 
-# ── Database (Settings > Database > Connection string)
-DATABASE_URL="postgresql://postgres.xxxx:[password]@aws-0-us-east-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
-DIRECT_URL="postgresql://postgres.xxxx:[password]@aws-0-us-east-1.pooler.supabase.com:5432/postgres"
+> Never commit `.env.local` — it is gitignored.
 
-# ── Stripe (dashboard.stripe.com/apikeys) ────────────
-STRIPE_SECRET_KEY=sk_test_...
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
-STRIPE_WEBHOOK_SECRET=whsec_...
+### 3. Supabase Auth
 
-# ── Resend (resend.com/api-keys) ──────────────────────
-RESEND_API_KEY=re_...
-EMAIL_FROM="LaunchKit <noreply@omarsharaf.me>"
-```
+In the Supabase dashboard:
 
-> **Tip:** Never commit `.env.local` — it's already in `.gitignore`.
+1. **Authentication → URL Configuration** — add `http://localhost:3000/api/auth/callback` to redirect URLs.
+2. **Authentication → Providers** — enable Google and/or GitHub if you want OAuth.
 
----
-
-### 3. Set Up Supabase Auth
-
-In your Supabase dashboard:
-
-1. Go to **Authentication → URL Configuration**
-2. Add `http://localhost:3000/api/auth/callback` to **Redirect URLs**
-3. Enable **Google** and/or **GitHub** providers under **Authentication → Providers** (optional)
-
----
-
-### 4. Set Up the Database
+### 4. Database
 
 ```bash
-# Generate the Prisma client from your schema
-npx prisma generate
-
-# Push schema to your database and create tables
-npx prisma migrate dev --name init
-
-# Seed the database with Starter / Pro / Enterprise plans
+npm run db:generate
+npm run db:migrate
 npm run db:seed
 ```
 
----
-
-### 5. Start the Development Server
+### 5. Run locally
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) — you're live. 🎉
+| URL | Description |
+| --- | ----------- |
+| [http://localhost:3000](http://localhost:3000) | Marketing landing page |
+| [http://localhost:3000/demo](http://localhost:3000/demo) | Live demo dashboard (no login) |
+| [http://localhost:3000/auth/login](http://localhost:3000/auth/login) | Sign in |
+| [http://localhost:3000/dashboard](http://localhost:3000/dashboard) | App dashboard (requires auth) |
 
----
-
-### 6. Set Up Stripe Webhooks (Local)
-
-In a new terminal:
+### 6. Stripe webhooks (local)
 
 ```bash
-# Install Stripe CLI: https://stripe.com/docs/stripe-cli
 stripe listen --forward-to localhost:3000/api/webhooks/stripe
 ```
 
-Copy the `whsec_...` secret printed to your terminal into `.env.local` as `STRIPE_WEBHOOK_SECRET`.
+Copy the `whsec_...` secret into `STRIPE_WEBHOOK_SECRET` in `.env.local`.
+
+---
+
+## 🎭 Live Demo
+
+LaunchKit includes a **public demo** at `/demo` that mirrors the real dashboard UX using static mock data from `src/lib/demo-data.ts`:
+
+- Overview with metrics, activity feed, and workspace cards
+- Billing and settings preview pages
+- “Exit demo” returns visitors to the marketing site
+- **No authentication** — middleware explicitly does not protect `/demo`
+
+Use this for sales, portfolios, or trying the UI before configuring Supabase. Customize mock names and plans in `demo-data.ts`.
+
+The marketing header links to `/demo` as **Live demo** (`DEMO_DASHBOARD_PATH` in `src/lib/site.ts`).
+
+---
+
+## 🏷️ Customize Your Product
+
+### Branding (`src/lib/site.ts` + env)
+
+| Env variable | Default | Used for |
+| ------------ | ------- | -------- |
+| `NEXT_PUBLIC_APP_NAME` | LaunchKit | Title, logo text, metadata |
+| `NEXT_PUBLIC_APP_TAGLINE` | (see `.env.example`) | Hero headline |
+| `NEXT_PUBLIC_APP_DESCRIPTION` | — | Meta description, footer |
+| `NEXT_PUBLIC_PRODUCT_CATEGORY` | Business operations platform | Hero eyebrow |
+| `NEXT_PUBLIC_APP_URL` | — | Canonical URL, Open Graph |
+| `NEXT_PUBLIC_GITHUB_REPO` | This repo | Links |
+| `NEXT_PUBLIC_DOCS_URL` | — | Help center / docs links |
+| `NEXT_PUBLIC_SUPPORT_EMAIL` | support@launchkit.dev | FAQ, contact |
+| `NEXT_PUBLIC_SHOW_DEVELOPER_CREDIT` | `true` | Show/hide “Developed by …” footer |
+
+### Marketing content (`src/lib/marketing.ts`)
+
+Edit one file to change:
+
+- `STATS`, `LOGO_CLOUD`, `FEATURES`, `PRICING_PLANS`, `FAQ_ITEMS`
+- `NAV_LINKS`, `FOOTER_LINKS`, `TESTIMONIALS`, `SHOWCASE_ITEMS`, `HOW_IT_WORKS`
+
+### Demo data (`src/lib/demo-data.ts`)
+
+Change `DEMO_USER`, `DEMO_ORG`, `DEMO_ORGANIZATIONS`, and activity metrics for the `/demo` experience.
 
 ---
 
@@ -261,266 +232,317 @@ Copy the `whsec_...` secret printed to your terminal into `.env.local` as `STRIP
 
 ```
 launchkit/
-│
 ├── prisma/
-│   ├── schema.prisma          # Full multi-tenant data model
-│   └── seed.ts                # Seeds Starter / Pro / Enterprise plans
+│   ├── schema.prisma          # Multi-tenant data model
+│   ├── seed.ts                # Starter / Pro / Enterprise plans
+│   └── migrations/
 │
 ├── src/
-│   ├── app/                   # Next.js 15 App Router
-│   │   ├── layout.tsx         # Root layout — fonts, theme, metadata
-│   │   ├── page.tsx           # Public landing page
-│   │   ├── auth/
-│   │   │   ├── layout.tsx     # Auth shell (centered, branded)
-│   │   │   ├── login/         # Sign in page + LoginForm component
-│   │   │   ├── register/      # Create account + RegisterForm
-│   │   │   └── forgot-password/
-│   │   ├── dashboard/
-│   │   │   ├── layout.tsx     # Sidebar layout (server, reads session)
-│   │   │   ├── page.tsx       # Overview — orgs, quick actions
-│   │   │   ├── billing/       # Subscription management
-│   │   │   └── settings/      # Org settings, member management
+│   ├── app/                   # Next.js App Router
+│   │   ├── layout.tsx         # Root layout, fonts, theme, metadata
+│   │   ├── page.tsx           # Marketing landing page
+│   │   ├── auth/              # login, register, forgot-password
+│   │   ├── dashboard/         # Protected app (overview → redirects to /dashboard)
+│   │   ├── demo/              # Public demo dashboard
+│   │   ├── privacy/           # Privacy policy
+│   │   ├── terms/             # Terms of service
 │   │   └── api/
-│   │       ├── auth/callback/ # Supabase OAuth callback + user sync
-│   │       ├── stripe/
-│   │       │   └── checkout/  # Create Stripe Checkout Sessions
-│   │       └── webhooks/
-│   │           └── stripe/    # Handle all Stripe webhook events
+│   │       ├── auth/callback/ # OAuth + email link → Prisma user sync
+│   │       ├── stripe/checkout/
+│   │       └── webhooks/stripe/
 │   │
 │   ├── components/
-│   │   ├── ui/                # Base primitives (Toast, Button, Input…)
-│   │   ├── auth/              # LoginForm, RegisterForm, ForgotPasswordForm
-│   │   ├── dashboard/         # Dashboard-specific widgets
+│   │   ├── ui/                # Button, Card, Input, Toast, …
+│   │   ├── auth/              # Login, register, forgot-password forms
+│   │   ├── brand/             # BrandLogo
+│   │   ├── dashboard/         # DashboardShell
+│   │   ├── demo/              # Demo-only widgets (charts, feed, banner)
+│   │   ├── layout/            # Marketing header/footer, theme toggle, developer credit
 │   │   ├── marketing/         # Landing page sections
-│   │   └── providers/         # ThemeProvider, future: AnalyticsProvider
+│   │   └── providers/         # ThemeProvider
 │   │
+│   ├── hooks/                 # use-current-user, use-organization, use-toast
 │   ├── lib/
-│   │   ├── auth.ts            # requireAuth, getUser, getDbUser, getOrganizationMembership
-│   │   ├── prisma.ts          # Singleton Prisma client (hot-reload safe)
-│   │   ├── stripe.ts          # createCheckoutSession, createBillingPortalSession, formatPrice
-│   │   ├── supabase/
-│   │   │   ├── client.ts      # Browser Supabase client
-│   │   │   └── server.ts      # Server Supabase client + admin client
-│   │   ├── utils.ts           # cn, slugify, formatRelativeDate, getInitials, …
-│   │   └── validations.ts     # All Zod schemas + exported TS types
+│   │   ├── auth.ts            # requireAuth, getUser, getDbUser, membership helpers
+│   │   ├── demo-data.ts       # Mock data for /demo
+│   │   ├── marketing.ts       # Landing page content
+│   │   ├── site.ts            # Branding constants from env
+│   │   ├── prisma.ts          # Prisma singleton
+│   │   ├── stripe.ts          # Checkout, portal, webhook helpers
+│   │   ├── supabase/          # Browser + server clients
+│   │   ├── utils.ts           # cn, slugify, formatters, …
+│   │   └── validations.ts     # Zod schemas
 │   │
-│   ├── hooks/
-│   │   ├── use-current-user.ts   # Client-side auth state listener
-│   │   ├── use-organization.ts   # Fetch + cache org + subscription
-│   │   └── use-toast.ts          # Toast notification state
-│   │
-│   ├── types/
-│   │   └── index.ts           # Composed Prisma types, ApiResponse, NavItem
-│   │
-│   ├── styles/
-│   │   └── globals.css        # Tailwind directives + CSS variables + utilities
-│   │
-│   └── middleware.ts          # Route protection — guards /dashboard, /org
+│   ├── styles/globals.css     # Tailwind + CSS variables
+│   ├── types/index.ts         # Composed Prisma + API types
+│   ├── test-utils/            # Shared Jest mocks
+│   └── middleware.ts          # Auth guards + session refresh
 │
+├── jest.config.ts             # 100% coverage thresholds
+├── jest.setup.ts
+├── next.config.ts             # Security headers, image domains
+├── tailwind.config.ts
 ├── .github/
-│   ├── workflows/ci.yml       # Lint → Type-check → Test → Build on every push
-│   ├── PULL_REQUEST_TEMPLATE.md
-│   ├── FUNDING.yml
-│   ├── labels.yml
-│   └── ISSUE_TEMPLATE/        # Bug report & feature request templates
-│
-├── next.config.ts             # Security headers, image domains, bundle optimizations
-├── tailwind.config.ts         # Design tokens, CSS variables, animations
-├── tsconfig.json              # Strict TypeScript + @/ path aliases
-├── jest.config.ts             # Jest + jsdom + path alias mapping
-├── .eslintrc.json             # ESLint: next/core-web-vitals + typescript + prettier
-├── .prettierrc                # Prettier config with tailwindcss plugin
-├── .env.example               # Fully documented environment variable reference
-├── CHANGELOG.md               # Version history
-├── CONTRIBUTING.md            # Contribution guidelines
+│   ├── workflows/ci.yml       # Lint, test, build on PR
+│   ├── workflows/release.yml  # Tagged releases
+│   └── ci.env                 # Dummy env for CI builds
+├── docs/CI_CD.md              # CI/CD and deployment guide
+├── .env.example
+├── vercel.json
+├── README.md
+├── CONTRIBUTING.md
+├── CHANGELOG.md
 ├── CODE_OF_CONDUCT.md
-├── SECURITY.md
-└── LICENSE                    # MIT — Copyright (c) 2025 Omar S. M. Abdelfatah
+└── SECURITY.md
 ```
+
+---
+
+## 🗺️ Routes & API
+
+### Public pages
+
+| Route | Description |
+| ----- | ----------- |
+| `/` | Marketing landing page |
+| `/demo` | Demo dashboard overview |
+| `/demo/billing` | Demo billing preview |
+| `/demo/settings` | Demo settings preview |
+| `/auth/login` | Sign in |
+| `/auth/register` | Create account |
+| `/auth/forgot-password` | Password reset |
+| `/privacy` | Privacy policy |
+| `/terms` | Terms of service |
+
+### Protected pages (auth required)
+
+| Route | Description |
+| ----- | ----------- |
+| `/dashboard` | Main dashboard overview |
+| `/dashboard/billing` | Subscription & billing |
+| `/dashboard/settings` | Profile & organization settings |
+| `/dashboard/overview` | Redirects to `/dashboard` |
+
+Middleware also treats `/org`, `/settings`, and `/billing` prefixes as protected (for future or nested routes).
+
+### API routes
+
+| Method | Route | Purpose |
+| ------ | ----- | ------- |
+| `GET` | `/api/auth/callback` | Supabase OAuth / email link callback; upserts user in Prisma |
+| `POST` | `/api/stripe/checkout` | Create Stripe Checkout session |
+| `POST` | `/api/webhooks/stripe` | Stripe subscription lifecycle events |
 
 ---
 
 ## 🔐 Authentication Flow
 
 ```
-Browser                     Middleware                  Supabase              Database
-   │                            │                          │                     │
-   │── GET /dashboard ─────────>│                          │                     │
-   │                            │── getUser() ────────────>│                     │
-   │                            │<─ null (no session) ─────│                     │
-   │<── 302 /auth/login ────────│                          │                     │
-   │                            │                          │                     │
-   │── POST /auth/login ─────────────────────────────────> │                     │
-   │   (email + password)                            signInWithPassword()        │
-   │<─ Set-Cookie: sb-... ──────────────────────────────── │                     │
-   │                            │                          │                     │
-   │── GET /api/auth/callback ──────────────────────────── │                     │
-   │   (code exchange)                           exchangeCodeForSession()        │
-   │                            │                          │── upsert user ─────>│
-   │                            │                          │<─ User record ───── │
-   │<── 302 /dashboard ─────────────────────────────────── │                     │
-   │                            │                          │                     │
-   │── GET /dashboard ─────────>│                          │                     │
-   │                            │── getUser() ────────────>│                     │
-   │                            │<─ User ──────────────────│                     │
-   │<── 200 Dashboard ──────────│                          │                     │
+Browser          Middleware              Supabase           Prisma
+   │                 │                      │                 │
+   │ GET /dashboard  │                      │                 │
+   │────────────────>│ getUser()            │                 │
+   │                 │─────────────────────>│                 │
+   │                 │<──── no session ─────│                 │
+   │<── 302 /auth/login?redirectTo=... ────│                 │
+   │                 │                      │                 │
+   │ POST login ───────────────────────────>│                 │
+   │<── Set-Cookie ─────────────────────────│                 │
+   │                 │                      │                 │
+   │ GET /api/auth/callback?code=... ───────>│ exchange code  │
+   │                 │                      │── upsert user ─>│
+   │<── 302 /dashboard ─────────────────────│                 │
 ```
 
-**Supported auth methods:**
-- ✅ Email + Password
-- ✅ Magic Link (passwordless email)
-- ✅ Google OAuth
-- ✅ GitHub OAuth
-- 🔜 SAML / SSO (Enterprise — on roadmap)
+**Supported in the UI today:**
+
+- Email + password
+- Google OAuth
+- GitHub OAuth
+- Password reset email
+
+The callback route also supports **magic-link** flows from Supabase; add a magic-link UI in `LoginForm` if you want that sign-in method exposed to users.
 
 ---
 
 ## 💳 Billing Flow
 
 ```
-Client                      API                     Stripe                  Database
-  │                          │                         │                       │
-  │── POST /api/stripe/checkout                        │                       │
-  │   { priceId, orgId } ──>│                          │                       │
-  │                          │── verify membership ──────────────────────────>│
-  │                          │── getOrCreateCustomer ──>│                      │
-  │                          │── createCheckoutSession >│                      │
-  │                          │<─ { url } ──────────────│                       │
-  │<── { url } ─────────────│                          │                       │
-  │                          │                          │                       │
-  │── redirect to Stripe ──────────────────────────── >│                       │
-  │   (user pays)            │                    checkout.session.completed   │
-  │                          │<──────────────── POST /api/webhooks/stripe ─── │
-  │                          │── upsert Subscription ─────────────────────── >│
-  │                          │                          │                       │
-  │<── redirect /dashboard/billing?success=true         │                       │
+Client              API                    Stripe              Prisma
+  │                  │                       │                   │
+  │ POST /api/stripe/checkout                │                   │
+  │ { priceId, orgId } ─>│ verify membership ──────────────────>│
+  │                  │── create session ───>│                   │
+  │<── { url } ──────│                       │                   │
+  │ redirect to Stripe ─────────────────────>│                   │
+  │                  │<── webhook: checkout.session.completed ─│
+  │                  │── upsert subscription ─────────────────>│
 ```
 
-**Handled webhook events:**
+**Webhook events handled:**
 
 | Event | Action |
-|---|---|
-| `checkout.session.completed` | Creates or updates the subscription record |
-| `customer.subscription.updated` | Syncs status, period dates, cancel flag |
-| `customer.subscription.deleted` | Marks subscription as `CANCELED` |
-| `invoice.payment_failed` | Marks subscription as `PAST_DUE` |
+| ----- | ------ |
+| `checkout.session.completed` | Create or update subscription |
+| `customer.subscription.updated` | Sync status and period dates |
+| `customer.subscription.deleted` | Mark subscription `CANCELED` |
+| `invoice.payment_failed` | Mark subscription `PAST_DUE` |
 
 ---
 
 ## 🗄️ Database Schema
 
-Designed for multi-tenant SaaS from day one:
-
 ```
-┌──────────────┐         ┌──────────────────────┐         ┌──────────────┐
-│     User     │────────<│  OrganizationMember  │>────────│ Organization │
-│──────────────│         │──────────────────────│         │──────────────│
-│ id           │         │ id                   │         │ id           │
-│ email        │         │ userId               │         │ name         │
-│ name         │         │ organizationId       │         │ slug         │
-│ avatarUrl    │         │ role (ADMIN|MEMBER)   │         │ logoUrl      │
-│ emailVerified│         │ joinedAt             │         │ stripeCustomerId│
-└──────────────┘         └──────────────────────┘         └──────┬───────┘
-                                                                  │
-                                              ┌───────────────────┼─────────────┐
-                                              │                   │             │
-                                       ┌──────▼──────┐    ┌──────▼──────┐      │
-                                       │ Subscription│    │ Invitation  │      │
-                                       │─────────────│    │─────────────│      │
-                                       │ stripeSubId │    │ email       │      │
-                                       │ status      │    │ role        │      │
-                                       │ planId ─────┼─── │ token       │      │
-                                       │ periodStart │    │ status      │      │
-                                       │ periodEnd   │    └─────────────┘      │
-                                       └──────┬──────┘                  ┌──────▼──────┐
-                                              │                         │  AuditLog   │
-                                       ┌──────▼──────┐                  │─────────────│
-                                       │    Plan     │                  │ action      │
-                                       │─────────────│                  │ entity      │
-                                       │ name        │                  │ metadata    │
-                                       │ amount      │                  │ userId      │
-                                       │ features    │                  │ createdAt   │
-                                       │ isPopular   │                  └─────────────┘
-                                       └─────────────┘
+User ──< OrganizationMember >── Organization
+                                      │
+                    ┌─────────────────┼─────────────────┐
+                    ▼                 ▼                 ▼
+              Subscription      Invitation         AuditLog
+                    │
+                    ▼
+                  Plan
 ```
 
-**Key design decisions:**
-- **Organization-centric billing** — subscriptions belong to orgs, not individual users
-- **Role-based access control** — `SUPER_ADMIN`, `ADMIN`, `MEMBER` per org
-- **Invitation system** — token-based with expiry, pending/accepted/expired states
-- **Audit trail** — every significant event is loggable with metadata
+**Design notes:**
+
+- Billing is **organization-scoped**, not per-user
+- Roles: `SUPER_ADMIN`, `ADMIN`, `MEMBER`
+- Invitations use tokens with `PENDING` / `ACCEPTED` / `EXPIRED`
+- `AuditLog` model is in the schema for future activity tracking
+
+Run `npm run db:studio` to inspect data locally.
+
+---
+
+## 🧪 Testing
+
+```bash
+npm test                 # Run all tests
+npm run test:watch       # Watch mode
+npm run test:coverage    # Coverage report (100% required)
+```
+
+- Tests live next to source files as `*.test.ts` / `*.test.tsx`
+- Shared mocks: `src/test-utils/`
+- `jest.config.ts` enforces **100%** statements, branches, functions, and lines on `src/`
+- API and middleware tests use `/** @jest-environment node */`
+
+Before contributing, also run:
+
+```bash
+npm run ci
+```
+
+(`lint`, `format:check`, `type-check`, `test`, dummy env, and `build` — same as GitHub Actions.)
+
+---
+
+## 🔄 CI/CD
+
+GitHub Actions runs on every push/PR to `main`, `master`, and `develop`:
+
+**lint** → **type-check** → **test** → **production build** (with dummy env from `.github/ci.env`).
+
+Full details: **[docs/CI_CD.md](./docs/CI_CD.md)**
+
+```bash
+npm run ci              # Run the full pipeline locally
+npm run ci:env          # Copy CI dummy env to .env.local (for builds without real keys)
+```
+
+---
+
+## 📜 npm Scripts
+
+| Script | Command | Description |
+| ------ | ------- | ----------- |
+| `dev` | `next dev --turbo` | Development server |
+| `build` | `prisma generate && next build` | Production build |
+| `start` | `next start` | Run production server |
+| `lint` / `lint:fix` | ESLint | Lint / auto-fix |
+| `type-check` | `tsc --noEmit` | TypeScript check |
+| `format` / `format:check` | Prettier | Format / verify |
+| `db:generate` | `prisma generate` | Generate Prisma client |
+| `db:migrate` | `prisma migrate dev` | Dev migrations |
+| `db:migrate:prod` | `prisma migrate deploy` | Production migrations |
+| `db:push` | `prisma db push` | Push schema without migration |
+| `db:studio` | `prisma studio` | Database GUI |
+| `db:seed` | `prisma/seed.ts` | Seed pricing plans |
+| `test` | `jest` | Run tests |
+| `test:coverage` | `jest --coverage` | Coverage with thresholds |
+| `ci:env` | copies `.github/ci.env` | Dummy env for CI/local build |
+| `ci` | full pipeline | Lint, format, types, test, build (matches GitHub Actions) |
+| `prepare` | `husky install` | Git pre-commit hooks |
 
 ---
 
 ## 🚀 Deployment
 
-### Deploy to Vercel (Recommended)
+### Vercel (recommended)
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/OmarSharaf/launchkit&env=NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY,SUPABASE_SERVICE_ROLE_KEY,DATABASE_URL,DIRECT_URL,STRIPE_SECRET_KEY,NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,STRIPE_WEBHOOK_SECRET,RESEND_API_KEY)
 
-1. Click the button above — Vercel prompts you to fill in all required env vars
-2. After deployment, run database migrations:
+1. Deploy and set all env vars from `.env.example`.
+2. Run migrations against production:
 
 ```bash
-npx prisma migrate deploy
+npm run db:migrate:prod
 npm run db:seed
 ```
 
-3. Add your Vercel production URL to Supabase's **Redirect URLs** and your Stripe **webhook endpoint**
+3. Add your production URL to Supabase redirect URLs.
+4. Register `https://your-domain.com/api/webhooks/stripe` in Stripe.
 
----
+### Other hosts
 
-### Other Platforms
+| Platform | Notes |
+| -------- | ----- |
+| Railway / Render / Fly.io | Set env vars, run `npm run build`, `npm start` |
+| Docker / VPS | Node 18+, run migrations before start |
+| Self-hosted | `npm run build && npm start` on port 3000 |
 
-| Platform | How |
-|---|---|
-| Railway / Render / Fly.io | Connect repo, set env vars, auto-deploy |
-| AWS / GCP / Azure | Docker or serverless adapters |
-| Self-hosted VPS | `npm run build && npm start` |
+See [SECURITY.md](./SECURITY.md) for a production security checklist.
 
 ---
 
 ## 🛣️ Roadmap
 
-**v1.0 — Foundation (current)**
-- [x] Email/password + OAuth authentication
-- [x] Multi-org multi-tenancy
-- [x] Team invitations with role assignment
-- [x] Stripe subscriptions (checkout, webhooks, portal)
-- [x] Audit log infrastructure
-- [x] Full CI/CD pipeline
-- [x] Security headers
-- [x] Dark mode
+**v1.0 — Foundation**
+
+- [x] Supabase auth (email, OAuth, password reset)
+- [x] Multi-org tenancy and invitations (schema + core flows)
+- [x] Stripe checkout, webhooks, billing portal helpers
+- [x] Marketing landing page + public demo dashboard
+- [x] Dashboard shell, dark mode, security headers
+- [x] 100% Jest coverage on `src/`
 
 **v1.1 — Growth**
-- [ ] Usage-based billing (metered Stripe billing)
-- [ ] Email notifications (invitations, payment receipts, alerts)
+
+- [ ] Usage-based / metered billing
+- [ ] Transactional email templates (invites, receipts)
+- [ ] Audit log UI
 - [ ] Admin super-dashboard
-- [ ] API key management
-- [ ] In-app notification center
+- [ ] API keys for integrations
 
 **v1.2 — Enterprise**
-- [ ] SAML / SSO integration
-- [ ] Advanced RBAC with custom permissions
-- [ ] i18n / localization
-- [ ] Webhooks for external integrations
-- [ ] Data export (CSV / JSON)
 
-> Want to help ship any of these? See [CONTRIBUTING.md](./CONTRIBUTING.md) — PRs are very welcome.
+- [ ] SAML / SSO
+- [ ] Custom RBAC permissions
+- [ ] i18n
+- [ ] Outbound webhooks for customers
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) to help ship any of these.
 
 ---
 
 ## 🤝 Contributing
 
-LaunchKit is open source and contributions are very welcome!
+Contributions are welcome.
 
-1. Read [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines
-2. Fork the repo: `git clone https://github.com/OmarSharaf/launchkit.git`
-3. Create a branch: `git checkout -b feat/amazing-feature`
-4. Commit with conventional commits: `git commit -m "feat: add amazing feature"`
-5. Push and open a Pull Request to `develop`
-
-Looking for a good first issue? Check the [`good first issue`](https://github.com/OmarSharaf/launchkit/labels/good%20first%20issue) label.
+1. Read [CONTRIBUTING.md](./CONTRIBUTING.md)
+2. Fork and branch: `git checkout -b feat/your-feature`
+3. Keep tests at 100% coverage
+4. Open a PR with a clear description
 
 ---
 
@@ -537,41 +559,31 @@ Looking for a good first issue? Check the [`good first issue`](https://github.co
       <br />
       <sub>Founder · Builder · Engineer</sub>
       <br /><br />
-      <a href="https://www.omarsharaf.me" title="Website">🌐 omarsharaf.me</a>
+      <a href="https://www.omarsharaf.me">🌐 omarsharaf.me</a>
       &nbsp;·&nbsp;
-      <a href="https://github.com/OmarSharaf" title="GitHub">
-        <img src="https://img.shields.io/badge/GitHub-OmarSharaf-181717?style=flat-square&logo=github" alt="GitHub" />
-      </a>
+      <a href="https://github.com/OmarSharaf">GitHub</a>
       &nbsp;·&nbsp;
-      <a href="https://www.linkedin.com/in/omarsharafaldin/" title="LinkedIn">
-        <img src="https://img.shields.io/badge/LinkedIn-omarsharafaldin-0A66C2?style=flat-square&logo=linkedin" alt="LinkedIn" />
-      </a>
+      <a href="https://www.linkedin.com/in/omarsharafaldin/">LinkedIn</a>
     </td>
   </tr>
 </table>
-
-Built with passion from Egypt 🇪🇬 — crafted for the global developer community.
 
 ---
 
 ## 💬 Community & Support
 
 | Channel | Link |
-|---|---|
-| 🐛 Bug reports | [GitHub Issues](https://github.com/OmarSharaf/launchkit/issues) |
-| 💡 Feature requests | [GitHub Issues](https://github.com/OmarSharaf/launchkit/issues) |
-| 💬 Discussions | [GitHub Discussions](https://github.com/OmarSharaf/launchkit/discussions) |
-| 🌐 Author's website | [omarsharaf.me](https://www.omarsharaf.me) |
-| 💼 LinkedIn | [omarsharafaldin](https://www.linkedin.com/in/omarsharafaldin/) |
-| 🌟 Star the project | [GitHub Stars](https://github.com/OmarSharaf/launchkit/stargazers) |
+| ------- | ---- |
+| Bug reports | [GitHub Issues](https://github.com/OmarSharaf/launchkit/issues) |
+| Feature requests | [GitHub Issues](https://github.com/OmarSharaf/launchkit/issues) |
+| Security | [SECURITY.md](./SECURITY.md) |
+| Website | [omarsharaf.me](https://www.omarsharaf.me) |
 
 ---
 
 ## 📄 License
 
-Distributed under the **MIT License**. See [LICENSE](./LICENSE) for full text.
-
-MIT means you can use it commercially, modify it, distribute it, and use it privately. The only requirement is keeping the copyright notice.
+MIT — see [LICENSE](./LICENSE).
 
 ```
 Copyright (c) 2026 Omar S. M. Abdelfatah
@@ -583,7 +595,7 @@ Copyright (c) 2026 Omar S. M. Abdelfatah
 
 <br />
 
-**If LaunchKit saved you time, please ⭐ the repo — it helps more developers find it.**
+**If LaunchKit saved you time, please ⭐ star the repo.**
 
 <br />
 

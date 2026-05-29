@@ -1,13 +1,10 @@
 import { PrismaClient } from '@prisma/client'
 
+// Next.js dev hot-reload would create a new PrismaClient every time without this
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
-/**
- * Singleton Prisma client to prevent connection pool exhaustion
- * in Next.js development with hot reloading.
- */
 export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
@@ -17,4 +14,6 @@ export const prisma =
         : ['error'],
   })
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+if (process.env.NODE_ENV !== 'production') {
+  globalForPrisma.prisma = prisma
+}

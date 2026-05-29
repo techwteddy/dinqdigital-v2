@@ -1,6 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+/**
+ * Sign-in form — email/password plus Google and GitHub OAuth.
+ * Uses react-hook-form + Zod so validation matches the server if we add an API later.
+ */
+
+import { Suspense, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -9,9 +14,33 @@ import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { signInSchema, type SignInInput } from '@/lib/validations'
 
+function LoginFormFallback() {
+  return (
+    <div className="flex flex-col gap-4" aria-busy="true" aria-label="Loading sign-in form">
+      <div className="grid grid-cols-2 gap-3">
+        <div className="h-10 animate-pulse rounded-md bg-muted" />
+        <div className="h-10 animate-pulse rounded-md bg-muted" />
+      </div>
+      <div className="h-4 animate-pulse rounded-md bg-muted" />
+      <div className="h-10 animate-pulse rounded-md bg-muted" />
+      <div className="h-10 animate-pulse rounded-md bg-muted" />
+      <div className="h-10 animate-pulse rounded-md bg-muted" />
+    </div>
+  )
+}
+
 export function LoginForm() {
+  return (
+    <Suspense fallback={<LoginFormFallback />}>
+      <LoginFormContent />
+    </Suspense>
+  )
+}
+
+function LoginFormContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  // middleware sets ?redirectTo= when someone hits /dashboard while logged out
   const redirectTo = searchParams.get('redirectTo') ?? '/dashboard'
   const [showPassword, setShowPassword] = useState(false)
   const [oauthLoading, setOauthLoading] = useState<'google' | 'github' | null>(null)
@@ -34,6 +63,7 @@ export function LoginForm() {
     })
 
     if (error) {
+      // Supabase message is a bit terse — friendlier copy for wrong password
       setError('root', {
         message: error.message === 'Invalid login credentials'
           ? 'Invalid email or password. Please try again.'
@@ -43,7 +73,7 @@ export function LoginForm() {
     }
 
     router.push(redirectTo)
-    router.refresh()
+    router.refresh() // pick up the new session cookie on the server
   }
 
   async function signInWithOAuth(provider: 'google' | 'github') {
