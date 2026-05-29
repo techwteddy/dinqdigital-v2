@@ -13,6 +13,7 @@ import Link from 'next/link'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { signInSchema, type SignInInput } from '@/lib/validations'
+import { getSafeRedirectPath } from '@/lib/safe-redirect'
 
 function LoginFormFallback() {
   return (
@@ -45,7 +46,9 @@ function LoginFormContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   // middleware sets ?redirectTo= when someone hits /dashboard while logged out
-  const redirectTo = searchParams.get('redirectTo') ?? '/dashboard'
+  const redirectTo = getSafeRedirectPath(searchParams.get('redirectTo'))
+  const authError = searchParams.get('error')
+  const authMessage = searchParams.get('message')
   const [showPassword, setShowPassword] = useState(false)
   const [oauthLoading, setOauthLoading] = useState<'google' | 'github' | null>(
     null
@@ -169,6 +172,16 @@ function LoginFormContent() {
         noValidate
         className="flex flex-col gap-3"
       >
+        {authError && (
+          <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
+            {authError}
+          </div>
+        )}
+        {authMessage && (
+          <div className="rounded-md bg-emerald-500/10 p-3 text-sm text-emerald-700 dark:text-emerald-400">
+            {authMessage}
+          </div>
+        )}
         {errors.root && (
           <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
             {errors.root.message}

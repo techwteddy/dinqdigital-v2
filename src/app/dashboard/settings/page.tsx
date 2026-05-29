@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
-import { requireAuth } from '@/lib/auth'
-import { prisma } from '@/lib/prisma'
+import { DashboardPageHeader } from '@/components/dashboard/dashboard-page-header'
+import { NotificationSettings } from '@/components/dashboard/notification-settings'
+import { getDbUserWithMemberships, requireAuth } from '@/lib/auth'
 import {
   Card,
   CardContent,
@@ -9,31 +10,28 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
 import { Settings, Users } from 'lucide-react'
+import { CreateOrganizationForm } from '@/components/settings/create-organization-form'
+import { InviteMemberForm } from '@/components/settings/invite-member-form'
 
 export const metadata: Metadata = { title: 'Settings' }
 
 export default async function SettingsPage() {
   const user = await requireAuth()
+  const dbUser = await getDbUserWithMemberships()
 
-  const dbUser = await prisma.user.findUnique({
-    where: { id: user.id },
-    include: {
-      memberships: {
-        include: { organization: { include: { members: true } } },
-      },
-    },
-  })
+  const primaryMembership = dbUser?.memberships[0]
+  const org = primaryMembership?.organization
+  const isAdmin =
+    primaryMembership?.role === 'ADMIN' ||
+    primaryMembership?.role === 'SUPER_ADMIN'
 
   return (
     <div className="flex flex-col gap-8">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight">Settings</h1>
-        <p className="mt-1 text-muted-foreground">
-          Manage your profile and organization preferences.
-        </p>
-      </div>
+      <DashboardPageHeader
+        title="Settings"
+        description="Manage your profile, organizations, notifications, and team invitations."
+      />
 
       <Card>
         <CardHeader>
@@ -48,7 +46,7 @@ export default async function SettingsPage() {
             <label htmlFor="name" className="text-sm font-medium">
               Full name
             </label>
-            <Input id="name" defaultValue={dbUser?.name ?? ''} disabled />
+            <Input id="name" defaultValue={dbUser?.name ?? ''} readOnly />
           </div>
           <div className="space-y-2">
             <label htmlFor="email" className="text-sm font-medium">
@@ -58,12 +56,11 @@ export default async function SettingsPage() {
               id="email"
               type="email"
               defaultValue={user.email ?? ''}
-              disabled
+              readOnly
             />
           </div>
           <p className="text-xs text-muted-foreground">
-            Profile editing will be available in a future release. Data is
-            synced from Supabase Auth.
+            Profile is synced from Supabase Auth.
           </p>
         </CardContent>
       </Card>
@@ -77,22 +74,18 @@ export default async function SettingsPage() {
           <CardDescription>Teams you belong to.</CardDescription>
         </CardHeader>
         <CardContent>
-          {!dbUser?.memberships.length ? (
-            <p className="text-sm text-muted-foreground">
-              You are not part of any organization yet.
-            </p>
-          ) : (
-            <ul className="divide-y divide-border rounded-lg border border-border">
-              {dbUser.memberships.map(({ organization: org, role }) => (
+          {dbUser?.memberships.length ? (
+            <ul className="mb-6 divide-y divide-border rounded-xl border border-border">
+              {dbUser.memberships.map(({ organization: o, role }) => (
                 <li
-                  key={org.id}
-                  className="flex items-center justify-between px-4 py-3 text-sm"
+                  key={o.id}
+                  className="flex items-center justify-between gap-4 px-4 py-3.5 text-sm"
                 >
                   <div>
-                    <p className="font-medium">{org.name}</p>
+                    <p className="font-medium">{o.name}</p>
                     <p className="text-xs text-muted-foreground">
-                      {org.members.length} member
-                      {org.members.length !== 1 ? 's' : ''}
+                      {o.members.length} member
+                      {o.members.length !== 1 ? 's' : ''}
                     </p>
                   </div>
                   <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium capitalize">
@@ -101,12 +94,30 @@ export default async function SettingsPage() {
                 </li>
               ))}
             </ul>
+          ) : (
+            <p className="mb-6 text-sm text-muted-foreground">
+              You are not part of any organization yet.
+            </p>
           )}
-          <Button className="mt-4" disabled>
-            Create organization (coming soon)
-          </Button>
+          <CreateOrganizationForm />
         </CardContent>
       </Card>
+
+      <NotificationSettings readOnly />
+
+      {org && isAdmin && (
+        <Card className="border-primary/20">
+          <CardHeader>
+            <CardTitle>Invite team members</CardTitle>
+            <CardDescription>
+              Send an email invitation to join {org.name}.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <InviteMemberForm organizationId={org.id} />
+          </CardContent>
+        </Card>
+      )}
     </div>
   )
 }

@@ -36,6 +36,7 @@ import {
   getOrganizationMembership,
   getUser,
   requireAuth,
+  requireAuthApi,
   requireGuest,
 } from './auth'
 import { mockDbUser, mockUser } from '@/test-utils'
@@ -93,6 +94,19 @@ describe('auth', () => {
       mockGetUser.mockResolvedValue({ data: { user: null } })
       await requireAuth()
       expect(redirect).toHaveBeenCalledWith('/auth/login')
+    })
+  })
+
+  describe('requireAuthApi', () => {
+    it('returns user when authenticated', async () => {
+      mockGetUser.mockResolvedValue({ data: { user: mockUser } })
+      const user = await requireAuthApi()
+      expect(user).toEqual(mockUser)
+    })
+
+    it('throws AuthError when not authenticated', async () => {
+      mockGetUser.mockResolvedValue({ data: { user: null } })
+      await expect(requireAuthApi()).rejects.toThrow('Unauthorized')
     })
   })
 

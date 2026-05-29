@@ -59,6 +59,8 @@ export function MarketingHeader() {
             size="icon"
             className="md:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-nav"
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           >
             {mobileOpen ? (
@@ -71,12 +73,13 @@ export function MarketingHeader() {
       </div>
 
       <div
+        id="mobile-nav"
         className={cn(
           'border-t border-border/60 md:hidden',
           mobileOpen ? 'block' : 'hidden'
         )}
       >
-        <nav className="container flex flex-col gap-1 py-4">
+        <nav className="container flex flex-col gap-1 py-4" aria-label="Mobile">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}

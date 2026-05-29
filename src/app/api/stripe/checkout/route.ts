@@ -2,20 +2,21 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { createCheckoutSession, getOrCreateStripeCustomer } from '@/lib/stripe'
 import { prisma } from '@/lib/prisma'
-import { requireAuth } from '@/lib/auth'
+import { requireAuthApi } from '@/lib/auth'
+import { AuthError } from '@/lib/errors'
+import { logger } from '@/lib/logger'
 
 const schema = z.object({
-  priceId: z.string(),
-  organizationId: z.string(),
+  priceId: z.string().min(1),
+  organizationId: z.string().min(1),
 })
 
 export async function POST(request: NextRequest) {
   try {
-    const user = await requireAuth()
+    const user = await requireAuthApi()
     const body = await request.json()
     const { priceId, organizationId } = schema.parse(body)
 
-    // Verify the user is an admin of the org
     const membership = await prisma.organizationMember.findFirst({
       where: {
         userId: user.id,
@@ -32,7 +33,6 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Get or create Stripe customer
     const dbUser = await prisma.user.findUnique({ where: { id: user.id } })
     const customer = await getOrCreateStripeCustomer({
       organizationId,
@@ -41,7 +41,6 @@ export async function POST(request: NextRequest) {
       existingCustomerId: membership.organization.stripeCustomerId,
     })
 
-    // Persist customer ID if new
     if (!membership.organization.stripeCustomerId) {
       await prisma.organization.update({
         where: { id: organizationId },
@@ -61,10 +60,15 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ url: session.url })
   } catch (err) {
+    if (err instanceof AuthError) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
     if (err instanceof z.ZodError) {
       return NextResponse.json({ error: err.errors }, { status: 400 })
     }
-    console.error('Checkout session error:', err)
+    logger.error('Checkout session error', {
+      message: err instanceof Error ? err.message : 'Unknown error',
+    })
     return NextResponse.json(
       { error: 'Failed to create checkout session' },
       { status: 500 }

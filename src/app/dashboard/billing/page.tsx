@@ -1,10 +1,12 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
-import { CreditCard, ExternalLink } from 'lucide-react'
-import { requireAuth } from '@/lib/auth'
+import { CreditCard } from 'lucide-react'
+import { BillingActions } from '@/components/billing/billing-actions'
+import { BillingAlerts } from '@/components/billing/billing-alerts'
+import { DashboardPageHeader } from '@/components/dashboard/dashboard-page-header'
+import { getDbUserWithMemberships, requireAuth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { isSubscriptionActive } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -12,50 +14,48 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { isSubscriptionActive } from '@/lib/utils'
 
 export const metadata: Metadata = { title: 'Billing' }
 
-export default async function BillingPage() {
-  const user = await requireAuth()
+interface BillingPageProps {
+  searchParams: Promise<{ success?: string; canceled?: string }>
+}
 
-  const dbUser = await prisma.user.findUnique({
-    where: { id: user.id },
-    include: {
-      memberships: {
-        include: {
-          organization: {
-            include: { subscription: { include: { plan: true } } },
-          },
-        },
-        take: 1,
-      },
-    },
-  })
+export default async function BillingPage({ searchParams }: BillingPageProps) {
+  await requireAuth()
+  const dbUser = await getDbUserWithMemberships()
+  const params = await searchParams
 
   const org = dbUser?.memberships[0]?.organization
   const sub = org?.subscription
   const active = sub ? isSubscriptionActive(sub.status) : false
 
+  const plans = await prisma.plan.findMany({
+    where: { isActive: true },
+    orderBy: { sortOrder: 'asc' },
+  })
+
   return (
     <div className="flex flex-col gap-8">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight">Billing</h1>
-        <p className="mt-1 text-muted-foreground">
-          Manage your subscription and payment methods.
-        </p>
-      </div>
+      <DashboardPageHeader
+        title="Billing"
+        description="Manage your subscription, payment methods, and plan upgrades."
+      />
 
-      <Card>
+      <BillingAlerts success={params.success} canceled={params.canceled} />
+
+      <Card className="border-border/80 shadow-sm">
         <CardHeader>
-          <div className="flex items-start justify-between gap-4">
+          <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <CardTitle className="flex items-center gap-2">
                 <CreditCard className="h-5 w-5 text-primary" />
                 Current plan
               </CardTitle>
               <CardDescription className="mt-1">
-                {org ? `Organization: ${org.name}` : 'No organization selected'}
+                {org
+                  ? `Organization: ${org.name}`
+                  : 'Create an organization in Settings first'}
               </CardDescription>
             </div>
             <Badge variant={active ? 'success' : 'secondary'}>
@@ -74,27 +74,54 @@ export default async function BillingPage() {
             </p>
           ) : (
             <p className="text-sm text-muted-foreground">
-              Upgrade to unlock more organizations, members, and priority
-              support.
+              Start a 14-day free trial on any paid plan.
             </p>
           )}
-          <div className="flex flex-wrap gap-3">
-            <Button asChild>
-              <Link href="/auth/register">Upgrade plan</Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <a
-                href="https://dashboard.stripe.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Stripe dashboard
-                <ExternalLink className="h-3.5 w-3.5" />
-              </a>
-            </Button>
-          </div>
+
+          {org && (
+            <BillingActions
+              organizationId={org.id}
+              hasSubscription={!!sub && active}
+              hasStripeCustomer={!!org.stripeCustomerId}
+              plans={plans.map((p) => ({
+                id: p.id,
+                name: p.name,
+                stripePriceIdMonth: p.stripePriceIdMonth,
+                amount: p.amount,
+                isPopular: p.isPopular,
+              }))}
+            />
+          )}
         </CardContent>
       </Card>
+
+      {plans.length > 0 && (
+        <div>
+          <h2 className="mb-4 text-lg font-semibold">Available plans</h2>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {plans.map((plan) => (
+              <Card
+                key={plan.id}
+                className={
+                  plan.isPopular
+                    ? 'border-primary ring-1 ring-primary/20'
+                    : undefined
+                }
+              >
+                <CardHeader>
+                  <CardTitle className="text-lg">{plan.name}</CardTitle>
+                  <CardDescription>
+                    <span className="text-2xl font-bold text-foreground">
+                      ${(plan.amount / 100).toFixed(0)}
+                    </span>
+                    /mo
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

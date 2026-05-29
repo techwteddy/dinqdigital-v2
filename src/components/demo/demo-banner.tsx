@@ -1,18 +1,28 @@
 import Link from 'next/link'
-import { Sparkles } from 'lucide-react'
+import { Play, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { DEMO_DASHBOARD_PATH } from '@/lib/site'
 
 export function DemoBanner() {
   return (
-    <div className="border-b border-primary/20 bg-primary/10 px-4 py-2.5">
-      <div className="container flex flex-wrap items-center justify-center gap-2 text-center text-sm sm:justify-between sm:text-left">
-        <p className="flex items-center justify-center gap-2 font-medium text-foreground">
-          <Sparkles className="h-4 w-4 text-primary" />
-          Live demo — explore the full dashboard without signing in
+    <div className="relative overflow-hidden border-b border-primary/20 bg-gradient-to-r from-primary/15 via-violet-500/10 to-primary/5">
+      <div className="container relative flex flex-wrap items-center justify-center gap-3 py-3 text-center text-sm sm:justify-between sm:text-left">
+        <p className="flex items-center justify-center gap-2 font-medium">
+          <Sparkles className="h-4 w-4 text-primary" aria-hidden />
+          <span>
+            Live demo — full dashboard with analytics, team, billing &amp;
+            settings
+          </span>
         </p>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center justify-center gap-2">
           <Button size="sm" variant="outline" asChild>
-            <Link href="/">Back to homepage</Link>
+            <Link href="/">Homepage</Link>
+          </Button>
+          <Button size="sm" variant="ghost" className="gap-1.5" asChild>
+            <Link href={DEMO_DASHBOARD_PATH}>
+              <Play className="h-3.5 w-3.5" />
+              Overview
+            </Link>
           </Button>
           <Button size="sm" asChild>
             <Link href="/auth/register">Start free trial</Link>

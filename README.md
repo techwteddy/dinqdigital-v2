@@ -417,12 +417,15 @@ Run `npm run db:studio` to inspect data locally.
 ## 🧪 Testing
 
 ```bash
-npm test                 # Run all tests
+npm test                 # Run all unit/integration tests (Jest)
 npm run test:watch       # Watch mode
-npm run test:coverage    # Coverage report (100% required)
+npm run test:coverage    # Coverage report (100% required on src/)
+npm run test:e2e         # Playwright smoke tests (marketing + demo + login)
+npm run test:e2e:ui      # Playwright UI mode
 ```
 
 - Tests live next to source files as `*.test.ts` / `*.test.tsx`
+- E2E specs: `e2e/` (config: `playwright.config.ts`)
 - Shared mocks: `src/test-utils/`
 - `jest.config.ts` enforces **100%** statements, branches, functions, and lines on `src/`
 - API and middleware tests use `/** @jest-environment node */`
@@ -434,6 +437,13 @@ npm run ci
 ```
 
 (`lint`, `format:check`, `type-check`, `test`, dummy env, and `build` — same as GitHub Actions.)
+
+Apply database migrations locally before seeding:
+
+```bash
+npm run db:migrate
+npm run db:seed
+```
 
 ---
 
@@ -512,17 +522,19 @@ See [SECURITY.md](./SECURITY.md) for a production security checklist.
 **v1.0 — Foundation**
 
 - [x] Supabase auth (email, OAuth, password reset)
-- [x] Multi-org tenancy and invitations (schema + core flows)
-- [x] Stripe checkout, webhooks, billing portal helpers
+- [x] Multi-org tenancy, invitations, and org API routes
+- [x] Stripe checkout, webhooks, billing portal API
 - [x] Marketing landing page + public demo dashboard
-- [x] Dashboard shell, dark mode, security headers
-- [x] 100% Jest coverage on `src/`
+- [x] Dashboard shell, dark mode, CSP/HSTS security headers
+- [x] Prisma migrations + seed (Stripe price IDs via env)
+- [x] 100% Jest coverage on `src/` + Playwright smoke tests
+- [x] Husky pre-commit, CI migration check, Open Graph image
 
 **v1.1 — Growth**
 
 - [ ] Usage-based / metered billing
-- [ ] Transactional email templates (invites, receipts)
-- [ ] Audit log UI
+- [x] Transactional email plumbing (Resend + invite emails)
+- [ ] Audit log UI (server-side `audit` helper ready)
 - [ ] Admin super-dashboard
 - [ ] API keys for integrations
 

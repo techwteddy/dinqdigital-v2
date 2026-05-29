@@ -97,4 +97,116 @@ export const DEMO_BILLING = {
   status: 'Active',
   nextBilling: 'June 28, 2026',
   paymentMethod: 'Visa •••• 4242',
+  usagePercent: 68,
+  usageLabel: 'API requests',
+  usageUsed: '68,420',
+  usageLimit: '100,000',
 }
+
+export const DEMO_TEAM = [
+  {
+    id: '1',
+    name: 'Alex Rivera',
+    email: 'alex@acme.co',
+    role: 'Owner',
+    status: 'active' as const,
+  },
+  {
+    id: '2',
+    name: 'Sarah Mitchell',
+    email: 'sarah@acme.co',
+    role: 'Admin',
+    status: 'active' as const,
+  },
+  {
+    id: '3',
+    name: 'James Kim',
+    email: 'james@acme.co',
+    role: 'Member',
+    status: 'active' as const,
+  },
+  {
+    id: '4',
+    name: 'Priya Sharma',
+    email: 'priya@acme.co',
+    role: 'Member',
+    status: 'away' as const,
+  },
+  {
+    id: '5',
+    name: 'Morgan Lee',
+    email: 'morgan@acme.co',
+    role: 'Member',
+    status: 'invited' as const,
+  },
+]
+
+export const DEMO_INVOICES = [
+  {
+    id: 'inv_001',
+    date: 'May 28, 2026',
+    amount: '$29.00',
+    status: 'paid' as const,
+    description: 'Pro plan — monthly',
+  },
+  {
+    id: 'inv_002',
+    date: 'Apr 28, 2026',
+    amount: '$29.00',
+    status: 'paid' as const,
+    description: 'Pro plan — monthly',
+  },
+  {
+    id: 'inv_003',
+    date: 'Mar 28, 2026',
+    amount: '$29.00',
+    status: 'paid' as const,
+    description: 'Pro plan — monthly',
+  },
+  {
+    id: 'inv_004',
+    date: 'Feb 28, 2026',
+    amount: '$0.00',
+    status: 'paid' as const,
+    description: 'Trial period',
+  },
+]
+
+export const DEMO_ANALYTICS = {
+  conversionRate: '4.8%',
+  conversionChange: '+0.6%',
+  sessions: '12,840',
+  sessionsChange: '+18%',
+  bounceRate: '32%',
+  bounceChange: '-4%',
+  topSources: [
+    { source: 'Organic search', visits: 4820, percent: 38 },
+    { source: 'Direct', visits: 3210, percent: 25 },
+    { source: 'Referral', visits: 2560, percent: 20 },
+    { source: 'Email', visits: 2250, percent: 17 },
+  ],
+}
+
+export const DEMO_NOTIFICATIONS = [
+  {
+    id: '1',
+    title: 'Report ready',
+    body: 'Weekly analytics export completed.',
+    time: '5m ago',
+    read: false,
+  },
+  {
+    id: '2',
+    title: 'New team member',
+    body: 'Morgan accepted your invitation.',
+    time: '2h ago',
+    read: false,
+  },
+  {
+    id: '3',
+    title: 'Billing reminder',
+    body: 'Pro plan renews in 12 days.',
+    time: '1d ago',
+    read: true,
+  },
+]

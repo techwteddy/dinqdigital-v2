@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
+import { SkipLink } from '@/components/layout/skip-link'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { Toaster } from '@/components/ui/toaster'
 import { APP_DESCRIPTION, APP_NAME, APP_URL, DEVELOPER_NAME } from '@/lib/site'
@@ -77,6 +78,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-background font-sans antialiased">
+        <SkipLink />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

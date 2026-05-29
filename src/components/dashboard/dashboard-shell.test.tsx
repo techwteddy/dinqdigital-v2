@@ -34,7 +34,7 @@ describe('DashboardShell', () => {
     )
 
     expect(screen.getByText('Demo content')).toBeInTheDocument()
-    expect(screen.getByText(/preview mode/i)).toBeInTheDocument()
+    expect(screen.getByText(/live demo/i)).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /exit demo/i })).toHaveAttribute(
       'href',
       '/'

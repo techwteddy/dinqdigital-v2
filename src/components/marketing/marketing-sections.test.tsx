@@ -80,13 +80,13 @@ describe('marketing sections', () => {
     })
     fireEvent.click(trialButton)
     expect(
-      screen.queryByText(/every plan includes a 14-day free trial/i)
-    ).not.toBeInTheDocument()
+      screen.getByText(/every plan includes a 14-day free trial/i)
+    ).not.toBeVisible()
 
     fireEvent.click(trialButton)
     expect(
       screen.getByText(/every plan includes a 14-day free trial/i)
-    ).toBeInTheDocument()
+    ).toBeVisible()
 
     fireEvent.click(
       screen.getByRole('button', { name: /can i change plans later/i })

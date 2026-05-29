@@ -8,5 +8,6 @@ describe('DemoBillingPage', () => {
       screen.getByRole('heading', { name: /billing/i })
     ).toBeInTheDocument()
     expect(screen.getByText(/current plan/i)).toBeInTheDocument()
+    expect(screen.getByText(/invoice history/i)).toBeInTheDocument()
   })
 })

@@ -8,9 +8,10 @@ describe('demo components', () => {
   it('renders DemoBanner', () => {
     render(<DemoBanner />)
     expect(screen.getByText(/live demo/i)).toBeInTheDocument()
-    expect(
-      screen.getByRole('link', { name: /back to homepage/i })
-    ).toHaveAttribute('href', '/')
+    expect(screen.getByRole('link', { name: /homepage/i })).toHaveAttribute(
+      'href',
+      '/'
+    )
   })
 
   it('renders DemoMetricsGrid', () => {

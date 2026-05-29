@@ -2,16 +2,11 @@ import { render, screen } from '@testing-library/react'
 import { mockUser } from '@/test-utils'
 
 const mockRequireAuth = jest.fn()
-const mockFindUnique = jest.fn()
+const mockGetDbUserWithMemberships = jest.fn()
 
 jest.mock('@/lib/auth', () => ({
   requireAuth: () => mockRequireAuth(),
-}))
-
-jest.mock('@/lib/prisma', () => ({
-  prisma: {
-    user: { findUnique: (...args: unknown[]) => mockFindUnique(...args) },
-  },
+  getDbUserWithMemberships: () => mockGetDbUserWithMemberships(),
 }))
 
 import DashboardPage, { metadata } from './page'
@@ -23,26 +18,28 @@ describe('DashboardPage', () => {
   })
 
   it('renders greeting when user record is missing', async () => {
-    mockFindUnique.mockResolvedValue(null)
+    mockGetDbUserWithMemberships.mockResolvedValue(null)
     const page = await DashboardPage()
     render(page)
-    expect(screen.getByText(/welcome back, there/i)).toBeInTheDocument()
+    expect(
+      screen.getByText(/good (morning|afternoon|evening), there/i)
+    ).toBeInTheDocument()
   })
 
   it('renders empty state when no organizations', async () => {
-    mockFindUnique.mockResolvedValue({ memberships: [] })
+    mockGetDbUserWithMemberships.mockResolvedValue({ memberships: [] })
     const page = await DashboardPage()
     render(page)
 
     expect(screen.getByText(/no organizations yet/i)).toBeInTheDocument()
     expect(
-      screen.getByRole('link', { name: /get started/i })
+      screen.getByRole('link', { name: /create organization/i })
     ).toBeInTheDocument()
   })
 
   it('renders singular member label and renewal date', async () => {
     const periodEnd = new Date('2025-06-15T12:00:00Z')
-    mockFindUnique.mockResolvedValue({
+    mockGetDbUserWithMemberships.mockResolvedValue({
       name: 'Alex',
       memberships: [
         {
@@ -52,7 +49,7 @@ describe('DashboardPage', () => {
             name: 'Solo Org',
             members: [{ id: 'm1' }],
             subscription: {
-              status: 'active',
+              status: 'ACTIVE',
               currentPeriodEnd: periodEnd,
               plan: { name: 'Starter' },
             },
@@ -70,7 +67,7 @@ describe('DashboardPage', () => {
 
   it('renders organizations with active subscription', async () => {
     const periodEnd = new Date()
-    mockFindUnique.mockResolvedValue({
+    mockGetDbUserWithMemberships.mockResolvedValue({
       name: 'John Doe',
       memberships: [
         {
@@ -80,7 +77,7 @@ describe('DashboardPage', () => {
             name: 'Acme',
             members: [{ id: 'm1' }, { id: 'm2' }],
             subscription: {
-              status: 'active',
+              status: 'ACTIVE',
               currentPeriodEnd: periodEnd,
               plan: { name: 'Pro' },
             },
@@ -92,14 +89,16 @@ describe('DashboardPage', () => {
     const page = await DashboardPage()
     render(page)
 
-    expect(screen.getByText(/welcome back, john/i)).toBeInTheDocument()
-    expect(screen.getByText('Acme')).toBeInTheDocument()
-    expect(screen.getByText('Pro')).toBeInTheDocument()
+    expect(
+      screen.getByText(/good (morning|afternoon|evening), john/i)
+    ).toBeInTheDocument()
+    expect(screen.getAllByText('Acme').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('Pro').length).toBeGreaterThan(0)
     expect(screen.getByText(/2 members/i)).toBeInTheDocument()
   })
 
   it('renders active badge fallback when plan name is missing', async () => {
-    mockFindUnique.mockResolvedValue({
+    mockGetDbUserWithMemberships.mockResolvedValue({
       name: 'Alex',
       memberships: [
         {
@@ -109,7 +108,7 @@ describe('DashboardPage', () => {
             name: 'Acme',
             members: [{ id: 'm1' }],
             subscription: {
-              status: 'active',
+              status: 'ACTIVE',
               currentPeriodEnd: new Date(),
               plan: null,
             },
@@ -124,7 +123,7 @@ describe('DashboardPage', () => {
   })
 
   it('renders free plan for inactive subscription', async () => {
-    mockFindUnique.mockResolvedValue({
+    mockGetDbUserWithMemberships.mockResolvedValue({
       name: null,
       memberships: [
         {
@@ -142,7 +141,9 @@ describe('DashboardPage', () => {
     const page = await DashboardPage()
     render(page)
 
-    expect(screen.getByText(/welcome back, there/i)).toBeInTheDocument()
+    expect(
+      screen.getByText(/good (morning|afternoon|evening), there/i)
+    ).toBeInTheDocument()
     expect(screen.getByText('Free')).toBeInTheDocument()
     expect(screen.getByText(/1 member/i)).toBeInTheDocument()
   })

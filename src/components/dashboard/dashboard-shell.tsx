@@ -5,16 +5,21 @@ import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import {
   ArrowLeft,
+  BarChart3,
   CreditCard,
   LayoutDashboard,
   LogOut,
   Menu,
+  Search,
   Settings,
+  Users,
   X,
 } from 'lucide-react'
 import { BrandLogo } from '@/components/brand/brand-logo'
+import { DashboardNotifications } from '@/components/dashboard/dashboard-notifications'
 import { ThemeToggle } from '@/components/layout/theme-toggle'
 import { Button } from '@/components/ui/button'
+import { DEMO_NOTIFICATIONS } from '@/lib/demo-data'
 import { cn } from '@/lib/utils'
 
 type BasePath = '/dashboard' | '/demo'
@@ -22,6 +27,18 @@ type BasePath = '/dashboard' | '/demo'
 function getNavItems(basePath: BasePath) {
   return [
     { href: basePath, label: 'Overview', icon: LayoutDashboard, exact: true },
+    {
+      href: `${basePath}/analytics`,
+      label: 'Analytics',
+      icon: BarChart3,
+      exact: false,
+    },
+    {
+      href: `${basePath}/team`,
+      label: 'Team',
+      icon: Users,
+      exact: false,
+    },
     {
       href: `${basePath}/billing`,
       label: 'Billing',
@@ -71,15 +88,16 @@ export function DashboardShell({
       </div>
 
       {orgName && (
-        <div className="border-b border-border px-4 py-3">
-          <p className="truncate text-sm font-medium">{orgName}</p>
+        <div className="border-b border-border bg-muted/20 px-4 py-3">
+          <p className="truncate text-sm font-semibold">{orgName}</p>
           <p className="text-xs text-muted-foreground">
             {planName ?? 'Free'} plan
+            {isDemo && ' · Preview'}
           </p>
         </div>
       )}
 
-      <nav className="flex-1 space-y-1 p-3">
+      <nav className="flex-1 space-y-0.5 p-3" aria-label="Dashboard">
         {navItems.map(({ href, label, icon: Icon, exact }) => {
           const active = exact ? pathname === href : pathname.startsWith(href)
           return (
@@ -90,7 +108,7 @@ export function DashboardShell({
               className={cn(
                 'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
                 active
-                  ? 'bg-primary/10 text-primary'
+                  ? 'bg-primary/10 text-primary shadow-sm'
                   : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
               )}
             >
@@ -103,7 +121,7 @@ export function DashboardShell({
 
       <div className="border-t border-border p-3">
         <div className="mb-2 flex items-center gap-3 rounded-lg px-3 py-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
+          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary to-violet-600 text-sm font-semibold text-primary-foreground shadow-sm">
             {initials}
           </div>
           <div className="min-w-0 flex-1">
@@ -138,21 +156,43 @@ export function DashboardShell({
     </>
   )
 
+  const topBarExtras = (
+    <>
+      <Button
+        variant="outline"
+        size="sm"
+        className="hidden gap-2 text-muted-foreground lg:flex"
+        type="button"
+        aria-label="Search dashboard"
+      >
+        <Search className="h-4 w-4" />
+        <span className="text-xs">Search…</span>
+        <kbd className="pointer-events-none ml-2 hidden rounded border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium sm:inline">
+          ⌘K
+        </kbd>
+      </Button>
+      <DashboardNotifications items={DEMO_NOTIFICATIONS} />
+      <ThemeToggle />
+    </>
+  )
+
   return (
     <div className="flex min-h-screen bg-background">
-      <aside className="hidden w-64 flex-col border-r border-border bg-card md:flex">
+      <aside className="hidden w-64 flex-col border-r border-border bg-card/50 backdrop-blur md:flex">
         {sidebar}
       </aside>
 
       <div className="flex flex-1 flex-col">
-        <header className="flex h-16 items-center justify-between border-b border-border bg-card/50 px-4 md:hidden">
+        <header className="flex h-16 items-center justify-between gap-2 border-b border-border bg-card/50 px-4 backdrop-blur md:hidden">
           <BrandLogo size="sm" href={isDemo ? '/' : '/'} />
           <div className="flex items-center gap-1">
+            <DashboardNotifications items={DEMO_NOTIFICATIONS} />
             <ThemeToggle />
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setMobileOpen(!mobileOpen)}
+              aria-expanded={mobileOpen}
               aria-label="Toggle menu"
             >
               {mobileOpen ? (
@@ -165,23 +205,39 @@ export function DashboardShell({
         </header>
 
         {mobileOpen && (
-          <div className="flex max-h-[calc(100vh-4rem)] flex-col border-b border-border bg-card md:hidden">
+          <div className="flex max-h-[min(70vh,calc(100vh-4rem))] flex-col overflow-y-auto border-b border-border bg-card md:hidden">
             {sidebar}
           </div>
         )}
 
-        <div className="hidden h-16 items-center justify-between gap-2 border-b border-border px-6 md:flex">
-          {isDemo && (
-            <p className="text-sm text-muted-foreground">
-              Preview mode — sample data only
-            </p>
-          )}
-          <div className="ml-auto flex items-center gap-2">
-            <ThemeToggle />
+        <div className="hidden h-16 items-center justify-between gap-4 border-b border-border bg-card/30 px-6 md:flex">
+          <div className="min-w-0">
+            {isDemo ? (
+              <p className="truncate text-sm text-muted-foreground">
+                <span className="font-medium text-foreground">Live demo</span>
+                {' — '}
+                sample data only · no sign-in required
+              </p>
+            ) : (
+              <p className="truncate text-sm text-muted-foreground">
+                {orgName ? (
+                  <>
+                    <span className="font-medium text-foreground">
+                      {orgName}
+                    </span>
+                    {' · '}
+                    {planName ?? 'Free'} plan
+                  </>
+                ) : (
+                  'Complete setup in Settings to unlock all features'
+                )}
+              </p>
+            )}
           </div>
+          <div className="flex shrink-0 items-center gap-2">{topBarExtras}</div>
         </div>
 
-        <main className="flex-1 overflow-auto">
+        <main className="flex-1 overflow-auto bg-gradient-to-b from-muted/20 to-background">
           <div className="container max-w-6xl py-8">{children}</div>
         </main>
       </div>

@@ -9,6 +9,6 @@ describe('DemoMetricsGrid negative trend', () => {
   it('renders down trend icon when metric is not up', () => {
     render(<DemoMetricsGrid />)
     expect(screen.getByText('Churn')).toBeInTheDocument()
-    expect(screen.getByText(/vs last month/i)).toBeInTheDocument()
+    expect(screen.getByText('+0.4%')).toBeInTheDocument()
   })
 })

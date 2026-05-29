@@ -3,6 +3,8 @@ import type { SubscriptionStatus } from '@prisma/client'
 import type Stripe from 'stripe'
 import { constructStripeEvent } from '@/lib/stripe'
 import { prisma } from '@/lib/prisma'
+import { WebhookError } from '@/lib/errors'
+import { logger } from '@/lib/logger'
 
 const STRIPE_TO_SUBSCRIPTION_STATUS: Record<
   Stripe.Subscription.Status,
@@ -24,15 +26,6 @@ function mapStripeSubscriptionStatus(
   return STRIPE_TO_SUBSCRIPTION_STATUS[status]
 }
 
-/**
- * Stripe Webhook Handler
- *
- * Handles the following events:
- * - checkout.session.completed
- * - customer.subscription.updated
- * - customer.subscription.deleted
- * - invoice.payment_failed
- */
 export async function POST(request: NextRequest) {
   const body = await request.text()
   const signature = request.headers.get('stripe-signature')
@@ -49,44 +42,45 @@ export async function POST(request: NextRequest) {
   try {
     event = constructStripeEvent(body, signature)
   } catch (err) {
-    console.error('⚠️  Webhook signature verification failed:', err)
+    logger.error('Webhook signature verification failed', {
+      message: err instanceof Error ? err.message : 'Unknown error',
+    })
     return NextResponse.json(
       { error: 'Invalid webhook signature' },
       { status: 400 }
     )
   }
 
-  console.info(`✅ Stripe webhook received: ${event.type}`)
+  logger.info('Stripe webhook received', { type: event.type })
 
   try {
     switch (event.type) {
-      case 'checkout.session.completed': {
+      case 'checkout.session.completed':
         await handleCheckoutSessionCompleted(
           event.data.object as Stripe.Checkout.Session
         )
         break
-      }
-      case 'customer.subscription.updated': {
+      case 'customer.subscription.updated':
         await handleSubscriptionUpdated(
           event.data.object as Stripe.Subscription
         )
         break
-      }
-      case 'customer.subscription.deleted': {
+      case 'customer.subscription.deleted':
         await handleSubscriptionDeleted(
           event.data.object as Stripe.Subscription
         )
         break
-      }
-      case 'invoice.payment_failed': {
+      case 'invoice.payment_failed':
         await handleInvoicePaymentFailed(event.data.object as Stripe.Invoice)
         break
-      }
       default:
-        console.info(`ℹ️  Unhandled event type: ${event.type}`)
+        logger.info('Unhandled Stripe event type', { type: event.type })
     }
   } catch (err) {
-    console.error(`❌ Error handling ${event.type}:`, err)
+    logger.error('Webhook handler failed', {
+      type: event.type,
+      message: err instanceof Error ? err.message : 'Unknown error',
+    })
     return NextResponse.json(
       { error: 'Webhook handler failed' },
       { status: 500 }
@@ -96,10 +90,6 @@ export async function POST(request: NextRequest) {
   return NextResponse.json({ received: true })
 }
 
-// ─────────────────────────────────────────────
-// EVENT HANDLERS
-// ─────────────────────────────────────────────
-
 async function handleCheckoutSessionCompleted(
   session: Stripe.Checkout.Session
 ) {
@@ -107,8 +97,9 @@ async function handleCheckoutSessionCompleted(
 
   const organizationId = session.metadata?.organizationId
   if (!organizationId) {
-    console.error('No organizationId in session metadata')
-    return
+    throw new WebhookError(
+      'Missing organizationId in checkout session metadata'
+    )
   }
 
   const subscription = await import('@/lib/stripe').then(({ stripe }) =>
@@ -119,7 +110,6 @@ async function handleCheckoutSessionCompleted(
 
   const priceId = subscription.items.data[0].price.id
 
-  // We store both monthly and yearly price IDs — match whichever they picked
   const plan = await prisma.plan.findFirst({
     where: {
       OR: [{ stripePriceIdMonth: priceId }, { stripePriceIdYear: priceId }],
@@ -127,8 +117,7 @@ async function handleCheckoutSessionCompleted(
   })
 
   if (!plan) {
-    console.error(`No plan found for priceId: ${priceId}`)
-    return
+    throw new WebhookError(`No plan found for Stripe price: ${priceId}`)
   }
 
   await prisma.subscription.upsert({
@@ -158,7 +147,7 @@ async function handleCheckoutSessionCompleted(
     },
   })
 
-  console.info(`✅ Subscription created for org: ${organizationId}`)
+  logger.info('Subscription synced from checkout', { organizationId })
 }
 
 async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
@@ -174,7 +163,7 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
         : null,
     },
   })
-  console.info(`✅ Subscription updated: ${subscription.id}`)
+  logger.info('Subscription updated', { subscriptionId: subscription.id })
 }
 
 async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
@@ -185,7 +174,7 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
       cancelAtPeriodEnd: false,
     },
   })
-  console.info(`✅ Subscription canceled: ${subscription.id}`)
+  logger.info('Subscription canceled', { subscriptionId: subscription.id })
 }
 
 async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
@@ -195,5 +184,7 @@ async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
     where: { stripeSubscriptionId: invoice.subscription as string },
     data: { status: 'PAST_DUE' },
   })
-  console.info(`⚠️  Payment failed for subscription: ${invoice.subscription}`)
+  logger.warn('Subscription payment failed', {
+    subscriptionId: String(invoice.subscription),
+  })
 }

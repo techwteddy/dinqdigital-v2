@@ -2,27 +2,31 @@ import { render, screen } from '@testing-library/react'
 import { mockUser } from '@/test-utils'
 
 const mockRequireAuth = jest.fn()
-const mockFindUnique = jest.fn()
+const mockGetDbUserWithMemberships = jest.fn()
 
 jest.mock('@/lib/auth', () => ({
   requireAuth: () => mockRequireAuth(),
+  getDbUserWithMemberships: () => mockGetDbUserWithMemberships(),
 }))
 
-jest.mock('@/lib/prisma', () => ({
-  prisma: {
-    user: { findUnique: (...args: unknown[]) => mockFindUnique(...args) },
-  },
+jest.mock('@/components/settings/create-organization-form', () => ({
+  CreateOrganizationForm: () => <div data-testid="create-org-form" />,
+}))
+
+jest.mock('@/components/settings/invite-member-form', () => ({
+  InviteMemberForm: () => null,
 }))
 
 import SettingsPage, { metadata } from './page'
 
 describe('SettingsPage', () => {
   beforeEach(() => {
+    jest.clearAllMocks()
     mockRequireAuth.mockResolvedValue(mockUser)
   })
 
   it('renders profile fields', async () => {
-    mockFindUnique.mockResolvedValue({
+    mockGetDbUserWithMemberships.mockResolvedValue({
       name: 'Jane Doe',
       memberships: [],
     })
@@ -39,7 +43,10 @@ describe('SettingsPage', () => {
 
   it('handles missing profile and email values', async () => {
     mockRequireAuth.mockResolvedValue({ ...mockUser, email: null })
-    mockFindUnique.mockResolvedValue({ name: null, memberships: [] })
+    mockGetDbUserWithMemberships.mockResolvedValue({
+      name: null,
+      memberships: [],
+    })
 
     render(await SettingsPage())
     expect(screen.getByLabelText(/full name/i)).toHaveValue('')
@@ -47,7 +54,7 @@ describe('SettingsPage', () => {
   })
 
   it('lists organizations with singular member label', async () => {
-    mockFindUnique.mockResolvedValue({
+    mockGetDbUserWithMemberships.mockResolvedValue({
       name: 'Jane',
       memberships: [
         {
@@ -66,7 +73,7 @@ describe('SettingsPage', () => {
   })
 
   it('lists organizations with member counts', async () => {
-    mockFindUnique.mockResolvedValue({
+    mockGetDbUserWithMemberships.mockResolvedValue({
       name: 'Jane',
       memberships: [
         {

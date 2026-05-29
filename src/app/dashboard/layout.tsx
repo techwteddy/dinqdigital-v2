@@ -1,5 +1,4 @@
-import { requireAuth } from '@/lib/auth'
-import { prisma } from '@/lib/prisma'
+import { getDbUserWithMemberships, requireAuth } from '@/lib/auth'
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { DashboardShell } from '@/components/dashboard/dashboard-shell'
@@ -14,20 +13,7 @@ export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
   const user = await requireAuth()
-
-  const dbUser = await prisma.user.findUnique({
-    where: { id: user.id },
-    include: {
-      memberships: {
-        include: {
-          organization: {
-            include: { subscription: { include: { plan: true } } },
-          },
-        },
-        take: 1,
-      },
-    },
-  })
+  const dbUser = await getDbUserWithMemberships()
 
   const org = dbUser?.memberships[0]?.organization
 

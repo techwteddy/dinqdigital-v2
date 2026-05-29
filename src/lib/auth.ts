@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
 import { cache } from 'react'
+import { AuthError } from '@/lib/errors'
 
 /**
  * Auth helpers for Server Components and Server Actions.
@@ -16,10 +17,6 @@ export const getUser = cache(async () => {
   return user
 })
 
-/**
- * Returns the current authenticated user's database record.
- * Cached per-request.
- */
 export const getDbUser = cache(async () => {
   const user = await getUser()
   if (!user) return null
@@ -29,28 +26,51 @@ export const getDbUser = cache(async () => {
   })
 })
 
-/**
- * Requires the user to be authenticated.
- * Redirects to /auth/login if not authenticated.
- */
+const membershipInclude = {
+  memberships: {
+    include: {
+      organization: {
+        include: {
+          subscription: { include: { plan: true } },
+          members: {
+            include: {
+              user: { select: { id: true, name: true, email: true } },
+            },
+          },
+        },
+      },
+    },
+    orderBy: { joinedAt: 'asc' as const },
+  },
+} as const
+
+export const getDbUserWithMemberships = cache(async () => {
+  const user = await getUser()
+  if (!user) return null
+
+  return prisma.user.findUnique({
+    where: { id: user.id },
+    include: membershipInclude,
+  })
+})
+
 export async function requireAuth() {
   const user = await getUser()
   if (!user) redirect('/auth/login')
   return user
 }
 
-/**
- * Requires the user to be unauthenticated.
- * Redirects to /dashboard if already authenticated.
- */
+export async function requireAuthApi() {
+  const user = await getUser()
+  if (!user) throw new AuthError()
+  return user
+}
+
 export async function requireGuest() {
   const user = await getUser()
   if (user) redirect('/dashboard')
 }
 
-/**
- * Returns the user's organization membership for a given org slug.
- */
 export async function getOrganizationMembership(slug: string) {
   const user = await getUser()
   if (!user) return null
@@ -69,5 +89,16 @@ export async function getOrganizationMembership(slug: string) {
         },
       },
     },
+  })
+}
+
+export async function requireOrgAdmin(organizationId: string, userId: string) {
+  return prisma.organizationMember.findFirst({
+    where: {
+      userId,
+      organizationId,
+      role: { in: ['ADMIN', 'SUPER_ADMIN'] },
+    },
+    include: { organization: true },
   })
 }

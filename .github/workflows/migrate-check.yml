@@ -1,0 +1,36 @@
+name: Prisma Migrate Check
+
+on:
+  pull_request:
+    branches: [main, master, develop]
+  push:
+    branches: [main, master, develop]
+
+permissions:
+  contents: read
+
+jobs:
+  migrate-check:
+    name: Validate Prisma schema
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check migration history
+        run: |
+          if [ ! -d "prisma/migrations" ]; then
+            echo "Missing prisma/migrations directory"
+            exit 1
+          fi
+          npx prisma validate

@@ -34,3 +34,6 @@ export const DEVELOPER_LINKEDIN = 'https://www.linkedin.com/in/omarsharafaldin/'
 
 export const SUPPORT_EMAIL =
   process.env.NEXT_PUBLIC_SUPPORT_EMAIL ?? 'support@launchkit.dev'
+
+export const EMAIL_FROM =
+  process.env.EMAIL_FROM ?? `${APP_NAME} <noreply@launchkit.dev>`

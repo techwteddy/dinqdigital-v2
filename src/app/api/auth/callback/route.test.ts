@@ -17,6 +17,10 @@ jest.mock('@/lib/prisma', () => ({
   },
 }))
 
+jest.mock('@/lib/organizations', () => ({
+  ensureDefaultOrganization: jest.fn().mockResolvedValue(undefined),
+}))
+
 import { createClient } from '@/lib/supabase/server'
 import { GET } from './route'
 

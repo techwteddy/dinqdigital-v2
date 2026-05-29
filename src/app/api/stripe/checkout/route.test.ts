@@ -13,7 +13,7 @@ const mockGetOrCreateStripeCustomer = jest.fn()
 const mockCreateCheckoutSession = jest.fn()
 
 jest.mock('@/lib/auth', () => ({
-  requireAuth: () => mockRequireAuth(),
+  requireAuthApi: () => mockRequireAuth(),
 }))
 
 jest.mock('@/lib/prisma', () => ({
@@ -126,6 +126,19 @@ describe('POST /api/stripe/checkout', () => {
 
     const response = await POST(request)
     expect(response.status).toBe(400)
+  })
+
+  it('returns 401 when unauthenticated', async () => {
+    const { AuthError } = await import('@/lib/errors')
+    mockRequireAuth.mockRejectedValue(new AuthError())
+
+    const request = new NextRequest('http://localhost/api/stripe/checkout', {
+      method: 'POST',
+      body: JSON.stringify({ priceId: 'price_1', organizationId: 'org-123' }),
+    })
+
+    const response = await POST(request)
+    expect(response.status).toBe(401)
   })
 
   it('returns 500 on unexpected errors', async () => {

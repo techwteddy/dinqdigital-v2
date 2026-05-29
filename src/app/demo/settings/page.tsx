@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Bell, Shield, User, Users } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
+import { DashboardPageHeader } from '@/components/dashboard/dashboard-page-header'
+import { NotificationSettings } from '@/components/dashboard/notification-settings'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -15,15 +16,12 @@ import { DEMO_ORGANIZATIONS, DEMO_USER } from '@/lib/demo-data'
 export default function DemoSettingsPage() {
   return (
     <div className="flex flex-col gap-8">
-      <div>
-        <Badge variant="secondary" className="mb-3">
-          Demo mode
-        </Badge>
-        <h1 className="text-2xl font-bold tracking-tight">Settings</h1>
-        <p className="mt-1 text-muted-foreground">
-          Profile and team preferences — sample data for preview.
-        </p>
-      </div>
+      <DashboardPageHeader
+        isDemo
+        title="Settings"
+        description="Profile, workspaces, notifications, and security — interactive demo toggles."
+        action={{ label: 'Start free trial', href: '/auth/register' }}
+      />
 
       <Card>
         <CardHeader>
@@ -35,12 +33,16 @@ export default function DemoSettingsPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <label className="text-sm font-medium">Full name</label>
-            <Input defaultValue={DEMO_USER.name} readOnly />
+            <label className="text-sm font-medium" htmlFor="demo-name">
+              Full name
+            </label>
+            <Input id="demo-name" defaultValue={DEMO_USER.name} readOnly />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium">Email</label>
-            <Input defaultValue={DEMO_USER.email} readOnly />
+            <label className="text-sm font-medium" htmlFor="demo-email">
+              Email
+            </label>
+            <Input id="demo-email" defaultValue={DEMO_USER.email} readOnly />
           </div>
         </CardContent>
       </Card>
@@ -54,11 +56,11 @@ export default function DemoSettingsPage() {
           <CardDescription>Organizations you belong to</CardDescription>
         </CardHeader>
         <CardContent>
-          <ul className="divide-y divide-border rounded-lg border border-border">
+          <ul className="divide-y divide-border rounded-xl border border-border">
             {DEMO_ORGANIZATIONS.map((org) => (
               <li
                 key={org.id}
-                className="flex items-center justify-between px-4 py-3 text-sm"
+                className="flex items-center justify-between gap-4 px-4 py-3.5 text-sm"
               >
                 <div>
                   <p className="font-medium">{org.name}</p>
@@ -75,21 +77,24 @@ export default function DemoSettingsPage() {
         </CardContent>
       </Card>
 
+      <NotificationSettings />
+
       <div className="grid gap-4 sm:grid-cols-2">
-        <Card>
+        <Card className="transition-shadow hover:shadow-md">
           <CardContent className="flex items-start gap-4 p-5">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
               <Bell className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <p className="font-medium">Notifications</p>
+              <p className="font-medium">Push notifications</p>
               <p className="text-xs text-muted-foreground">
-                Email digests, alerts, and mentions
+                Browser and mobile alerts
               </p>
+              <p className="mt-2 text-xs text-primary">Coming soon</p>
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="transition-shadow hover:shadow-md">
           <CardContent className="flex items-start gap-4 p-5">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
               <Shield className="h-5 w-5 text-primary" />
@@ -99,12 +104,15 @@ export default function DemoSettingsPage() {
               <p className="text-xs text-muted-foreground">
                 2FA, sessions, and API keys
               </p>
+              <p className="mt-2 text-xs text-primary">
+                Configure after signup
+              </p>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      <Button asChild>
+      <Button asChild size="lg" className="w-full sm:w-auto">
         <Link href="/auth/register">Create a real account</Link>
       </Button>
     </div>
