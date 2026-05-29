@@ -21,8 +21,8 @@ const TRUST_ITEMS = [
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden border-b border-border/60">
-      <div className="absolute inset-0 mesh-gradient" aria-hidden />
-      <div className="absolute inset-0 grid-pattern opacity-30" aria-hidden />
+      <div className="mesh-gradient absolute inset-0" aria-hidden />
+      <div className="grid-pattern absolute inset-0 opacity-30" aria-hidden />
       <div
         className="absolute left-1/4 top-20 h-72 w-72 rounded-full bg-primary/20 blur-3xl"
         aria-hidden
@@ -76,7 +76,8 @@ export function HeroSection() {
         <HeroVisual />
 
         <p className="mx-auto mt-8 max-w-lg text-center text-xs text-muted-foreground">
-          Trusted by teams who run on {APP_NAME}. Explore the product before you commit.
+          Trusted by teams who run on {APP_NAME}. Explore the product before you
+          commit.
         </p>
       </div>
     </section>

@@ -10,7 +10,9 @@ interface DashboardLayoutProps {
   children: React.ReactNode
 }
 
-export default async function DashboardLayout({ children }: DashboardLayoutProps) {
+export default async function DashboardLayout({
+  children,
+}: DashboardLayoutProps) {
   const user = await requireAuth()
 
   const dbUser = await prisma.user.findUnique({

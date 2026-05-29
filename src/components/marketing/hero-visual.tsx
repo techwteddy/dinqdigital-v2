@@ -11,7 +11,10 @@ export function HeroVisual() {
       href={DEMO_DASHBOARD_PATH}
       className="group relative mx-auto mt-16 block max-w-5xl animate-fade-in-up"
     >
-      <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-primary/20 via-violet-500/15 to-blue-500/20 blur-2xl transition-opacity group-hover:opacity-100 opacity-70" aria-hidden />
+      <div
+        className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-primary/20 via-violet-500/15 to-blue-500/20 opacity-70 blur-2xl transition-opacity group-hover:opacity-100"
+        aria-hidden
+      />
       <div className="relative overflow-hidden rounded-2xl border border-border/80 bg-card shadow-2xl shadow-primary/10 ring-1 ring-white/10 transition-transform duration-300 group-hover:scale-[1.01]">
         <div className="flex items-center gap-2 border-b border-border bg-muted/60 px-4 py-3">
           <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
@@ -36,7 +39,9 @@ export function HeroVisual() {
           <div className="bg-card p-5 lg:col-span-10">
             <div className="mb-4 flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium text-muted-foreground">Overview</p>
+                <p className="text-xs font-medium text-muted-foreground">
+                  Overview
+                </p>
                 <p className="text-lg font-semibold">Good morning, Alex</p>
               </div>
               <span className="flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-medium text-emerald-600 dark:text-emerald-400">
@@ -64,12 +69,17 @@ export function HeroVisual() {
               </div>
               <div className="flex h-24 items-end justify-between gap-2">
                 {DEMO_CHART_WEEKLY.map((bar) => (
-                  <div key={bar.label} className="flex flex-1 flex-col items-center gap-1">
+                  <div
+                    key={bar.label}
+                    className="flex flex-1 flex-col items-center gap-1"
+                  >
                     <div
                       className="w-full rounded-t-md bg-gradient-to-t from-primary to-primary/60 transition-all group-hover:from-primary group-hover:to-violet-500"
                       style={{ height: `${(bar.value / max) * 100}%` }}
                     />
-                    <span className="text-[10px] text-muted-foreground">{bar.label}</span>
+                    <span className="text-[10px] text-muted-foreground">
+                      {bar.label}
+                    </span>
                   </div>
                 ))}
               </div>

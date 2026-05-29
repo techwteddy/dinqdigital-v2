@@ -62,7 +62,9 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-feature-settings: 'rlig' 1, 'calt' 1;
+    font-feature-settings:
+      'rlig' 1,
+      'calt' 1;
   }
 
   html {
@@ -98,18 +100,24 @@
 
   .mesh-gradient {
     background-image:
-      radial-gradient(at 40% 20%, hsl(var(--primary) / 0.15) 0px, transparent 50%),
+      radial-gradient(
+        at 40% 20%,
+        hsl(var(--primary) / 0.15) 0px,
+        transparent 50%
+      ),
       radial-gradient(at 80% 0%, hsl(262 83% 58% / 0.12) 0px, transparent 50%),
       radial-gradient(at 0% 50%, hsl(173 58% 39% / 0.08) 0px, transparent 50%),
-      radial-gradient(at 80% 50%, hsl(var(--primary) / 0.1) 0px, transparent 50%),
+      radial-gradient(
+        at 80% 50%,
+        hsl(var(--primary) / 0.1) 0px,
+        transparent 50%
+      ),
       radial-gradient(at 0% 100%, hsl(262 83% 58% / 0.1) 0px, transparent 50%);
   }
 
   .grid-pattern {
-    background-image: linear-gradient(
-        hsl(var(--border) / 0.5) 1px,
-        transparent 1px
-      ),
+    background-image:
+      linear-gradient(hsl(var(--border) / 0.5) 1px, transparent 1px),
       linear-gradient(90deg, hsl(var(--border) / 0.5) 1px, transparent 1px);
     background-size: 48px 48px;
   }

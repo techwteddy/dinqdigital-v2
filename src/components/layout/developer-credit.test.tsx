@@ -5,10 +5,9 @@ describe('DeveloperCredit', () => {
   it('renders bar variant by default', () => {
     render(<DeveloperCredit />)
     expect(screen.getByLabelText('Developer credit')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /omar s\. m\. abdelfatah/i })).toHaveAttribute(
-      'href',
-      'https://www.omarsharaf.me'
-    )
+    expect(
+      screen.getByRole('link', { name: /omar s\. m\. abdelfatah/i })
+    ).toHaveAttribute('href', 'https://www.omarsharaf.me')
   })
 
   it('renders compact variant', () => {

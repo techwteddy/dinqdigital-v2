@@ -189,8 +189,7 @@ export const FAQ_ITEMS = [
   },
   {
     question: 'Do you offer demos for enterprise teams?',
-    answer:
-      `Yes. Explore the live demo dashboard anytime, or contact us at ${SUPPORT_EMAIL} for a personalized walkthrough.`,
+    answer: `Yes. Explore the live demo dashboard anytime, or contact us at ${SUPPORT_EMAIL} for a personalized walkthrough.`,
   },
   {
     question: 'How secure is my data?',

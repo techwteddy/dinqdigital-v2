@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
+- **Build provenance attestations** in CI and Release workflows via [`actions/attest-build-provenance@v3`](https://github.com/actions/attest-build-provenance)
 - **Live demo dashboard** at `/demo` — public preview of the full dashboard UI (overview, billing, settings) with mock data; no authentication required
 - **Demo components:** activity chart, activity feed, metrics grid, preview banner
 - **Marketing landing page** sections: stats bar, logo cloud, product showcase, integrations, how-it-works, testimonials, FAQ, CTA

@@ -10,6 +10,9 @@ on:
 
 permissions:
   contents: write
+  id-token: write
+  attestations: write
+  artifact-metadata: write
 
 jobs:
   release:
@@ -38,6 +41,11 @@ jobs:
       - name: Package build output
         run: |
           tar -czf launchkit-build.tar.gz .next package.json package-lock.json next.config.ts prisma public
+
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@v3
+        with:
+          subject-path: launchkit-build.tar.gz
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2

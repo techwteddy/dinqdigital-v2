@@ -12,10 +12,16 @@ export function DemoActivityChart() {
       <CardContent>
         <div className="flex h-48 items-end justify-between gap-3">
           {DEMO_CHART_WEEKLY.map((bar) => (
-            <div key={bar.label} className="flex flex-1 flex-col items-center gap-2">
+            <div
+              key={bar.label}
+              className="flex flex-1 flex-col items-center gap-2"
+            >
               <div
                 className="w-full rounded-t-lg bg-gradient-to-t from-primary to-primary/50 transition-all hover:from-violet-600 hover:to-primary"
-                style={{ height: `${(bar.value / max) * 100}%`, minHeight: '8px' }}
+                style={{
+                  height: `${(bar.value / max) * 100}%`,
+                  minHeight: '8px',
+                }}
               />
               <span className="text-xs text-muted-foreground">{bar.label}</span>
             </div>

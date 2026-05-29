@@ -50,7 +50,9 @@ describe('POST /api/stripe/checkout', () => {
     mockFindFirst.mockResolvedValue(membership)
     mockFindUnique.mockResolvedValue({ email: 'db@example.com' })
     mockGetOrCreateStripeCustomer.mockResolvedValue({ id: 'cus_new' })
-    mockCreateCheckoutSession.mockResolvedValue({ url: 'https://checkout.stripe.com' })
+    mockCreateCheckoutSession.mockResolvedValue({
+      url: 'https://checkout.stripe.com',
+    })
     mockOrgUpdate.mockResolvedValue({})
   })
 
@@ -73,7 +75,10 @@ describe('POST /api/stripe/checkout', () => {
 
   it('skips org update when customer already exists', async () => {
     mockFindFirst.mockResolvedValue({
-      organization: { ...membership.organization, stripeCustomerId: 'cus_existing' },
+      organization: {
+        ...membership.organization,
+        stripeCustomerId: 'cus_existing',
+      },
     })
     mockGetOrCreateStripeCustomer.mockResolvedValue({ id: 'cus_existing' })
 

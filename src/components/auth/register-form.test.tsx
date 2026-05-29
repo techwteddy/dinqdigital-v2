@@ -33,9 +33,15 @@ describe('RegisterForm', () => {
   it('submits valid registration', async () => {
     render(<RegisterForm />)
 
-    fireEvent.change(screen.getByLabelText(/full name/i), { target: { value: 'John Doe' } })
-    fireEvent.change(screen.getByLabelText(/email/i), { target: { value: 'john@example.com' } })
-    fireEvent.change(screen.getByLabelText(/^password$/i), { target: { value: 'Password1' } })
+    fireEvent.change(screen.getByLabelText(/full name/i), {
+      target: { value: 'John Doe' },
+    })
+    fireEvent.change(screen.getByLabelText(/email/i), {
+      target: { value: 'john@example.com' },
+    })
+    fireEvent.change(screen.getByLabelText(/^password$/i), {
+      target: { value: 'Password1' },
+    })
     fireEvent.change(screen.getByLabelText(/confirm password/i), {
       target: { value: 'Password1' },
     })
@@ -51,9 +57,15 @@ describe('RegisterForm', () => {
     signUp.mockResolvedValue({ error: { message: 'Email taken' } })
     render(<RegisterForm />)
 
-    fireEvent.change(screen.getByLabelText(/full name/i), { target: { value: 'John Doe' } })
-    fireEvent.change(screen.getByLabelText(/email/i), { target: { value: 'john@example.com' } })
-    fireEvent.change(screen.getByLabelText(/^password$/i), { target: { value: 'Password1' } })
+    fireEvent.change(screen.getByLabelText(/full name/i), {
+      target: { value: 'John Doe' },
+    })
+    fireEvent.change(screen.getByLabelText(/email/i), {
+      target: { value: 'john@example.com' },
+    })
+    fireEvent.change(screen.getByLabelText(/^password$/i), {
+      target: { value: 'Password1' },
+    })
     fireEvent.change(screen.getByLabelText(/confirm password/i), {
       target: { value: 'Password1' },
     })

@@ -16,10 +16,16 @@ describe('marketing sections', () => {
   it('renders HeroSection with demo visual', () => {
     render(<HeroSection />)
     expect(
-      screen.getByRole('heading', { name: /the smarter way to run, grow, and scale your business/i })
+      screen.getByRole('heading', {
+        name: /the smarter way to run, grow, and scale your business/i,
+      })
     ).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /start free trial/i })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /view live demo/i })).toHaveAttribute('href', '/demo')
+    expect(
+      screen.getByRole('link', { name: /start free trial/i })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: /view live demo/i })
+    ).toHaveAttribute('href', '/demo')
   })
 
   it('renders StatsBar, LogoCloud, and IntegrationsSection', () => {
@@ -69,7 +75,9 @@ describe('marketing sections', () => {
       screen.getByText(/every plan includes a 14-day free trial/i)
     ).toBeInTheDocument()
 
-    const trialButton = screen.getByRole('button', { name: /is there a free trial/i })
+    const trialButton = screen.getByRole('button', {
+      name: /is there a free trial/i,
+    })
     fireEvent.click(trialButton)
     expect(
       screen.queryByText(/every plan includes a 14-day free trial/i)
@@ -80,6 +88,8 @@ describe('marketing sections', () => {
       screen.getByText(/every plan includes a 14-day free trial/i)
     ).toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('button', { name: /can i change plans later/i }))
+    fireEvent.click(
+      screen.getByRole('button', { name: /can i change plans later/i })
+    )
   })
 })

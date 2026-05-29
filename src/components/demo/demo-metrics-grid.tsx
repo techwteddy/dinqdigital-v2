@@ -10,11 +10,15 @@ export function DemoMetricsGrid() {
         <Card key={metric.label} className="overflow-hidden">
           <CardContent className="p-5">
             <p className="text-sm text-muted-foreground">{metric.label}</p>
-            <p className="mt-1 text-2xl font-bold tracking-tight">{metric.value}</p>
+            <p className="mt-1 text-2xl font-bold tracking-tight">
+              {metric.value}
+            </p>
             <p
               className={cn(
                 'mt-2 flex items-center gap-1 text-xs font-medium',
-                metric.up ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-500'
+                metric.up
+                  ? 'text-emerald-600 dark:text-emerald-400'
+                  : 'text-red-500'
               )}
             >
               {metric.up ? (

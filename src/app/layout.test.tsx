@@ -2,7 +2,9 @@ import { render, screen } from '@testing-library/react'
 import RootLayout, { metadata, viewport } from './layout'
 
 jest.mock('@/components/providers/theme-provider', () => ({
-  ThemeProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  ThemeProvider: ({ children }: { children: React.ReactNode }) => (
+    <>{children}</>
+  ),
 }))
 
 jest.mock('@/components/ui/toaster', () => ({

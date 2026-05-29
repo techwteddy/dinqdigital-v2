@@ -55,8 +55,7 @@ export async function GET(request: NextRequest) {
             data.user.user_metadata?.full_name ??
             data.user.user_metadata?.name ??
             undefined,
-          avatarUrl:
-            data.user.user_metadata?.avatar_url ?? undefined,
+          avatarUrl: data.user.user_metadata?.avatar_url ?? undefined,
           emailVerified: !!data.user.email_confirmed_at,
         },
       })

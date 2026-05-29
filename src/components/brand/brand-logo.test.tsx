@@ -9,7 +9,9 @@ describe('BrandLogo', () => {
   })
 
   it('renders icon-only and custom sizes', () => {
-    const { rerender } = render(<BrandLogo showText={false} size="sm" href="/dashboard" />)
+    const { rerender } = render(
+      <BrandLogo showText={false} size="sm" href="/dashboard" />
+    )
     expect(screen.queryByText('LaunchKit')).not.toBeInTheDocument()
     expect(screen.getByRole('link')).toHaveAttribute('href', '/dashboard')
 

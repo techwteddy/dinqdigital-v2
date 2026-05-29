@@ -31,14 +31,18 @@ describe('ForgotPasswordForm', () => {
     await waitFor(() => {
       expect(resetPasswordForEmail).toHaveBeenCalledWith(
         'test@example.com',
-        expect.objectContaining({ redirectTo: expect.stringContaining('/auth/reset-password') })
+        expect.objectContaining({
+          redirectTo: expect.stringContaining('/auth/reset-password'),
+        })
       )
       expect(screen.getByText(/reset link sent/i)).toBeInTheDocument()
     })
   })
 
   it('shows error on failure', async () => {
-    resetPasswordForEmail.mockResolvedValue({ error: { message: 'Rate limited' } })
+    resetPasswordForEmail.mockResolvedValue({
+      error: { message: 'Rate limited' },
+    })
     render(<ForgotPasswordForm />)
 
     fireEvent.change(screen.getByLabelText(/email/i), {

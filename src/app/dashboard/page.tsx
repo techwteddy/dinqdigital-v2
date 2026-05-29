@@ -6,7 +6,13 @@ import Link from 'next/link'
 import { ArrowRight, CreditCard, Users, Zap } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 
 export const metadata: Metadata = { title: 'Dashboard' }
 
@@ -51,7 +57,8 @@ export default async function DashboardPage() {
             </div>
             <CardTitle className="mb-2">No organizations yet</CardTitle>
             <CardDescription className="mb-6 max-w-sm">
-              Create your first organization to unlock team features, billing, and settings.
+              Create your first organization to unlock team features, billing,
+              and settings.
             </CardDescription>
             <Button asChild>
               <Link href="/dashboard/settings">
@@ -75,7 +82,7 @@ export default async function DashboardPage() {
                       {org.name[0].toUpperCase()}
                     </div>
                     <Badge variant={active ? 'success' : 'secondary'}>
-                      {active ? sub?.plan?.name ?? 'Active' : 'Free'}
+                      {active ? (sub?.plan?.name ?? 'Active') : 'Free'}
                     </Badge>
                   </div>
                   <CardTitle className="text-lg">{org.name}</CardTitle>
@@ -87,7 +94,8 @@ export default async function DashboardPage() {
                   <div className="flex items-center gap-4 text-xs text-muted-foreground">
                     <span className="flex items-center gap-1">
                       <Users className="h-3.5 w-3.5" />
-                      {org.members.length} member{org.members.length !== 1 ? 's' : ''}
+                      {org.members.length} member
+                      {org.members.length !== 1 ? 's' : ''}
                     </span>
                     {sub && (
                       <span className="flex items-center gap-1">

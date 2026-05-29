@@ -60,7 +60,8 @@ export function DashboardShell({
 }: DashboardShellProps) {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
-  const initials = userName[0]?.toUpperCase() ?? userEmail[0]?.toUpperCase() ?? 'U'
+  const initials =
+    userName[0]?.toUpperCase() ?? userEmail[0]?.toUpperCase() ?? 'U'
   const navItems = getNavItems(basePath)
 
   const sidebar = (
@@ -72,7 +73,9 @@ export function DashboardShell({
       {orgName && (
         <div className="border-b border-border px-4 py-3">
           <p className="truncate text-sm font-medium">{orgName}</p>
-          <p className="text-xs text-muted-foreground">{planName ?? 'Free'} plan</p>
+          <p className="text-xs text-muted-foreground">
+            {planName ?? 'Free'} plan
+          </p>
         </div>
       )}
 
@@ -105,7 +108,9 @@ export function DashboardShell({
           </div>
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium">{userName}</p>
-            <p className="truncate text-xs text-muted-foreground">{userEmail}</p>
+            <p className="truncate text-xs text-muted-foreground">
+              {userEmail}
+            </p>
           </div>
         </div>
         {isDemo ? (
@@ -150,7 +155,11 @@ export function DashboardShell({
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
             >
-              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {mobileOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
             </Button>
           </div>
         </header>

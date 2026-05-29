@@ -8,7 +8,9 @@ jest.mock('@/components/auth/login-form', () => ({
 describe('LoginPage', () => {
   it('renders login page content', () => {
     render(<LoginPage />)
-    expect(screen.getByRole('heading', { name: /welcome back/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: /welcome back/i })
+    ).toBeInTheDocument()
     expect(screen.getByTestId('login-form')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /sign up/i })).toHaveAttribute(
       'href',

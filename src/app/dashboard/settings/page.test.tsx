@@ -28,9 +28,13 @@ describe('SettingsPage', () => {
     })
 
     render(await SettingsPage())
-    expect(screen.getByRole('heading', { name: /settings/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: /settings/i })
+    ).toBeInTheDocument()
     expect(screen.getByDisplayValue('Jane Doe')).toBeInTheDocument()
-    expect(screen.getByText(/not part of any organization/i)).toBeInTheDocument()
+    expect(
+      screen.getByText(/not part of any organization/i)
+    ).toBeInTheDocument()
   })
 
   it('handles missing profile and email values', async () => {

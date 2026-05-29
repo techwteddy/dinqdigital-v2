@@ -18,33 +18,44 @@ export default function PrivacyPage() {
       </header>
       <main className="container max-w-3xl py-16">
         <h1 className="text-3xl font-bold tracking-tight">Privacy Policy</h1>
-        <p className="mt-2 text-muted-foreground">Last updated: {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
+        <p className="mt-2 text-muted-foreground">
+          Last updated:{' '}
+          {new Date().toLocaleDateString('en-US', {
+            month: 'long',
+            year: 'numeric',
+          })}
+        </p>
 
         <div className="mt-10 space-y-8">
           <section>
             <h2 className="text-xl font-semibold">Information we collect</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              We collect account information you provide (such as name and email), usage data, and
-              payment information processed by Stripe. Authentication is handled via Supabase.
+              We collect account information you provide (such as name and
+              email), usage data, and payment information processed by Stripe.
+              Authentication is handled via Supabase.
             </p>
           </section>
           <section>
             <h2 className="text-xl font-semibold">How we use data</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Data is used to provide and improve {APP_NAME}, process transactions, send transactional
-              emails, and comply with legal obligations. Replace this section with your actual practices.
+              Data is used to provide and improve {APP_NAME}, process
+              transactions, send transactional emails, and comply with legal
+              obligations. Replace this section with your actual practices.
             </p>
           </section>
           <section>
             <h2 className="text-xl font-semibold">Your rights</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Depending on your region, you may request access, correction, or deletion of your personal
-              data by contacting support.
+              Depending on your region, you may request access, correction, or
+              deletion of your personal data by contacting support.
             </p>
           </section>
         </div>
 
-        <Link href="/" className="mt-12 inline-block text-sm font-medium text-primary hover:underline">
+        <Link
+          href="/"
+          className="mt-12 inline-block text-sm font-medium text-primary hover:underline"
+        >
           ← Back to home
         </Link>
       </main>

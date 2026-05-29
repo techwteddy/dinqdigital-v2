@@ -40,6 +40,8 @@ describe('Button', () => {
         <a href="/test">Link button</a>
       </Button>
     )
-    expect(screen.getByRole('link', { name: 'Link button' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: 'Link button' })
+    ).toBeInTheDocument()
   })
 })

@@ -54,7 +54,9 @@ export function MarketingFooter() {
         <Separator className="my-8" />
 
         <div className="flex flex-col items-center justify-between gap-4 text-sm text-muted-foreground sm:flex-row">
-          <p>© {new Date().getFullYear()} {APP_NAME}. Open source · MIT License.</p>
+          <p>
+            © {new Date().getFullYear()} {APP_NAME}. Open source · MIT License.
+          </p>
           {SHOW_DEVELOPER_CREDIT && <DeveloperCredit variant="compact" />}
         </div>
       </div>
@@ -74,7 +76,12 @@ function FooterLink({
   const className = 'transition-colors hover:text-foreground'
   if (external) {
     return (
-      <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={className}
+      >
         {label}
       </a>
     )

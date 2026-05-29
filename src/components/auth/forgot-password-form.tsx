@@ -7,7 +7,10 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
-import { forgotPasswordSchema, type ForgotPasswordInput } from '@/lib/validations'
+import {
+  forgotPasswordSchema,
+  type ForgotPasswordInput,
+} from '@/lib/validations'
 
 export function ForgotPasswordForm() {
   const [success, setSuccess] = useState(false)
@@ -50,7 +53,11 @@ export function ForgotPasswordForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-3">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      noValidate
+      className="flex flex-col gap-3"
+    >
       {errors.root && (
         <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
           {errors.root.message}

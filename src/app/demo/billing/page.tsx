@@ -2,7 +2,13 @@ import Link from 'next/link'
 import { Check, CreditCard } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { DEMO_BILLING } from '@/lib/demo-data'
 import { PLANS } from '@/lib/marketing'
 
@@ -52,7 +58,9 @@ export default function DemoBillingPage() {
         <Card>
           <CardHeader>
             <CardTitle>Plan features</CardTitle>
-            <CardDescription>Everything included in your Pro subscription</CardDescription>
+            <CardDescription>
+              Everything included in your Pro subscription
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <ul className="grid gap-2 sm:grid-cols-2">

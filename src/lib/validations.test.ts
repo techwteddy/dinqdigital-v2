@@ -32,9 +32,27 @@ describe('signUpSchema', () => {
   })
 
   it('rejects weak password', () => {
-    expect(signUpSchema.safeParse({ ...valid, password: 'short', confirmPassword: 'short' }).success).toBe(false)
-    expect(signUpSchema.safeParse({ ...valid, password: 'password1', confirmPassword: 'password1' }).success).toBe(false)
-    expect(signUpSchema.safeParse({ ...valid, password: 'Password', confirmPassword: 'Password' }).success).toBe(false)
+    expect(
+      signUpSchema.safeParse({
+        ...valid,
+        password: 'short',
+        confirmPassword: 'short',
+      }).success
+    ).toBe(false)
+    expect(
+      signUpSchema.safeParse({
+        ...valid,
+        password: 'password1',
+        confirmPassword: 'password1',
+      }).success
+    ).toBe(false)
+    expect(
+      signUpSchema.safeParse({
+        ...valid,
+        password: 'Password',
+        confirmPassword: 'Password',
+      }).success
+    ).toBe(false)
   })
 
   it('rejects mismatched passwords', () => {
@@ -57,14 +75,20 @@ describe('signInSchema', () => {
   })
 
   it('rejects invalid email and empty password', () => {
-    expect(signInSchema.safeParse({ email: 'bad', password: '' }).success).toBe(false)
+    expect(signInSchema.safeParse({ email: 'bad', password: '' }).success).toBe(
+      false
+    )
   })
 })
 
 describe('forgotPasswordSchema', () => {
   it('validates email', () => {
-    expect(forgotPasswordSchema.safeParse({ email: 'a@b.com' }).success).toBe(true)
-    expect(forgotPasswordSchema.safeParse({ email: 'invalid' }).success).toBe(false)
+    expect(forgotPasswordSchema.safeParse({ email: 'a@b.com' }).success).toBe(
+      true
+    )
+    expect(forgotPasswordSchema.safeParse({ email: 'invalid' }).success).toBe(
+      false
+    )
   })
 })
 
@@ -88,26 +112,37 @@ describe('resetPasswordSchema', () => {
 describe('createOrganizationSchema', () => {
   it('accepts valid organization', () => {
     expect(
-      createOrganizationSchema.safeParse({ name: 'Acme', slug: 'acme-corp' }).success
+      createOrganizationSchema.safeParse({ name: 'Acme', slug: 'acme-corp' })
+        .success
     ).toBe(true)
   })
 
   it('rejects invalid slug', () => {
     expect(
-      createOrganizationSchema.safeParse({ name: 'Acme', slug: 'Acme Corp!' }).success
+      createOrganizationSchema.safeParse({ name: 'Acme', slug: 'Acme Corp!' })
+        .success
     ).toBe(false)
   })
 })
 
 describe('updateOrganizationSchema', () => {
   it('accepts partial updates', () => {
-    expect(updateOrganizationSchema.safeParse({ name: 'New' }).success).toBe(true)
-    expect(updateOrganizationSchema.safeParse({ logoUrl: '' }).success).toBe(true)
-    expect(updateOrganizationSchema.safeParse({ logoUrl: 'https://x.com/logo.png' }).success).toBe(true)
+    expect(updateOrganizationSchema.safeParse({ name: 'New' }).success).toBe(
+      true
+    )
+    expect(updateOrganizationSchema.safeParse({ logoUrl: '' }).success).toBe(
+      true
+    )
+    expect(
+      updateOrganizationSchema.safeParse({ logoUrl: 'https://x.com/logo.png' })
+        .success
+    ).toBe(true)
   })
 
   it('rejects invalid logo url', () => {
-    expect(updateOrganizationSchema.safeParse({ logoUrl: 'not-a-url' }).success).toBe(false)
+    expect(
+      updateOrganizationSchema.safeParse({ logoUrl: 'not-a-url' }).success
+    ).toBe(false)
   })
 })
 
@@ -126,6 +161,8 @@ describe('updateProfileSchema', () => {
   it('validates profile updates', () => {
     expect(updateProfileSchema.safeParse({}).success).toBe(true)
     expect(updateProfileSchema.safeParse({ avatarUrl: '' }).success).toBe(true)
-    expect(updateProfileSchema.safeParse({ avatarUrl: 'not-url' }).success).toBe(false)
+    expect(
+      updateProfileSchema.safeParse({ avatarUrl: 'not-url' }).success
+    ).toBe(false)
   })
 })

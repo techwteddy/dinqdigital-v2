@@ -8,12 +8,13 @@ jest.mock('@/components/auth/forgot-password-form', () => ({
 describe('ForgotPasswordPage', () => {
   it('renders forgot password page', () => {
     render(<ForgotPasswordPage />)
-    expect(screen.getByRole('heading', { name: /forgot password/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: /forgot password/i })
+    ).toBeInTheDocument()
     expect(screen.getByTestId('forgot-form')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /back to sign in/i })).toHaveAttribute(
-      'href',
-      '/auth/login'
-    )
+    expect(
+      screen.getByRole('link', { name: /back to sign in/i })
+    ).toHaveAttribute('href', '/auth/login')
   })
 
   it('exports metadata', () => {

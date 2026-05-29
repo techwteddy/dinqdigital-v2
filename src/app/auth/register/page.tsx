@@ -33,11 +33,17 @@ export default function RegisterPage() {
 
       <p className="text-center text-xs text-muted-foreground">
         By creating an account, you agree to our{' '}
-        <Link href="/terms" className="underline underline-offset-4 hover:text-foreground">
+        <Link
+          href="/terms"
+          className="underline underline-offset-4 hover:text-foreground"
+        >
           Terms
         </Link>{' '}
         and{' '}
-        <Link href="/privacy" className="underline underline-offset-4 hover:text-foreground">
+        <Link
+          href="/privacy"
+          className="underline underline-offset-4 hover:text-foreground"
+        >
           Privacy Policy
         </Link>
         .

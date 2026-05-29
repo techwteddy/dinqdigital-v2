@@ -8,13 +8,18 @@ jest.mock('@/components/auth/register-form', () => ({
 describe('RegisterPage', () => {
   it('renders register page content', () => {
     render(<RegisterPage />)
-    expect(screen.getByRole('heading', { name: /create an account/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: /create an account/i })
+    ).toBeInTheDocument()
     expect(screen.getByTestId('register-form')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /sign in/i })).toHaveAttribute(
       'href',
       '/auth/login'
     )
-    expect(screen.getByRole('link', { name: /terms/i })).toHaveAttribute('href', '/terms')
+    expect(screen.getByRole('link', { name: /terms/i })).toHaveAttribute(
+      'href',
+      '/terms'
+    )
   })
 
   it('exports metadata', () => {

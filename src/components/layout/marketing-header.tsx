@@ -14,7 +14,7 @@ export function MarketingHeader() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 glass">
+    <header className="glass sticky top-0 z-50">
       <div className="container flex h-16 items-center justify-between">
         <BrandLogo />
 
@@ -32,13 +32,23 @@ export function MarketingHeader() {
 
         <div className="flex items-center gap-1 sm:gap-2">
           <ThemeToggle />
-          <Button variant="outline" size="sm" className="hidden sm:inline-flex gap-1.5" asChild>
+          <Button
+            variant="outline"
+            size="sm"
+            className="hidden gap-1.5 sm:inline-flex"
+            asChild
+          >
             <Link href={DEMO_DASHBOARD_PATH}>
               <Play className="h-3.5 w-3.5" />
               Live demo
             </Link>
           </Button>
-          <Button variant="ghost" size="sm" className="hidden sm:inline-flex" asChild>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="hidden sm:inline-flex"
+            asChild
+          >
             <Link href="/auth/login">Sign in</Link>
           </Button>
           <Button size="sm" asChild>
@@ -51,7 +61,11 @@ export function MarketingHeader() {
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {mobileOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
           </Button>
         </div>
       </div>

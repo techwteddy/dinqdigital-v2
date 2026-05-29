@@ -2,14 +2,24 @@ import Link from 'next/link'
 import { Check } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { SectionHeading } from '@/components/marketing/section-heading'
 import { PLANS } from '@/lib/marketing'
 import { cn } from '@/lib/utils'
 
 export function PricingSection() {
   return (
-    <section id="pricing" className="scroll-mt-20 border-b border-border py-20 md:py-28">
+    <section
+      id="pricing"
+      className="scroll-mt-20 border-b border-border py-20 md:py-28"
+    >
       <div className="container">
         <SectionHeading
           eyebrow="Pricing"
@@ -40,14 +50,19 @@ export function PricingSection() {
                     {plan.price}
                   </span>
                   {plan.period && (
-                    <span className="text-sm text-muted-foreground">{plan.period}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {plan.period}
+                    </span>
                   )}
                 </div>
               </CardHeader>
               <CardContent className="flex-1">
                 <ul className="space-y-2.5">
                   {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2 text-sm">
+                    <li
+                      key={feature}
+                      className="flex items-start gap-2 text-sm"
+                    >
                       <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                       {feature}
                     </li>

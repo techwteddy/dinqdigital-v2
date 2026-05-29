@@ -2,12 +2,16 @@ jest.mock('stripe', () => {
   return jest.fn().mockImplementation(() => ({
     checkout: {
       sessions: {
-        create: jest.fn().mockResolvedValue({ url: 'https://checkout.stripe.com' }),
+        create: jest
+          .fn()
+          .mockResolvedValue({ url: 'https://checkout.stripe.com' }),
       },
     },
     billingPortal: {
       sessions: {
-        create: jest.fn().mockResolvedValue({ url: 'https://billing.stripe.com' }),
+        create: jest
+          .fn()
+          .mockResolvedValue({ url: 'https://billing.stripe.com' }),
       },
     },
     customers: {
@@ -38,9 +42,13 @@ describe('stripe helpers', () => {
     ;(stripe.billingPortal.sessions.create as jest.Mock).mockResolvedValue({
       url: 'https://billing.stripe.com',
     })
-    ;(stripe.customers.retrieve as jest.Mock).mockResolvedValue({ id: 'cus_existing' })
+    ;(stripe.customers.retrieve as jest.Mock).mockResolvedValue({
+      id: 'cus_existing',
+    })
     ;(stripe.customers.create as jest.Mock).mockResolvedValue({ id: 'cus_new' })
-    ;(stripe.webhooks.constructEvent as jest.Mock).mockReturnValue({ type: 'test.event' })
+    ;(stripe.webhooks.constructEvent as jest.Mock).mockReturnValue({
+      type: 'test.event',
+    })
   })
 
   describe('createCheckoutSession', () => {

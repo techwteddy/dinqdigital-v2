@@ -4,12 +4,12 @@ LaunchKit uses **GitHub Actions** to validate every change on `main`, `master`, 
 
 ## Quick reference
 
-| Task | Command |
-| ---- | ------- |
-| Run full CI locally | `npm run ci` |
-| Lint + format + types + tests + build | Same as above |
-| Tests with coverage gates | `npm run test:coverage` |
-| Copy dummy env for local build | `npm run ci:env` |
+| Task                                  | Command                 |
+| ------------------------------------- | ----------------------- |
+| Run full CI locally                   | `npm run ci`            |
+| Lint + format + types + tests + build | Same as above           |
+| Tests with coverage gates             | `npm run test:coverage` |
+| Copy dummy env for local build        | `npm run ci:env`        |
 
 `npm run ci` mirrors the GitHub pipeline: lint → Prettier → type-check → Jest → copy [`.github/ci.env`](../.github/ci.env) → production build.
 
@@ -17,17 +17,31 @@ LaunchKit uses **GitHub Actions** to validate every change on `main`, `master`, 
 
 ## GitHub Actions workflows
 
-| Workflow | File | Trigger | Jobs |
-| -------- | ---- | ------- | ---- |
-| **CI** | [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) | Push / PR to `main`, `master`, `develop` | `lint` → `typecheck` → `test` → `build` (parallel lint/typecheck/test, then build) |
-| **Release** | [`.github/workflows/release.yml`](../.github/workflows/release.yml) | Tag `v*.*.*` (e.g. `v1.0.0`) | Build + attach release artifact |
+| Workflow    | File                                                                | Trigger                                  | Jobs                                                                               |
+| ----------- | ------------------------------------------------------------------- | ---------------------------------------- | ---------------------------------------------------------------------------------- |
+| **CI**      | [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)           | Push / PR to `main`, `master`, `develop` | `lint` → `typecheck` → `test` → `build` (parallel lint/typecheck/test, then build) |
+| **Release** | [`.github/workflows/release.yml`](../.github/workflows/release.yml) | Tag `v*.*.*` (e.g. `v1.0.0`)             | Build + attach release artifact                                                    |
 
 ### CI job details
 
 1. **Lint & format** — `npm run lint`, `npm run format:check`
 2. **TypeScript** — `npm run type-check`
 3. **Tests** — `npm test` (100% coverage is enforced locally via `jest.config.ts`; run `npm run test:coverage` before large PRs)
-4. **Production build** — `npm run ci:env` then `npm run build`, uploads `.next` artifact
+4. **Production build** — `npm run ci:env` then `npm run build`, packages `launchkit-build.tar.gz`, signs [SLSA build provenance](https://slsa.dev/spec/v1.0/provenance) with [`actions/attest-build-provenance@v3`](https://github.com/actions/attest-build-provenance), uploads the tarball
+
+### Build provenance attestations
+
+After each successful production build, CI and Release workflows run [`actions/attest-build-provenance`](https://github.com/actions/attest-build-provenance) on `launchkit-build.tar.gz`. This creates a Sigstore-signed [in-toto](https://github.com/in-toto/attestation) attestation linked to the workflow run and repository.
+
+**Verify an attestation** (requires [GitHub CLI](https://cli.github.com/)):
+
+```bash
+gh attestation verify launchkit-build.tar.gz --owner OmarSharaf --repo launchkit
+```
+
+See GitHub’s guide: [Using artifact attestations to establish provenance for builds](https://docs.github.com/en/actions/security-guides/using-artifact-attestations-to-establish-provenance-for-builds).
+
+> **Note:** Artifact attestations are available for **public** repositories on current GitHub plans. Private repos require GitHub Enterprise Cloud. See the [action README](https://github.com/actions/attest-build-provenance#usage) for plan details.
 
 ### CI environment variables
 
@@ -44,7 +58,7 @@ After a successful CI run on `main`:
 
 1. Open the workflow run on GitHub
 2. **Artifacts** → `nextjs-build-<sha>`
-3. Contains `.next`, `public`, `prisma`, `package.json`, and related files
+3. Download `launchkit-build.tar.gz` (`.next`, `public`, `prisma`, `package.json`, etc.)
 
 Useful for self-hosted deploys (VPS, Railway, Render, Fly.io).
 
@@ -89,11 +103,11 @@ Replace the org/repo if you fork the project.
 
 ### GitHub Actions vs Vercel
 
-| | GitHub Actions | Vercel |
-| -- | -------------- | ------ |
-| **Purpose** | Verify PRs, artifacts, releases | Host the live app |
-| **Required for** | Contributing to the kit | Your production SaaS |
-| **Build** | Every push/PR to protected branches | Every deploy |
+|                  | GitHub Actions                      | Vercel               |
+| ---------------- | ----------------------------------- | -------------------- |
+| **Purpose**      | Verify PRs, artifacts, releases     | Host the live app    |
+| **Required for** | Contributing to the kit             | Your production SaaS |
+| **Build**        | Every push/PR to protected branches | Every deploy         |
 
 Most teams use **both**: Actions for quality gates, Vercel for hosting.
 
@@ -101,11 +115,11 @@ Most teams use **both**: Actions for quality gates, Vercel for hosting.
 
 ## Other platforms
 
-| Platform | Build | Deploy |
-| -------- | ----- | ------ |
-| Railway / Render / Fly.io | `npm run build` | Connect repo + env vars, `npm start` |
-| Docker | `output: 'standalone'` in Next.js (optional) | Container + env file |
-| VPS | CI artifact or `npm run ci` on server | `npm start` behind reverse proxy |
+| Platform                  | Build                                        | Deploy                               |
+| ------------------------- | -------------------------------------------- | ------------------------------------ |
+| Railway / Render / Fly.io | `npm run build`                              | Connect repo + env vars, `npm start` |
+| Docker                    | `output: 'standalone'` in Next.js (optional) | Container + env file                 |
+| VPS                       | CI artifact or `npm run ci` on server        | `npm start` behind reverse proxy     |
 
 ---
 
@@ -122,11 +136,11 @@ This does not replace `npm run ci` before pushing — always run `npm run ci` or
 
 ## Troubleshooting
 
-| Problem | Fix |
-| ------- | --- |
-| Build fails locally without `.env.local` | Run `npm run ci:env` or copy `.env.example` |
-| Tests fail coverage locally | Run `npm run test:coverage` and add/update `*.test.tsx` files |
-| Prisma client missing | `npm run db:generate` |
-| Webhook errors in dev | `stripe listen --forward-to localhost:3000/api/webhooks/stripe` |
+| Problem                                  | Fix                                                             |
+| ---------------------------------------- | --------------------------------------------------------------- |
+| Build fails locally without `.env.local` | Run `npm run ci:env` or copy `.env.example`                     |
+| Tests fail coverage locally              | Run `npm run test:coverage` and add/update `*.test.tsx` files   |
+| Prisma client missing                    | `npm run db:generate`                                           |
+| Webhook errors in dev                    | `stripe listen --forward-to localhost:3000/api/webhooks/stripe` |
 
 For security-related deployment guidance, see [SECURITY.md](../SECURITY.md).

@@ -5,7 +5,13 @@ import { DemoActivityFeed } from '@/components/demo/demo-activity-feed'
 import { DemoMetricsGrid } from '@/components/demo/demo-metrics-grid'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { DEMO_ORGANIZATIONS, DEMO_USER } from '@/lib/demo-data'
 
 export default function DemoDashboardPage() {
@@ -83,7 +89,9 @@ export default function DemoDashboardPage() {
               <CreditCard className="h-5 w-5 text-primary" />
               <div className="flex-1">
                 <p className="font-medium">Billing</p>
-                <p className="text-xs text-muted-foreground">Plans & invoices</p>
+                <p className="text-xs text-muted-foreground">
+                  Plans & invoices
+                </p>
               </div>
               <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:translate-x-0.5" />
             </CardContent>

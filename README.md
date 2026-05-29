@@ -63,42 +63,42 @@
 
 ## ✨ What's Included
 
-| Area | What you get |
-| ---- | ------------ |
-| 🔐 **Authentication** | Email/password, Google OAuth, GitHub OAuth, password reset — Supabase Auth + Prisma user sync |
-| 🏢 **Multi-tenancy** | Organizations, members, roles (`SUPER_ADMIN` / `ADMIN` / `MEMBER`), invitations in Prisma |
-| 💳 **Stripe billing** | Checkout sessions, webhooks, billing portal helpers, seeded plans |
-| 🛡️ **Route protection** | Middleware session refresh + redirects for `/dashboard` and `/auth` |
-| 🎭 **Live demo** | Public `/demo` dashboard with mock data — no sign-in required |
-| 🌐 **Marketing site** | Full landing page: hero, stats, features, showcase, integrations, pricing, FAQ, testimonials |
-| 🎨 **UI system** | shadcn/ui + Radix UI + Tailwind CSS + dark mode (`next-themes`) |
-| 🧩 **Dashboard shell** | Shared sidebar layout for real app and demo (`DashboardShell`) |
-| 🏷️ **White-label branding** | App name, tagline, URLs, and developer credit via environment variables |
-| 🗄️ **Type-safe database** | PostgreSQL + Prisma — migrations, seed script, composed TypeScript types |
-| 📧 **Email (Resend)** | API key wired in env — ready for transactional email |
-| ✅ **Validation** | Zod schemas shared for forms (`src/lib/validations.ts`) |
-| 🧪 **Tests** | Jest + React Testing Library with **100% enforced coverage** on `src/` |
-| 🔄 **CI/CD** | GitHub Actions (lint, type-check, test, build) + optional Vercel deploy |
-| 🔒 **Security defaults** | Webhook verification, security headers, server-only service role usage |
-| 📦 **DX** | ESLint, Prettier, Husky, lint-staged, strict TypeScript |
+| Area                        | What you get                                                                                  |
+| --------------------------- | --------------------------------------------------------------------------------------------- |
+| 🔐 **Authentication**       | Email/password, Google OAuth, GitHub OAuth, password reset — Supabase Auth + Prisma user sync |
+| 🏢 **Multi-tenancy**        | Organizations, members, roles (`SUPER_ADMIN` / `ADMIN` / `MEMBER`), invitations in Prisma     |
+| 💳 **Stripe billing**       | Checkout sessions, webhooks, billing portal helpers, seeded plans                             |
+| 🛡️ **Route protection**     | Middleware session refresh + redirects for `/dashboard` and `/auth`                           |
+| 🎭 **Live demo**            | Public `/demo` dashboard with mock data — no sign-in required                                 |
+| 🌐 **Marketing site**       | Full landing page: hero, stats, features, showcase, integrations, pricing, FAQ, testimonials  |
+| 🎨 **UI system**            | shadcn/ui + Radix UI + Tailwind CSS + dark mode (`next-themes`)                               |
+| 🧩 **Dashboard shell**      | Shared sidebar layout for real app and demo (`DashboardShell`)                                |
+| 🏷️ **White-label branding** | App name, tagline, URLs, and developer credit via environment variables                       |
+| 🗄️ **Type-safe database**   | PostgreSQL + Prisma — migrations, seed script, composed TypeScript types                      |
+| 📧 **Email (Resend)**       | API key wired in env — ready for transactional email                                          |
+| ✅ **Validation**           | Zod schemas shared for forms (`src/lib/validations.ts`)                                       |
+| 🧪 **Tests**                | Jest + React Testing Library with **100% enforced coverage** on `src/`                        |
+| 🔄 **CI/CD**                | GitHub Actions (lint, type-check, test, build) + optional Vercel deploy                       |
+| 🔒 **Security defaults**    | Webhook verification, security headers, server-only service role usage                        |
+| 📦 **DX**                   | ESLint, Prettier, Husky, lint-staged, strict TypeScript                                       |
 
 ---
 
 ## 🖥️ Tech Stack
 
-| Layer | Technology | Why |
-| ----- | ---------- | --- |
-| Framework | **Next.js 15** (App Router) | Server Components, Server Actions, Turbopack dev |
-| Language | **TypeScript 5.6** (strict) | End-to-end type safety |
-| Auth | **Supabase Auth** + `@supabase/ssr` | OAuth, sessions, cookie handling for SSR |
-| Database | **PostgreSQL** + **Prisma** | Relational model, migrations, typed queries |
-| Payments | **Stripe** | Checkout, subscriptions, webhooks, portal |
-| Email | **Resend** | Transactional email API |
-| UI | **Tailwind CSS**, **shadcn/ui**, **Radix UI** | Accessible, customizable components |
-| Forms | **React Hook Form** + **Zod** | Client validation aligned with server schemas |
-| State | **Zustand** | Lightweight client state (where needed) |
-| Testing | **Jest** + **React Testing Library** | Unit/integration tests with coverage gates |
-| Fonts | **Geist** | Sans + mono via `geist` package |
+| Layer     | Technology                                    | Why                                              |
+| --------- | --------------------------------------------- | ------------------------------------------------ |
+| Framework | **Next.js 15** (App Router)                   | Server Components, Server Actions, Turbopack dev |
+| Language  | **TypeScript 5.6** (strict)                   | End-to-end type safety                           |
+| Auth      | **Supabase Auth** + `@supabase/ssr`           | OAuth, sessions, cookie handling for SSR         |
+| Database  | **PostgreSQL** + **Prisma**                   | Relational model, migrations, typed queries      |
+| Payments  | **Stripe**                                    | Checkout, subscriptions, webhooks, portal        |
+| Email     | **Resend**                                    | Transactional email API                          |
+| UI        | **Tailwind CSS**, **shadcn/ui**, **Radix UI** | Accessible, customizable components              |
+| Forms     | **React Hook Form** + **Zod**                 | Client validation aligned with server schemas    |
+| State     | **Zustand**                                   | Lightweight client state (where needed)          |
+| Testing   | **Jest** + **React Testing Library**          | Unit/integration tests with coverage gates       |
+| Fonts     | **Geist**                                     | Sans + mono via `geist` package                  |
 
 ---
 
@@ -128,19 +128,19 @@ cp .env.example .env.local
 
 See [.env.example](./.env.example) for the full list. Minimum required for local dev:
 
-| Variable | Purpose |
-| -------- | ------- |
-| `NEXT_PUBLIC_APP_URL` | Site URL (e.g. `http://localhost:3000`) |
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key (public) |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server-only admin operations |
-| `DATABASE_URL` | Pooled Postgres connection (PgBouncer) |
-| `DIRECT_URL` | Direct Postgres connection for migrations |
-| `STRIPE_SECRET_KEY` | Server-side Stripe API |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Client-side Stripe |
-| `STRIPE_WEBHOOK_SECRET` | Webhook signature verification |
-| `RESEND_API_KEY` | Email sending |
-| `EMAIL_FROM` | Sender address for Resend |
+| Variable                             | Purpose                                   |
+| ------------------------------------ | ----------------------------------------- |
+| `NEXT_PUBLIC_APP_URL`                | Site URL (e.g. `http://localhost:3000`)   |
+| `NEXT_PUBLIC_SUPABASE_URL`           | Supabase project URL                      |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY`      | Supabase anon key (public)                |
+| `SUPABASE_SERVICE_ROLE_KEY`          | Server-only admin operations              |
+| `DATABASE_URL`                       | Pooled Postgres connection (PgBouncer)    |
+| `DIRECT_URL`                         | Direct Postgres connection for migrations |
+| `STRIPE_SECRET_KEY`                  | Server-side Stripe API                    |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Client-side Stripe                        |
+| `STRIPE_WEBHOOK_SECRET`              | Webhook signature verification            |
+| `RESEND_API_KEY`                     | Email sending                             |
+| `EMAIL_FROM`                         | Sender address for Resend                 |
 
 Branding and marketing URLs (`NEXT_PUBLIC_APP_NAME`, tagline, docs link, developer credit, etc.) are documented in `.env.example`.
 
@@ -167,12 +167,12 @@ npm run db:seed
 npm run dev
 ```
 
-| URL | Description |
-| --- | ----------- |
-| [http://localhost:3000](http://localhost:3000) | Marketing landing page |
-| [http://localhost:3000/demo](http://localhost:3000/demo) | Live demo dashboard (no login) |
-| [http://localhost:3000/auth/login](http://localhost:3000/auth/login) | Sign in |
-| [http://localhost:3000/dashboard](http://localhost:3000/dashboard) | App dashboard (requires auth) |
+| URL                                                                  | Description                    |
+| -------------------------------------------------------------------- | ------------------------------ |
+| [http://localhost:3000](http://localhost:3000)                       | Marketing landing page         |
+| [http://localhost:3000/demo](http://localhost:3000/demo)             | Live demo dashboard (no login) |
+| [http://localhost:3000/auth/login](http://localhost:3000/auth/login) | Sign in                        |
+| [http://localhost:3000/dashboard](http://localhost:3000/dashboard)   | App dashboard (requires auth)  |
 
 ### 6. Stripe webhooks (local)
 
@@ -203,17 +203,17 @@ The marketing header links to `/demo` as **Live demo** (`DEMO_DASHBOARD_PATH` in
 
 ### Branding (`src/lib/site.ts` + env)
 
-| Env variable | Default | Used for |
-| ------------ | ------- | -------- |
-| `NEXT_PUBLIC_APP_NAME` | LaunchKit | Title, logo text, metadata |
-| `NEXT_PUBLIC_APP_TAGLINE` | (see `.env.example`) | Hero headline |
-| `NEXT_PUBLIC_APP_DESCRIPTION` | — | Meta description, footer |
-| `NEXT_PUBLIC_PRODUCT_CATEGORY` | Business operations platform | Hero eyebrow |
-| `NEXT_PUBLIC_APP_URL` | — | Canonical URL, Open Graph |
-| `NEXT_PUBLIC_GITHUB_REPO` | This repo | Links |
-| `NEXT_PUBLIC_DOCS_URL` | — | Help center / docs links |
-| `NEXT_PUBLIC_SUPPORT_EMAIL` | support@launchkit.dev | FAQ, contact |
-| `NEXT_PUBLIC_SHOW_DEVELOPER_CREDIT` | `true` | Show/hide “Developed by …” footer |
+| Env variable                        | Default                      | Used for                          |
+| ----------------------------------- | ---------------------------- | --------------------------------- |
+| `NEXT_PUBLIC_APP_NAME`              | LaunchKit                    | Title, logo text, metadata        |
+| `NEXT_PUBLIC_APP_TAGLINE`           | (see `.env.example`)         | Hero headline                     |
+| `NEXT_PUBLIC_APP_DESCRIPTION`       | —                            | Meta description, footer          |
+| `NEXT_PUBLIC_PRODUCT_CATEGORY`      | Business operations platform | Hero eyebrow                      |
+| `NEXT_PUBLIC_APP_URL`               | —                            | Canonical URL, Open Graph         |
+| `NEXT_PUBLIC_GITHUB_REPO`           | This repo                    | Links                             |
+| `NEXT_PUBLIC_DOCS_URL`              | —                            | Help center / docs links          |
+| `NEXT_PUBLIC_SUPPORT_EMAIL`         | support@launchkit.dev        | FAQ, contact                      |
+| `NEXT_PUBLIC_SHOW_DEVELOPER_CREDIT` | `true`                       | Show/hide “Developed by …” footer |
 
 ### Marketing content (`src/lib/marketing.ts`)
 
@@ -302,36 +302,36 @@ launchkit/
 
 ### Public pages
 
-| Route | Description |
-| ----- | ----------- |
-| `/` | Marketing landing page |
-| `/demo` | Demo dashboard overview |
-| `/demo/billing` | Demo billing preview |
-| `/demo/settings` | Demo settings preview |
-| `/auth/login` | Sign in |
-| `/auth/register` | Create account |
-| `/auth/forgot-password` | Password reset |
-| `/privacy` | Privacy policy |
-| `/terms` | Terms of service |
+| Route                   | Description             |
+| ----------------------- | ----------------------- |
+| `/`                     | Marketing landing page  |
+| `/demo`                 | Demo dashboard overview |
+| `/demo/billing`         | Demo billing preview    |
+| `/demo/settings`        | Demo settings preview   |
+| `/auth/login`           | Sign in                 |
+| `/auth/register`        | Create account          |
+| `/auth/forgot-password` | Password reset          |
+| `/privacy`              | Privacy policy          |
+| `/terms`                | Terms of service        |
 
 ### Protected pages (auth required)
 
-| Route | Description |
-| ----- | ----------- |
-| `/dashboard` | Main dashboard overview |
-| `/dashboard/billing` | Subscription & billing |
+| Route                 | Description                     |
+| --------------------- | ------------------------------- |
+| `/dashboard`          | Main dashboard overview         |
+| `/dashboard/billing`  | Subscription & billing          |
 | `/dashboard/settings` | Profile & organization settings |
-| `/dashboard/overview` | Redirects to `/dashboard` |
+| `/dashboard/overview` | Redirects to `/dashboard`       |
 
 Middleware also treats `/org`, `/settings`, and `/billing` prefixes as protected (for future or nested routes).
 
 ### API routes
 
-| Method | Route | Purpose |
-| ------ | ----- | ------- |
-| `GET` | `/api/auth/callback` | Supabase OAuth / email link callback; upserts user in Prisma |
-| `POST` | `/api/stripe/checkout` | Create Stripe Checkout session |
-| `POST` | `/api/webhooks/stripe` | Stripe subscription lifecycle events |
+| Method | Route                  | Purpose                                                      |
+| ------ | ---------------------- | ------------------------------------------------------------ |
+| `GET`  | `/api/auth/callback`   | Supabase OAuth / email link callback; upserts user in Prisma |
+| `POST` | `/api/stripe/checkout` | Create Stripe Checkout session                               |
+| `POST` | `/api/webhooks/stripe` | Stripe subscription lifecycle events                         |
 
 ---
 
@@ -381,12 +381,12 @@ Client              API                    Stripe              Prisma
 
 **Webhook events handled:**
 
-| Event | Action |
-| ----- | ------ |
-| `checkout.session.completed` | Create or update subscription |
-| `customer.subscription.updated` | Sync status and period dates |
-| `customer.subscription.deleted` | Mark subscription `CANCELED` |
-| `invoice.payment_failed` | Mark subscription `PAST_DUE` |
+| Event                           | Action                        |
+| ------------------------------- | ----------------------------- |
+| `checkout.session.completed`    | Create or update subscription |
+| `customer.subscription.updated` | Sync status and period dates  |
+| `customer.subscription.deleted` | Mark subscription `CANCELED`  |
+| `invoice.payment_failed`        | Mark subscription `PAST_DUE`  |
 
 ---
 
@@ -441,7 +441,9 @@ npm run ci
 
 GitHub Actions runs on every push/PR to `main`, `master`, and `develop`:
 
-**lint** → **type-check** → **test** → **production build** (with dummy env from `.github/ci.env`).
+**lint** → **type-check** → **test** → **production build** → **provenance attestation** (with dummy env from `.github/ci.env`).
+
+Build artifacts are signed with [SLSA provenance](https://slsa.dev/spec/v1.0/provenance) via [`actions/attest-build-provenance`](https://github.com/actions/attest-build-provenance).
 
 Full details: **[docs/CI_CD.md](./docs/CI_CD.md)**
 
@@ -454,25 +456,25 @@ npm run ci:env          # Copy CI dummy env to .env.local (for builds without re
 
 ## 📜 npm Scripts
 
-| Script | Command | Description |
-| ------ | ------- | ----------- |
-| `dev` | `next dev --turbo` | Development server |
-| `build` | `prisma generate && next build` | Production build |
-| `start` | `next start` | Run production server |
-| `lint` / `lint:fix` | ESLint | Lint / auto-fix |
-| `type-check` | `tsc --noEmit` | TypeScript check |
-| `format` / `format:check` | Prettier | Format / verify |
-| `db:generate` | `prisma generate` | Generate Prisma client |
-| `db:migrate` | `prisma migrate dev` | Dev migrations |
-| `db:migrate:prod` | `prisma migrate deploy` | Production migrations |
-| `db:push` | `prisma db push` | Push schema without migration |
-| `db:studio` | `prisma studio` | Database GUI |
-| `db:seed` | `prisma/seed.ts` | Seed pricing plans |
-| `test` | `jest` | Run tests |
-| `test:coverage` | `jest --coverage` | Coverage with thresholds |
-| `ci:env` | copies `.github/ci.env` | Dummy env for CI/local build |
-| `ci` | full pipeline | Lint, format, types, test, build (matches GitHub Actions) |
-| `prepare` | `husky install` | Git pre-commit hooks |
+| Script                    | Command                         | Description                                               |
+| ------------------------- | ------------------------------- | --------------------------------------------------------- |
+| `dev`                     | `next dev --turbo`              | Development server                                        |
+| `build`                   | `prisma generate && next build` | Production build                                          |
+| `start`                   | `next start`                    | Run production server                                     |
+| `lint` / `lint:fix`       | ESLint                          | Lint / auto-fix                                           |
+| `type-check`              | `tsc --noEmit`                  | TypeScript check                                          |
+| `format` / `format:check` | Prettier                        | Format / verify                                           |
+| `db:generate`             | `prisma generate`               | Generate Prisma client                                    |
+| `db:migrate`              | `prisma migrate dev`            | Dev migrations                                            |
+| `db:migrate:prod`         | `prisma migrate deploy`         | Production migrations                                     |
+| `db:push`                 | `prisma db push`                | Push schema without migration                             |
+| `db:studio`               | `prisma studio`                 | Database GUI                                              |
+| `db:seed`                 | `prisma/seed.ts`                | Seed pricing plans                                        |
+| `test`                    | `jest`                          | Run tests                                                 |
+| `test:coverage`           | `jest --coverage`               | Coverage with thresholds                                  |
+| `ci:env`                  | copies `.github/ci.env`         | Dummy env for CI/local build                              |
+| `ci`                      | full pipeline                   | Lint, format, types, test, build (matches GitHub Actions) |
+| `prepare`                 | `husky install`                 | Git pre-commit hooks                                      |
 
 ---
 
@@ -495,11 +497,11 @@ npm run db:seed
 
 ### Other hosts
 
-| Platform | Notes |
-| -------- | ----- |
+| Platform                  | Notes                                          |
+| ------------------------- | ---------------------------------------------- |
 | Railway / Render / Fly.io | Set env vars, run `npm run build`, `npm start` |
-| Docker / VPS | Node 18+, run migrations before start |
-| Self-hosted | `npm run build && npm start` on port 3000 |
+| Docker / VPS              | Node 18+, run migrations before start          |
+| Self-hosted               | `npm run build && npm start` on port 3000      |
 
 See [SECURITY.md](./SECURITY.md) for a production security checklist.
 
@@ -572,12 +574,12 @@ Contributions are welcome.
 
 ## 💬 Community & Support
 
-| Channel | Link |
-| ------- | ---- |
-| Bug reports | [GitHub Issues](https://github.com/OmarSharaf/launchkit/issues) |
+| Channel          | Link                                                            |
+| ---------------- | --------------------------------------------------------------- |
+| Bug reports      | [GitHub Issues](https://github.com/OmarSharaf/launchkit/issues) |
 | Feature requests | [GitHub Issues](https://github.com/OmarSharaf/launchkit/issues) |
-| Security | [SECURITY.md](./SECURITY.md) |
-| Website | [omarsharaf.me](https://www.omarsharaf.me) |
+| Security         | [SECURITY.md](./SECURITY.md)                                    |
+| Website          | [omarsharaf.me](https://www.omarsharaf.me)                      |
 
 ---
 

@@ -3,12 +3,7 @@ import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { Toaster } from '@/components/ui/toaster'
-import {
-  APP_DESCRIPTION,
-  APP_NAME,
-  APP_URL,
-  DEVELOPER_NAME,
-} from '@/lib/site'
+import { APP_DESCRIPTION, APP_NAME, APP_URL, DEVELOPER_NAME } from '@/lib/site'
 import '@/styles/globals.css'
 
 export const metadata: Metadata = {

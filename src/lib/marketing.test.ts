@@ -30,7 +30,9 @@ describe('marketing content', () => {
   it('exports pricing plans with highlighted tier', () => {
     expect(PLANS).toHaveLength(3)
     expect(PLANS.some((p) => p.highlighted)).toBe(true)
-    expect(PLANS.find((p) => p.name === 'Enterprise')?.href).toContain('mailto:')
+    expect(PLANS.find((p) => p.name === 'Enterprise')?.href).toContain(
+      'mailto:'
+    )
   })
 
   it('exports testimonials, faq, and showcase items', () => {

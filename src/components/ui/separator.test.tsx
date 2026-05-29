@@ -8,7 +8,9 @@ describe('Separator', () => {
   })
 
   it('renders vertical separator', () => {
-    const { container } = render(<Separator orientation="vertical" decorative={false} />)
+    const { container } = render(
+      <Separator orientation="vertical" decorative={false} />
+    )
     expect(container.firstChild).toHaveClass('w-[1px]')
   })
 })

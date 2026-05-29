@@ -18,7 +18,12 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
 
   if (!mounted) {
     return (
-      <Button variant="ghost" size="icon" className={cn('h-9 w-9', className)} disabled>
+      <Button
+        variant="ghost"
+        size="icon"
+        className={cn('h-9 w-9', className)}
+        disabled
+      >
         <Sun className="h-4 w-4" />
       </Button>
     )

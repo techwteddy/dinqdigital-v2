@@ -10,7 +10,9 @@ describe('HomePage', () => {
     render(<HomePage />)
 
     expect(
-      screen.getByRole('heading', { name: /the smarter way to run, grow, and scale your business/i })
+      screen.getByRole('heading', {
+        name: /the smarter way to run, grow, and scale your business/i,
+      })
     ).toBeInTheDocument()
     expect(screen.getByText('Real-time analytics')).toBeInTheDocument()
     expect(screen.getAllByText('Slack').length).toBeGreaterThan(0)

@@ -1,7 +1,13 @@
 import type { Metadata } from 'next'
 import { requireAuth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Settings, Users } from 'lucide-react'
@@ -48,10 +54,16 @@ export default async function SettingsPage() {
             <label htmlFor="email" className="text-sm font-medium">
               Email
             </label>
-            <Input id="email" type="email" defaultValue={user.email ?? ''} disabled />
+            <Input
+              id="email"
+              type="email"
+              defaultValue={user.email ?? ''}
+              disabled
+            />
           </div>
           <p className="text-xs text-muted-foreground">
-            Profile editing will be available in a future release. Data is synced from Supabase Auth.
+            Profile editing will be available in a future release. Data is
+            synced from Supabase Auth.
           </p>
         </CardContent>
       </Card>
@@ -79,7 +91,8 @@ export default async function SettingsPage() {
                   <div>
                     <p className="font-medium">{org.name}</p>
                     <p className="text-xs text-muted-foreground">
-                      {org.members.length} member{org.members.length !== 1 ? 's' : ''}
+                      {org.members.length} member
+                      {org.members.length !== 1 ? 's' : ''}
                     </p>
                   </div>
                   <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium capitalize">

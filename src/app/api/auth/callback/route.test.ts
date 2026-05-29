@@ -20,7 +20,9 @@ jest.mock('@/lib/prisma', () => ({
 import { createClient } from '@/lib/supabase/server'
 import { GET } from './route'
 
-const mockCreateClient = createClient as jest.MockedFunction<typeof createClient>
+const mockCreateClient = createClient as jest.MockedFunction<
+  typeof createClient
+>
 
 function createRequest(url: string, headers: Record<string, string> = {}) {
   return new NextRequest(new URL(url), { headers })
@@ -39,14 +41,18 @@ describe('GET /api/auth/callback', () => {
 
   it('redirects with error code when description is missing', async () => {
     const response = await GET(
-      createRequest('http://localhost:3000/api/auth/callback?error=access_denied')
+      createRequest(
+        'http://localhost:3000/api/auth/callback?error=access_denied'
+      )
     )
     expect(response.headers.get('location')).toContain('error=access_denied')
   })
 
   it('redirects on auth error from supabase', async () => {
     const response = await GET(
-      createRequest('http://localhost:3000/api/auth/callback?error=access_denied&error_description=Denied')
+      createRequest(
+        'http://localhost:3000/api/auth/callback?error=access_denied&error_description=Denied'
+      )
     )
     expect(response.status).toBe(307)
     expect(response.headers.get('location')).toContain('error=Denied')
@@ -75,7 +81,9 @@ describe('GET /api/auth/callback', () => {
       error: null,
     })
 
-    await GET(createRequest('http://localhost:3000/api/auth/callback?code=valid-code'))
+    await GET(
+      createRequest('http://localhost:3000/api/auth/callback?code=valid-code')
+    )
 
     expect(mockUpsert).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -99,7 +107,9 @@ describe('GET /api/auth/callback', () => {
       error: null,
     })
 
-    await GET(createRequest('http://localhost:3000/api/auth/callback?code=valid-code'))
+    await GET(
+      createRequest('http://localhost:3000/api/auth/callback?code=valid-code')
+    )
 
     expect(mockUpsert).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -118,18 +128,25 @@ describe('GET /api/auth/callback', () => {
         user: {
           ...mockUser,
           email_confirmed_at: new Date().toISOString(),
-          user_metadata: { full_name: 'Test User', avatar_url: 'https://avatar.png' },
+          user_metadata: {
+            full_name: 'Test User',
+            avatar_url: 'https://avatar.png',
+          },
         },
       },
       error: null,
     })
 
     const response = await GET(
-      createRequest('http://localhost:3000/api/auth/callback?code=valid-code&next=/dashboard')
+      createRequest(
+        'http://localhost:3000/api/auth/callback?code=valid-code&next=/dashboard'
+      )
     )
 
     expect(mockUpsert).toHaveBeenCalled()
-    expect(response.headers.get('location')).toBe('http://localhost:3000/dashboard')
+    expect(response.headers.get('location')).toBe(
+      'http://localhost:3000/dashboard'
+    )
     process.env.NODE_ENV = originalEnv
   })
 
@@ -137,7 +154,13 @@ describe('GET /api/auth/callback', () => {
     const originalEnv = process.env.NODE_ENV
     process.env.NODE_ENV = 'production'
     mockExchangeCode.mockResolvedValue({
-      data: { user: { ...mockUser, email_confirmed_at: null, user_metadata: { name: 'Named' } } },
+      data: {
+        user: {
+          ...mockUser,
+          email_confirmed_at: null,
+          user_metadata: { name: 'Named' },
+        },
+      },
       error: null,
     })
 
@@ -147,7 +170,9 @@ describe('GET /api/auth/callback', () => {
       })
     )
 
-    expect(response.headers.get('location')).toBe('https://app.example.com/dashboard')
+    expect(response.headers.get('location')).toBe(
+      'https://app.example.com/dashboard'
+    )
     process.env.NODE_ENV = originalEnv
   })
 
@@ -163,7 +188,9 @@ describe('GET /api/auth/callback', () => {
       createRequest('http://localhost:3000/api/auth/callback?code=valid')
     )
 
-    expect(response.headers.get('location')).toBe('http://localhost:3000/dashboard')
+    expect(response.headers.get('location')).toBe(
+      'http://localhost:3000/dashboard'
+    )
     process.env.NODE_ENV = originalEnv
   })
 

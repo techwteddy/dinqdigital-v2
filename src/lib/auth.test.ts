@@ -40,7 +40,9 @@ import {
 } from './auth'
 import { mockDbUser, mockUser } from '@/test-utils'
 
-const mockCreateClient = createClient as jest.MockedFunction<typeof createClient>
+const mockCreateClient = createClient as jest.MockedFunction<
+  typeof createClient
+>
 
 describe('auth', () => {
   beforeEach(() => {

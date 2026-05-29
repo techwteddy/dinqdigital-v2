@@ -10,7 +10,8 @@ const mockSubscriptionUpsert = jest.fn()
 const mockSubscriptionUpdate = jest.fn()
 
 jest.mock('@/lib/stripe', () => ({
-  constructStripeEvent: (...args: unknown[]) => mockConstructStripeEvent(...args),
+  constructStripeEvent: (...args: unknown[]) =>
+    mockConstructStripeEvent(...args),
   stripe: {
     subscriptions: {
       retrieve: (...args: unknown[]) => mockSubscriptionRetrieve(...args),

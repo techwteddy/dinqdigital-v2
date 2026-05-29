@@ -8,15 +8,15 @@ jest.mock('@/components/layout/theme-toggle', () => ({
 describe('MarketingHeader', () => {
   it('renders navigation links', () => {
     render(<MarketingHeader />)
-    expect(screen.getAllByRole('link', { name: /features/i })[0]).toHaveAttribute(
-      'href',
-      '#features'
-    )
-    expect(screen.getAllByRole('link', { name: /live demo/i })[0]).toHaveAttribute('href', '/demo')
-    expect(screen.getByRole('link', { name: /start free trial/i })).toHaveAttribute(
-      'href',
-      '/auth/register'
-    )
+    expect(
+      screen.getAllByRole('link', { name: /features/i })[0]
+    ).toHaveAttribute('href', '#features')
+    expect(
+      screen.getAllByRole('link', { name: /live demo/i })[0]
+    ).toHaveAttribute('href', '/demo')
+    expect(
+      screen.getByRole('link', { name: /start free trial/i })
+    ).toHaveAttribute('href', '/auth/register')
   })
 
   it('toggles mobile navigation and closes via nav actions', () => {

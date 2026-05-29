@@ -9,7 +9,11 @@ export const metadata: Metadata = {
   description: `Explore the full ${APP_NAME} dashboard without signing in.`,
 }
 
-export default function DemoLayout({ children }: { children: React.ReactNode }) {
+export default function DemoLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <div className="flex min-h-screen flex-col">
       <DemoBanner />

@@ -3,7 +3,8 @@
  */
 
 export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME ?? 'LaunchKit'
-export const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://launchkit.dev'
+export const APP_URL =
+  process.env.NEXT_PUBLIC_APP_URL ?? 'https://launchkit.dev'
 export const APP_TAGLINE =
   process.env.NEXT_PUBLIC_APP_TAGLINE ??
   'The smarter way to run, grow, and scale your business.'
@@ -17,9 +18,11 @@ export const PRODUCT_CATEGORY =
 export const DEMO_DASHBOARD_PATH = '/demo'
 
 export const GITHUB_REPO =
-  process.env.NEXT_PUBLIC_GITHUB_REPO ?? 'https://github.com/OmarSharaf/launchkit'
+  process.env.NEXT_PUBLIC_GITHUB_REPO ??
+  'https://github.com/OmarSharaf/launchkit'
 export const DOCS_URL = process.env.NEXT_PUBLIC_DOCS_URL ?? `${APP_URL}/demo`
-export const DEMO_URL = process.env.NEXT_PUBLIC_DEMO_URL ?? `${APP_URL}${DEMO_DASHBOARD_PATH}`
+export const DEMO_URL =
+  process.env.NEXT_PUBLIC_DEMO_URL ?? `${APP_URL}${DEMO_DASHBOARD_PATH}`
 
 export const SHOW_DEVELOPER_CREDIT =
   process.env.NEXT_PUBLIC_SHOW_DEVELOPER_CREDIT !== 'false'

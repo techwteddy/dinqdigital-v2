@@ -31,14 +31,16 @@ export function IntegrationsSection() {
           ))}
         </div>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
-          {['Notion', 'HubSpot', 'Linear', 'GitHub', 'Zapier', 'Figma'].map((tool) => (
-            <span
-              key={tool}
-              className="rounded-full border border-border bg-background px-4 py-1.5 text-xs font-medium text-muted-foreground"
-            >
-              {tool}
-            </span>
-          ))}
+          {['Notion', 'HubSpot', 'Linear', 'GitHub', 'Zapier', 'Figma'].map(
+            (tool) => (
+              <span
+                key={tool}
+                className="rounded-full border border-border bg-background px-4 py-1.5 text-xs font-medium text-muted-foreground"
+              >
+                {tool}
+              </span>
+            )
+          )}
         </div>
       </div>
     </section>

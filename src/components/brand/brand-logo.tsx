@@ -40,7 +40,10 @@ export function BrandLogo({
   return (
     <Link
       href={href}
-      className={cn('flex items-center gap-2.5 transition-opacity hover:opacity-90', className)}
+      className={cn(
+        'flex items-center gap-2.5 transition-opacity hover:opacity-90',
+        className
+      )}
     >
       {content}
     </Link>

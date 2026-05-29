@@ -35,7 +35,10 @@ describe('DashboardShell', () => {
 
     expect(screen.getByText('Demo content')).toBeInTheDocument()
     expect(screen.getByText(/preview mode/i)).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /exit demo/i })).toHaveAttribute('href', '/')
+    expect(screen.getByRole('link', { name: /exit demo/i })).toHaveAttribute(
+      'href',
+      '/'
+    )
   })
 
   it('omits sign out control when action is not provided', () => {
@@ -44,8 +47,12 @@ describe('DashboardShell', () => {
         <div>Content</div>
       </DashboardShell>
     )
-    expect(screen.queryByRole('button', { name: /sign out/i })).not.toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: /exit demo/i })).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('button', { name: /sign out/i })
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: /exit demo/i })
+    ).not.toBeInTheDocument()
   })
 
   it('renders sign out when not in demo mode', () => {
@@ -59,13 +66,19 @@ describe('DashboardShell', () => {
       </DashboardShell>
     )
 
-    const form = screen.getByRole('button', { name: /sign out/i }).closest('form')
+    const form = screen
+      .getByRole('button', { name: /sign out/i })
+      .closest('form')
     if (form) fireEvent.submit(form)
   })
 
   it('uses email initial when name is empty', () => {
     render(
-      <DashboardShell userName="" userEmail="z@example.com" signOutAction={signOutAction}>
+      <DashboardShell
+        userName=""
+        userEmail="z@example.com"
+        signOutAction={signOutAction}
+      >
         <div>Content</div>
       </DashboardShell>
     )
@@ -98,7 +111,11 @@ describe('DashboardShell', () => {
   it('highlights billing route and toggles mobile menu', () => {
     mockPathname.mockReturnValue('/dashboard/billing')
     render(
-      <DashboardShell userName="User" userEmail="u@example.com" signOutAction={signOutAction}>
+      <DashboardShell
+        userName="User"
+        userEmail="u@example.com"
+        signOutAction={signOutAction}
+      >
         <div>Content</div>
       </DashboardShell>
     )

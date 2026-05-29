@@ -12,7 +12,10 @@ jest.mock('@supabase/ssr', () => ({
 
 import { middleware } from './middleware'
 
-function createRequest(pathname: string, cookies: { name: string; value: string }[] = []) {
+function createRequest(
+  pathname: string,
+  cookies: { name: string; value: string }[] = []
+) {
   const url = new URL(`http://localhost:3000${pathname}`)
   const request = new NextRequest(url)
   cookies.forEach(({ name, value }) => {
@@ -71,14 +74,18 @@ describe('middleware', () => {
     }
     const cookies = config.cookies.getAll()
     expect(cookies).toBeDefined()
-    config.cookies.setAll([{ name: 'sb', value: 'new', options: { path: '/' } }])
+    config.cookies.setAll([
+      { name: 'sb', value: 'new', options: { path: '/' } },
+    ])
   })
 
   it('protects /org and /settings routes', async () => {
     const orgResponse = await middleware(createRequest('/org/acme'))
     expect(orgResponse.status).toBe(307)
 
-    const settingsResponse = await middleware(createRequest('/settings/profile'))
+    const settingsResponse = await middleware(
+      createRequest('/settings/profile')
+    )
     expect(settingsResponse.status).toBe(307)
   })
 

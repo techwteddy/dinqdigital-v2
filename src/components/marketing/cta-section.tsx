@@ -8,7 +8,10 @@ export function CtaSection() {
     <section className="py-20 md:py-28">
       <div className="container">
         <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-violet-500/10 px-6 py-16 text-center md:px-12">
-          <div className="absolute inset-0 mesh-gradient opacity-60" aria-hidden />
+          <div
+            className="mesh-gradient absolute inset-0 opacity-60"
+            aria-hidden
+          />
           <div
             className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/20 blur-3xl"
             aria-hidden
@@ -22,8 +25,8 @@ export function CtaSection() {
               Ready to transform how your team works?
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-muted-foreground">
-              Join thousands of teams using {APP_NAME}. Start your free trial or explore
-              the dashboard first — no signup required.
+              Join thousands of teams using {APP_NAME}. Start your free trial or
+              explore the dashboard first — no signup required.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button size="lg" asChild>

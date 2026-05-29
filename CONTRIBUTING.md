@@ -86,17 +86,17 @@ Copy the printed `whsec_...` value into `.env.local` as `STRIPE_WEBHOOK_SECRET`.
 
 ## Project Conventions
 
-| Area | Location | Notes |
-| ---- | -------- | ----- |
-| App routes | `src/app/` | Next.js 15 App Router |
-| UI components | `src/components/` | `ui/`, `auth/`, `dashboard/`, `demo/`, `marketing/`, `layout/`, `brand/` |
-| Business logic | `src/lib/` | Auth, Prisma, Stripe, Supabase, validations |
-| Marketing copy | `src/lib/marketing.ts` | Features, pricing, FAQ, nav links |
-| Branding | `src/lib/site.ts` + `.env` | App name, tagline, URLs, developer credit |
-| Demo mock data | `src/lib/demo-data.ts` | Public `/demo` dashboard only |
-| Database | `prisma/schema.prisma` | Migrations in `prisma/migrations/` |
-| Tests | Colocated `*.test.ts(x)` next to source | Jest + React Testing Library |
-| Shared test helpers | `src/test-utils/` | Mocks for Supabase, auth, etc. |
+| Area                | Location                                | Notes                                                                    |
+| ------------------- | --------------------------------------- | ------------------------------------------------------------------------ |
+| App routes          | `src/app/`                              | Next.js 15 App Router                                                    |
+| UI components       | `src/components/`                       | `ui/`, `auth/`, `dashboard/`, `demo/`, `marketing/`, `layout/`, `brand/` |
+| Business logic      | `src/lib/`                              | Auth, Prisma, Stripe, Supabase, validations                              |
+| Marketing copy      | `src/lib/marketing.ts`                  | Features, pricing, FAQ, nav links                                        |
+| Branding            | `src/lib/site.ts` + `.env`              | App name, tagline, URLs, developer credit                                |
+| Demo mock data      | `src/lib/demo-data.ts`                  | Public `/demo` dashboard only                                            |
+| Database            | `prisma/schema.prisma`                  | Migrations in `prisma/migrations/`                                       |
+| Tests               | Colocated `*.test.ts(x)` next to source | Jest + React Testing Library                                             |
+| Shared test helpers | `src/test-utils/`                       | Mocks for Supabase, auth, etc.                                           |
 
 Use the `@/` import alias for everything under `src/`.
 

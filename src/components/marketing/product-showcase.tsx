@@ -8,7 +8,10 @@ import { cn } from '@/lib/utils'
 
 export function ProductShowcase() {
   return (
-    <section id="showcase" className="scroll-mt-20 border-b border-border py-20 md:py-28">
+    <section
+      id="showcase"
+      className="scroll-mt-20 border-b border-border py-20 md:py-28"
+    >
       <div className="container">
         <SectionHeading
           eyebrow="Product"
@@ -53,7 +56,9 @@ export function ProductShowcase() {
                   </div>
                 </div>
                 <h3 className="text-lg font-semibold">{item.title}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {item.description}
+                </p>
               </div>
             </div>
           ))}
@@ -62,7 +67,8 @@ export function ProductShowcase() {
         <div className="mt-12 flex flex-col items-center gap-4 rounded-2xl border border-dashed border-primary/30 bg-primary/5 p-8 text-center">
           <Globe className="h-10 w-10 text-primary" />
           <p className="max-w-md text-muted-foreground">
-            Walk through the full dashboard — charts, billing, team settings — with zero signup.
+            Walk through the full dashboard — charts, billing, team settings —
+            with zero signup.
           </p>
           <Button size="lg" asChild>
             <Link href={DEMO_DASHBOARD_PATH}>

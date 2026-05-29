@@ -2,7 +2,9 @@ import { render, screen } from '@testing-library/react'
 import DemoDashboardPage from './page'
 
 jest.mock('@/components/dashboard/dashboard-shell', () => ({
-  DashboardShell: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  DashboardShell: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
 }))
 
 describe('DemoDashboardPage', () => {

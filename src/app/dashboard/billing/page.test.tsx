@@ -24,7 +24,9 @@ describe('BillingPage', () => {
   it('renders free plan when no organization', async () => {
     mockFindUnique.mockResolvedValue({ memberships: [] })
     render(await BillingPage())
-    expect(screen.getByRole('heading', { name: /billing/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: /billing/i })
+    ).toBeInTheDocument()
     expect(screen.getByText('Free')).toBeInTheDocument()
     expect(screen.getByText(/no organization selected/i)).toBeInTheDocument()
   })

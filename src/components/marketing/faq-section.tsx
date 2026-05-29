@@ -10,7 +10,10 @@ export function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   return (
-    <section id="faq" className="scroll-mt-20 border-b border-border py-20 md:py-28">
+    <section
+      id="faq"
+      className="scroll-mt-20 border-b border-border py-20 md:py-28"
+    >
       <div className="container">
         <SectionHeading
           eyebrow="FAQ"

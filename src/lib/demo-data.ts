@@ -36,11 +36,41 @@ export const DEMO_ORGANIZATIONS = [
 ]
 
 export const DEMO_ACTIVITY = [
-  { id: '1', action: 'Report exported', user: 'Sarah M.', time: '2m ago', type: 'success' as const },
-  { id: '2', action: 'Workflow automated', user: 'James K.', time: '18m ago', type: 'info' as const },
-  { id: '3', action: 'New team member invited', user: 'Alex R.', time: '1h ago', type: 'info' as const },
-  { id: '4', action: 'Billing updated to Pro', user: 'System', time: '3h ago', type: 'success' as const },
-  { id: '5', action: 'API key rotated', user: 'Priya S.', time: '5h ago', type: 'warning' as const },
+  {
+    id: '1',
+    action: 'Report exported',
+    user: 'Sarah M.',
+    time: '2m ago',
+    type: 'success' as const,
+  },
+  {
+    id: '2',
+    action: 'Workflow automated',
+    user: 'James K.',
+    time: '18m ago',
+    type: 'info' as const,
+  },
+  {
+    id: '3',
+    action: 'New team member invited',
+    user: 'Alex R.',
+    time: '1h ago',
+    type: 'info' as const,
+  },
+  {
+    id: '4',
+    action: 'Billing updated to Pro',
+    user: 'System',
+    time: '3h ago',
+    type: 'success' as const,
+  },
+  {
+    id: '5',
+    action: 'API key rotated',
+    user: 'Priya S.',
+    time: '5h ago',
+    type: 'warning' as const,
+  },
 ]
 
 export const DEMO_CHART_WEEKLY = [

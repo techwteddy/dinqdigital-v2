@@ -18,8 +18,13 @@ export function HowItWorksSection() {
           {STEPS.map((step) => {
             const Icon = step.icon
             return (
-              <div key={step.step} className="relative rounded-xl border border-border bg-card p-6 shadow-sm">
-                <span className="text-4xl font-bold text-primary/20">{step.step}</span>
+              <div
+                key={step.step}
+                className="relative rounded-xl border border-border bg-card p-6 shadow-sm"
+              >
+                <span className="text-4xl font-bold text-primary/20">
+                  {step.step}
+                </span>
                 <div className="mt-4 flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10">
                   <Icon className="h-5 w-5 text-primary" />
                 </div>

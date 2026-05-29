@@ -35,7 +35,9 @@ describe('DashboardPage', () => {
     render(page)
 
     expect(screen.getByText(/no organizations yet/i)).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /get started/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: /get started/i })
+    ).toBeInTheDocument()
   })
 
   it('renders singular member label and renewal date', async () => {

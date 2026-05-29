@@ -11,7 +11,10 @@ interface DeveloperCreditProps {
  * Shows "Developed by Omar S. M. Abdelfatah" — used in the root layout
  * so every route gets the credit without repeating markup in each page.
  */
-export function DeveloperCredit({ variant = 'bar', className = '' }: DeveloperCreditProps) {
+export function DeveloperCredit({
+  variant = 'bar',
+  className = '',
+}: DeveloperCreditProps) {
   const credit = (
     <>
       Developed by{' '}
@@ -28,9 +31,7 @@ export function DeveloperCredit({ variant = 'bar', className = '' }: DeveloperCr
 
   if (variant === 'compact') {
     return (
-      <p className={`text-sm text-muted-foreground ${className}`}>
-        {credit}
-      </p>
+      <p className={`text-sm text-muted-foreground ${className}`}>{credit}</p>
     )
   }
 

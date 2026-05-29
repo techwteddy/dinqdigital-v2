@@ -10,7 +10,10 @@ jest.mock('@/lib/supabase/client', () => ({
 import { useCurrentUser } from './use-current-user'
 
 describe('useCurrentUser', () => {
-  let authChangeCallback: (event: string, session: { user: typeof mockUser } | null) => void
+  let authChangeCallback: (
+    event: string,
+    session: { user: typeof mockUser } | null
+  ) => void
 
   beforeEach(() => {
     jest.clearAllMocks()

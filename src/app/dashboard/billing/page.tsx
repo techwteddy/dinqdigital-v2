@@ -5,7 +5,13 @@ import { requireAuth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { isSubscriptionActive } from '@/lib/utils'
 
 export const metadata: Metadata = { title: 'Billing' }
@@ -53,19 +59,23 @@ export default async function BillingPage() {
               </CardDescription>
             </div>
             <Badge variant={active ? 'success' : 'secondary'}>
-              {active ? sub?.plan?.name ?? 'Active' : 'Free'}
+              {active ? (sub?.plan?.name ?? 'Active') : 'Free'}
             </Badge>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           {sub ? (
             <p className="text-sm text-muted-foreground">
-              Status: <span className="capitalize text-foreground">{sub.status.toLowerCase()}</span>
+              Status:{' '}
+              <span className="capitalize text-foreground">
+                {sub.status.toLowerCase()}
+              </span>
               {sub.cancelAtPeriodEnd && ' · Cancels at period end'}
             </p>
           ) : (
             <p className="text-sm text-muted-foreground">
-              Upgrade to unlock more organizations, members, and priority support.
+              Upgrade to unlock more organizations, members, and priority
+              support.
             </p>
           )}
           <div className="flex flex-wrap gap-3">

@@ -2,10 +2,10 @@
 
 ## Supported Versions
 
-| Version | Supported          |
-| ------- | ------------------ |
+| Version | Supported              |
+| ------- | ---------------------- |
 | 1.x     | :white_check_mark: Yes |
-| < 1.0   | :x: No              |
+| < 1.0   | :x: No                 |
 
 ## Reporting a Vulnerability
 
@@ -68,12 +68,12 @@ It does **not** cover:
 
 Set in `next.config.ts` for all routes:
 
-| Header | Value |
-| ------ | ----- |
-| `X-Frame-Options` | `DENY` |
-| `X-Content-Type-Options` | `nosniff` |
-| `Referrer-Policy` | `strict-origin-when-cross-origin` |
-| `Permissions-Policy` | `camera=(), microphone=(), geolocation=()` |
+| Header                   | Value                                      |
+| ------------------------ | ------------------------------------------ |
+| `X-Frame-Options`        | `DENY`                                     |
+| `X-Content-Type-Options` | `nosniff`                                  |
+| `Referrer-Policy`        | `strict-origin-when-cross-origin`          |
+| `Permissions-Policy`     | `camera=(), microphone=(), geolocation=()` |
 
 ### Access control
 
@@ -95,15 +95,27 @@ When you deploy LaunchKit for production:
 
 ## Sensitive Environment Variables
 
-| Variable | Exposure | Notes |
-| -------- | -------- | ----- |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server only | Full database access — treat like a root password |
-| `STRIPE_SECRET_KEY` | Server only | Can charge customers and manage subscriptions |
-| `STRIPE_WEBHOOK_SECRET` | Server only | Prevents forged webhook events |
-| `DATABASE_URL` / `DIRECT_URL` | Server only | Direct Postgres access |
-| `RESEND_API_KEY` | Server only | Can send email from your domain |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public | Safe for browser with RLS; still scope Supabase policies correctly |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Public | Expected to be public |
+| Variable                             | Exposure    | Notes                                                              |
+| ------------------------------------ | ----------- | ------------------------------------------------------------------ |
+| `SUPABASE_SERVICE_ROLE_KEY`          | Server only | Full database access — treat like a root password                  |
+| `STRIPE_SECRET_KEY`                  | Server only | Can charge customers and manage subscriptions                      |
+| `STRIPE_WEBHOOK_SECRET`              | Server only | Prevents forged webhook events                                     |
+| `DATABASE_URL` / `DIRECT_URL`        | Server only | Direct Postgres access                                             |
+| `RESEND_API_KEY`                     | Server only | Can send email from your domain                                    |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY`      | Public      | Safe for browser with RLS; still scope Supabase policies correctly |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Public      | Expected to be public                                              |
+
+## Supply chain & build provenance
+
+CI and release workflows generate **SLSA build provenance** attestations for `launchkit-build.tar.gz` using [`actions/attest-build-provenance`](https://github.com/actions/attest-build-provenance). Signatures are issued via Sigstore and stored in GitHub’s attestations API.
+
+Verify downloaded release artifacts before deploying:
+
+```bash
+gh attestation verify launchkit-build.tar.gz --owner OmarSharaf --repo launchkit
+```
+
+See [docs/CI_CD.md](./docs/CI_CD.md#build-provenance-attestations) for details.
 
 ## Testing vs. security
 

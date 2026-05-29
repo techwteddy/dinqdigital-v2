@@ -9,8 +9,17 @@ describe('MarketingFooter', () => {
       'href',
       expect.stringContaining('/demo')
     )
-    expect(screen.getByRole('link', { name: /live demo/i })).toHaveAttribute('href', '/demo')
-    expect(screen.getByRole('link', { name: /terms/i })).toHaveAttribute('href', '/terms')
-    expect(screen.getByRole('link', { name: /contact/i })).toHaveAttribute('target', '_blank')
+    expect(screen.getByRole('link', { name: /live demo/i })).toHaveAttribute(
+      'href',
+      '/demo'
+    )
+    expect(screen.getByRole('link', { name: /terms/i })).toHaveAttribute(
+      'href',
+      '/terms'
+    )
+    expect(screen.getByRole('link', { name: /contact/i })).toHaveAttribute(
+      'target',
+      '_blank'
+    )
   })
 })

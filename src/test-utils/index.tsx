@@ -1,14 +1,18 @@
 import type { ReactElement } from 'react'
 import { render, type RenderOptions } from '@testing-library/react'
 
-export function createMockSupabaseAuth(overrides: Record<string, unknown> = {}) {
+export function createMockSupabaseAuth(
+  overrides: Record<string, unknown> = {}
+) {
   return {
     getUser: jest.fn().mockResolvedValue({ data: { user: null } }),
     signInWithPassword: jest.fn().mockResolvedValue({ error: null }),
     signInWithOAuth: jest.fn().mockResolvedValue({ error: null }),
     signUp: jest.fn().mockResolvedValue({ error: null }),
     resetPasswordForEmail: jest.fn().mockResolvedValue({ error: null }),
-    exchangeCodeForSession: jest.fn().mockResolvedValue({ data: { user: null }, error: null }),
+    exchangeCodeForSession: jest
+      .fn()
+      .mockResolvedValue({ data: { user: null }, error: null }),
     onAuthStateChange: jest.fn().mockReturnValue({
       data: { subscription: { unsubscribe: jest.fn() } },
     }),

@@ -1,7 +1,5 @@
 jest.mock('@/lib/demo-data', () => ({
-  DEMO_METRICS: [
-    { label: 'Churn', value: '2.1%', change: '+0.4%', up: false },
-  ],
+  DEMO_METRICS: [{ label: 'Churn', value: '2.1%', change: '+0.4%', up: false }],
 }))
 
 import { render, screen } from '@testing-library/react'

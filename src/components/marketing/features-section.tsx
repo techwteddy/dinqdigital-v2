@@ -1,10 +1,19 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { SectionHeading } from '@/components/marketing/section-heading'
 import { FEATURES } from '@/lib/marketing'
 
 export function FeaturesSection() {
   return (
-    <section id="features" className="scroll-mt-20 border-b border-border py-20 md:py-28">
+    <section
+      id="features"
+      className="scroll-mt-20 border-b border-border py-20 md:py-28"
+    >
       <div className="container">
         <SectionHeading
           eyebrow="Features"

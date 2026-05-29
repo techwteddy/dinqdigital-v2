@@ -122,10 +122,7 @@ async function handleCheckoutSessionCompleted(
   // We store both monthly and yearly price IDs — match whichever they picked
   const plan = await prisma.plan.findFirst({
     where: {
-      OR: [
-        { stripePriceIdMonth: priceId },
-        { stripePriceIdYear: priceId },
-      ],
+      OR: [{ stripePriceIdMonth: priceId }, { stripePriceIdYear: priceId }],
     },
   })
 
