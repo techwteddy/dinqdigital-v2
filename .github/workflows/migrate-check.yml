@@ -27,6 +27,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Configure CI environment
+        run: npm run ci:env
+
       - name: Check migration history
         run: |
           if [ ! -d "prisma/migrations" ]; then
