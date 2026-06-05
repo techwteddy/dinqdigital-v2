@@ -7,7 +7,7 @@ describe('MarketingFooter', () => {
     expect(screen.getByText('Product')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /help center/i })).toHaveAttribute(
       'href',
-      expect.stringContaining('/demo')
+      'https://github.com/OmarSharaf/launchkit'
     )
     expect(screen.getByRole('link', { name: /live demo/i })).toHaveAttribute(
       'href',

@@ -41,4 +41,11 @@ describe('site constants', () => {
     expect(site.SUPPORT_EMAIL).toBe('hello@test.com')
     expect(site.SHOW_DEVELOPER_CREDIT).toBe(false)
   })
+
+  it('adds https when app url omits protocol', async () => {
+    process.env.NEXT_PUBLIC_APP_URL = 'myapp.vercel.app'
+
+    const site = await import('./site')
+    expect(site.APP_URL).toBe('https://myapp.vercel.app')
+  })
 })
