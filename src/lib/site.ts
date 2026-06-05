@@ -2,9 +2,17 @@
  * Site-wide branding — customize via environment variables for your product.
  */
 
+function normalizeAppUrl(raw: string | undefined, fallback: string): string {
+  const value = raw?.trim() || fallback
+  if (/^https?:\/\//i.test(value)) return value.replace(/\/$/, '')
+  return `https://${value.replace(/\/$/, '')}`
+}
+
 export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME ?? 'LaunchKit'
-export const APP_URL =
-  process.env.NEXT_PUBLIC_APP_URL ?? 'https://launchkit.dev'
+export const APP_URL = normalizeAppUrl(
+  process.env.NEXT_PUBLIC_APP_URL,
+  'https://launchkit.dev'
+)
 export const APP_TAGLINE =
   process.env.NEXT_PUBLIC_APP_TAGLINE ??
   'The smarter way to run, grow, and scale your business.'
