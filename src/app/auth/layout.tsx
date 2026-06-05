@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import { BrandLogo } from '@/components/brand/brand-logo'
-import { DeveloperCredit } from '@/components/layout/developer-credit'
 import { ThemeToggle } from '@/components/layout/theme-toggle'
-import { APP_DESCRIPTION, SHOW_DEVELOPER_CREDIT } from '@/lib/site'
+import { APP_DESCRIPTION, APP_NAME } from '@/lib/site'
 import { Sparkles } from 'lucide-react'
 
 interface AuthLayoutProps {
@@ -32,11 +31,11 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
         </div>
         <blockquote className="relative max-w-md">
           <p className="text-2xl font-semibold leading-snug tracking-tight">
-            &ldquo;The best SaaS boilerplate is the one that gets out of your
-            way — so you can ship what customers actually pay for.&rdquo;
+            &ldquo;{APP_NAME} brings your team, billing, and insights into one
+            place — so you can focus on growth.&rdquo;
           </p>
           <footer className="mt-6 text-sm text-primary-foreground/80">
-            Built for founders, agencies, and product teams
+            Trusted by teams worldwide
           </footer>
         </blockquote>
         <p className="relative text-sm text-primary-foreground/70">
@@ -61,12 +60,6 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
         <main className="flex flex-1 flex-col items-center justify-center p-6 sm:p-10">
           <div className="w-full max-w-sm animate-fade-in">{children}</div>
         </main>
-
-        {SHOW_DEVELOPER_CREDIT && (
-          <div className="border-t border-border px-6 py-4 text-center">
-            <DeveloperCredit variant="compact" />
-          </div>
-        )}
       </div>
     </div>
   )

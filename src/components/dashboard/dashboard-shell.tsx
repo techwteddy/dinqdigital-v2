@@ -216,7 +216,7 @@ export function DashboardShell({
               <p className="truncate text-sm text-muted-foreground">
                 <span className="font-medium text-foreground">Live demo</span>
                 {' — '}
-                sample data only · no sign-in required
+                explore the full dashboard without signing in
               </p>
             ) : (
               <p className="truncate text-sm text-muted-foreground">

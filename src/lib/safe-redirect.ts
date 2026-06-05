@@ -1,7 +1,3 @@
-/**
- * Validates redirect targets to prevent open redirects.
- * Only same-origin relative paths are allowed.
- */
 export function getSafeRedirectPath(
   target: string | null | undefined,
   fallback = '/dashboard'

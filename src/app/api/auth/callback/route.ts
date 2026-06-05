@@ -5,12 +5,6 @@ import { getSafeRedirectPath } from '@/lib/safe-redirect'
 import { ensureDefaultOrganization } from '@/lib/organizations'
 import { logger } from '@/lib/logger'
 
-/**
- * Supabase Auth Callback Handler
- *
- * Handles OAuth and magic link callbacks.
- * After Supabase confirms the session, we sync the user to our Prisma database.
- */
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')

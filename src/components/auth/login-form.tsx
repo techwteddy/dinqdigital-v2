@@ -1,10 +1,5 @@
 'use client'
 
-/**
- * Sign-in form — email/password plus Google and GitHub OAuth.
- * Uses react-hook-form + Zod so validation matches the server if we add an API later.
- */
-
 import { Suspense, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -102,7 +97,6 @@ function LoginFormContent() {
 
   return (
     <div className="flex flex-col gap-4">
-      {/* OAuth buttons */}
       <div className="grid grid-cols-2 gap-3">
         <button
           type="button"
@@ -166,7 +160,6 @@ function LoginFormContent() {
         <hr className="flex-1 border-border" />
       </div>
 
-      {/* Email/password form */}
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate

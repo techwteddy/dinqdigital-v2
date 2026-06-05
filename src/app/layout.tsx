@@ -1,28 +1,33 @@
 import type { Metadata, Viewport } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
+import { DeveloperCredit } from '@/components/layout/developer-credit'
 import { SkipLink } from '@/components/layout/skip-link'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { Toaster } from '@/components/ui/toaster'
-import { APP_DESCRIPTION, APP_NAME, APP_URL, DEVELOPER_NAME } from '@/lib/site'
+import {
+  APP_DESCRIPTION,
+  APP_NAME,
+  APP_TAGLINE,
+  APP_URL,
+  DEVELOPER_NAME,
+} from '@/lib/site'
 import '@/styles/globals.css'
 
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
   title: {
-    default: `${APP_NAME} — Ship Your SaaS Faster`,
+    default: `${APP_NAME} — ${APP_TAGLINE.split('.')[0]}`,
     template: `%s | ${APP_NAME}`,
   },
   description: APP_DESCRIPTION,
   keywords: [
-    'saas boilerplate',
-    'saas starter kit',
-    'nextjs starter',
-    'supabase starter',
-    'stripe billing',
-    'multi-tenant saas',
-    'typescript boilerplate',
-    'marketing landing page',
+    'business operations',
+    'team collaboration',
+    'workflow automation',
+    'analytics dashboard',
+    'subscription billing',
+    'multi-tenant platform',
   ],
   authors: [{ name: DEVELOPER_NAME, url: 'https://www.omarsharaf.me' }],
   creator: DEVELOPER_NAME,
@@ -30,13 +35,13 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: APP_URL,
-    title: `${APP_NAME} — Ship Your SaaS Faster`,
+    title: `${APP_NAME} — ${APP_TAGLINE.split('.')[0]}`,
     description: APP_DESCRIPTION,
     siteName: APP_NAME,
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${APP_NAME} — Ship Your SaaS Faster`,
+    title: `${APP_NAME} — ${APP_TAGLINE.split('.')[0]}`,
     description: APP_DESCRIPTION,
     creator: '@OmarSharaf',
   },
@@ -77,7 +82,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       className={`${GeistSans.variable} ${GeistMono.variable}`}
       suppressHydrationWarning
     >
-      <body className="min-h-screen bg-background font-sans antialiased">
+      <body className="flex min-h-screen flex-col bg-background font-sans antialiased">
         <SkipLink />
         <ThemeProvider
           attribute="class"
@@ -85,7 +90,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <div className="flex flex-1 flex-col">{children}</div>
+          <DeveloperCredit variant="bar" />
           <Toaster />
         </ThemeProvider>
       </body>

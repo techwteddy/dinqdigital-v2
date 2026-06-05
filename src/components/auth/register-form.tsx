@@ -1,10 +1,5 @@
 'use client'
 
-/**
- * Registration form — creates a Supabase auth user and shows a "check your email" state.
- * full_name in user_metadata is synced to Prisma on the auth callback route.
- */
-
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'

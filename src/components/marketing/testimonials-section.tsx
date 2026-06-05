@@ -1,6 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { SectionHeading } from '@/components/marketing/section-heading'
 import { TESTIMONIALS } from '@/lib/marketing'
+import { APP_NAME } from '@/lib/site'
 
 export function TestimonialsSection() {
   return (
@@ -9,7 +10,7 @@ export function TestimonialsSection() {
         <SectionHeading
           eyebrow="Testimonials"
           title="Trusted by founders who ship fast"
-          description="Teams use this kit to skip months of boilerplate and launch products their customers love."
+          description={`Teams rely on ${APP_NAME} to unify operations, billing, and analytics in one workspace.`}
         />
 
         <div className="grid gap-6 md:grid-cols-3">

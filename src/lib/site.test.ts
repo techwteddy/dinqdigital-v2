@@ -9,12 +9,10 @@ describe('site constants', () => {
   it('uses defaults when env vars are unset', async () => {
     delete process.env.NEXT_PUBLIC_APP_NAME
     delete process.env.NEXT_PUBLIC_APP_URL
-    delete process.env.NEXT_PUBLIC_SHOW_DEVELOPER_CREDIT
 
     const site = await import('./site')
     expect(site.APP_NAME).toBe('LaunchKit')
     expect(site.APP_URL).toBe('https://launchkit.dev')
-    expect(site.SHOW_DEVELOPER_CREDIT).toBe(true)
     expect(site.DEVELOPER_NAME).toBe('Omar S. M. Abdelfatah')
     expect(site.DEMO_DASHBOARD_PATH).toBe('/demo')
   })
@@ -28,7 +26,6 @@ describe('site constants', () => {
     process.env.NEXT_PUBLIC_DOCS_URL = 'https://docs.test'
     process.env.NEXT_PUBLIC_DEMO_URL = 'https://demo.test'
     process.env.NEXT_PUBLIC_SUPPORT_EMAIL = 'hello@test.com'
-    process.env.NEXT_PUBLIC_SHOW_DEVELOPER_CREDIT = 'false'
 
     const site = await import('./site')
     expect(site.APP_NAME).toBe('My SaaS')
@@ -39,7 +36,6 @@ describe('site constants', () => {
     expect(site.DOCS_URL).toBe('https://docs.test')
     expect(site.DEMO_URL).toBe('https://demo.test')
     expect(site.SUPPORT_EMAIL).toBe('hello@test.com')
-    expect(site.SHOW_DEVELOPER_CREDIT).toBe(false)
   })
 
   it('adds https when app url omits protocol', async () => {

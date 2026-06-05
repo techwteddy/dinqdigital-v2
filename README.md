@@ -203,17 +203,16 @@ The marketing header links to `/demo` as **Live demo** (`DEMO_DASHBOARD_PATH` in
 
 ### Branding (`src/lib/site.ts` + env)
 
-| Env variable                        | Default                      | Used for                          |
-| ----------------------------------- | ---------------------------- | --------------------------------- |
-| `NEXT_PUBLIC_APP_NAME`              | LaunchKit                    | Title, logo text, metadata        |
-| `NEXT_PUBLIC_APP_TAGLINE`           | (see `.env.example`)         | Hero headline                     |
-| `NEXT_PUBLIC_APP_DESCRIPTION`       | —                            | Meta description, footer          |
-| `NEXT_PUBLIC_PRODUCT_CATEGORY`      | Business operations platform | Hero eyebrow                      |
-| `NEXT_PUBLIC_APP_URL`               | —                            | Canonical URL, Open Graph         |
-| `NEXT_PUBLIC_GITHUB_REPO`           | This repo                    | Links                             |
-| `NEXT_PUBLIC_DOCS_URL`              | —                            | Help center / docs links          |
-| `NEXT_PUBLIC_SUPPORT_EMAIL`         | support@launchkit.dev        | FAQ, contact                      |
-| `NEXT_PUBLIC_SHOW_DEVELOPER_CREDIT` | `true`                       | Show/hide “Developed by …” footer |
+| Env variable                   | Default                      | Used for                   |
+| ------------------------------ | ---------------------------- | -------------------------- |
+| `NEXT_PUBLIC_APP_NAME`         | LaunchKit                    | Title, logo text, metadata |
+| `NEXT_PUBLIC_APP_TAGLINE`      | (see `.env.example`)         | Hero headline              |
+| `NEXT_PUBLIC_APP_DESCRIPTION`  | —                            | Meta description, footer   |
+| `NEXT_PUBLIC_PRODUCT_CATEGORY` | Business operations platform | Hero eyebrow               |
+| `NEXT_PUBLIC_APP_URL`          | —                            | Canonical URL, Open Graph  |
+| `NEXT_PUBLIC_GITHUB_REPO`      | This repo                    | Links                      |
+| `NEXT_PUBLIC_DOCS_URL`         | —                            | Help center / docs links   |
+| `NEXT_PUBLIC_SUPPORT_EMAIL`    | support@launchkit.dev        | FAQ, contact               |
 
 ### Marketing content (`src/lib/marketing.ts`)
 

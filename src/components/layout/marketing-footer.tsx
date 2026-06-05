@@ -1,9 +1,8 @@
 import Link from 'next/link'
 import { BrandLogo } from '@/components/brand/brand-logo'
-import { DeveloperCredit } from '@/components/layout/developer-credit'
 import { Separator } from '@/components/ui/separator'
 import { FOOTER_LINKS } from '@/lib/marketing'
-import { APP_DESCRIPTION, APP_NAME, SHOW_DEVELOPER_CREDIT } from '@/lib/site'
+import { APP_DESCRIPTION, APP_NAME } from '@/lib/site'
 
 export function MarketingFooter() {
   return (
@@ -55,9 +54,8 @@ export function MarketingFooter() {
 
         <div className="flex flex-col items-center justify-between gap-4 text-sm text-muted-foreground sm:flex-row">
           <p>
-            © {new Date().getFullYear()} {APP_NAME}. Open source · MIT License.
+            © {new Date().getFullYear()} {APP_NAME}. All rights reserved.
           </p>
-          {SHOW_DEVELOPER_CREDIT && <DeveloperCredit variant="compact" />}
         </div>
       </div>
     </footer>

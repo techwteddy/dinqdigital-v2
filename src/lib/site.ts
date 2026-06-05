@@ -1,7 +1,3 @@
-/**
- * Site-wide branding — customize via environment variables for your product.
- */
-
 function normalizeAppUrl(raw: string | undefined, fallback: string): string {
   const value = raw?.trim() || fallback
   if (/^https?:\/\//i.test(value)) return value.replace(/\/$/, '')
@@ -31,9 +27,6 @@ export const GITHUB_REPO =
 export const DOCS_URL = process.env.NEXT_PUBLIC_DOCS_URL ?? `${APP_URL}/demo`
 export const DEMO_URL =
   process.env.NEXT_PUBLIC_DEMO_URL ?? `${APP_URL}${DEMO_DASHBOARD_PATH}`
-
-export const SHOW_DEVELOPER_CREDIT =
-  process.env.NEXT_PUBLIC_SHOW_DEVELOPER_CREDIT !== 'false'
 
 export const DEVELOPER_NAME = 'Omar S. M. Abdelfatah'
 export const DEVELOPER_URL = 'https://www.omarsharaf.me'

@@ -1,16 +1,6 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
-/**
- * Runs on every matched request before the page loads.
- *
- * Two jobs:
- * 1. Refresh the Supabase session cookie (so Server Components see the user)
- * 2. Redirect guests away from /dashboard and signed-in users away from /auth
- *
- * @author Omar S. M. Abdelfatah
- */
-// /demo is public — full dashboard preview without login
 const PROTECTED_PREFIXES = ['/dashboard', '/org', '/settings', '/billing']
 const AUTH_PREFIXES = ['/auth']
 

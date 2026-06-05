@@ -91,7 +91,6 @@ When you deploy LaunchKit for production:
 5. Point Stripe webhooks to `https://your-domain.com/api/webhooks/stripe` and use the production signing secret
 6. Enable **Row Level Security (RLS)** on Supabase tables if clients access the database directly
 7. Run `npm audit` regularly and keep dependencies updated
-8. Set `NEXT_PUBLIC_SHOW_DEVELOPER_CREDIT=false` if you do not want the default developer attribution in the UI
 
 ## Sensitive Environment Variables
 

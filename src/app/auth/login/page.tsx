@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   description: `Sign in to your ${APP_NAME} account.`,
 }
 
-/** Email/password + OAuth sign-in. Redirect after login is handled in LoginForm. */
 export default function LoginPage() {
   return (
     <div className="flex flex-col gap-6">

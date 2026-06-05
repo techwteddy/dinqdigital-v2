@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   description: `Create your ${APP_NAME} account and start building.`,
 }
 
-/** New user signup — Supabase sends a confirmation email before first login. */
 export default function RegisterPage() {
   return (
     <div className="flex flex-col gap-6">

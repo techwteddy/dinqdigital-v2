@@ -1,7 +1,3 @@
-/**
- * Mock data for the public demo dashboard (no auth required).
- */
-
 export const DEMO_USER = {
   name: 'Alex Rivera',
   email: 'alex@acme.co',

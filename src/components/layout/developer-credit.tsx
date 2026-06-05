@@ -2,15 +2,10 @@ import Link from 'next/link'
 import { DEVELOPER_NAME, DEVELOPER_URL } from '@/lib/site'
 
 interface DeveloperCreditProps {
-  /** Use "compact" inside existing footers; "bar" is the slim strip on every page */
   variant?: 'bar' | 'compact'
   className?: string
 }
 
-/**
- * Shows "Developed by Omar S. M. Abdelfatah" — used in the root layout
- * so every route gets the credit without repeating markup in each page.
- */
 export function DeveloperCredit({
   variant = 'bar',
   className = '',

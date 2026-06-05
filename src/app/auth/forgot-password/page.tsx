@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   description: `Reset your ${APP_NAME} account password.`,
 }
 
-/** Password reset flow — user gets an email with a magic link from Supabase. */
 export default function ForgotPasswordPage() {
   return (
     <div className="flex flex-col gap-6">
