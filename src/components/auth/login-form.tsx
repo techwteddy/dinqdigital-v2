@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import { AUTH_CALLBACK_URL } from '@/lib/site'
 import { signInSchema, type SignInInput } from '@/lib/validations'
 import { getSafeRedirectPath } from '@/lib/safe-redirect'
 
@@ -86,7 +87,7 @@ function LoginFormContent() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${window.location.origin}/api/auth/callback?next=${redirectTo}`,
+        redirectTo: `${AUTH_CALLBACK_URL}?next=${encodeURIComponent(redirectTo)}`,
       },
     })
     if (error) {

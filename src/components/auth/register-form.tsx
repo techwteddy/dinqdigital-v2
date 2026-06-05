@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import { AUTH_CALLBACK_URL } from '@/lib/site'
 import { signUpSchema, type SignUpInput } from '@/lib/validations'
 
 export function RegisterForm() {
@@ -28,7 +29,7 @@ export function RegisterForm() {
       password: data.password,
       options: {
         data: { full_name: data.name },
-        emailRedirectTo: `${window.location.origin}/api/auth/callback`,
+        emailRedirectTo: AUTH_CALLBACK_URL,
       },
     })
 

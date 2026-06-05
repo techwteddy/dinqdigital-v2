@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import { APP_URL } from '@/lib/site'
 import {
   forgotPasswordSchema,
   type ForgotPasswordInput,
@@ -26,7 +27,7 @@ export function ForgotPasswordForm() {
 
   async function onSubmit(data: ForgotPasswordInput) {
     const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
-      redirectTo: `${window.location.origin}/auth/reset-password`,
+      redirectTo: `${APP_URL}/auth/reset-password`,
     })
 
     if (error) {

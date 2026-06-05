@@ -9,6 +9,7 @@ export const APP_URL = normalizeAppUrl(
   process.env.NEXT_PUBLIC_APP_URL,
   'https://launchkit.dev'
 )
+export const AUTH_CALLBACK_URL = `${APP_URL}/api/auth/callback`
 export const APP_TAGLINE =
   process.env.NEXT_PUBLIC_APP_TAGLINE ??
   'The smarter way to run, grow, and scale your business.'
