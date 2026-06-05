@@ -87,6 +87,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Stripe webhook signature verification
 - Zod validation schemas in `src/lib/validations.ts`
 - Server-side auth helpers in `src/lib/auth.ts`
+  Omar
 
 ---
 
