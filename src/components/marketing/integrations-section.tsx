@@ -1,11 +1,11 @@
-import { Globe, Plug, Webhook, Zap } from 'lucide-react'
+import { Globe, Plug, Zap } from 'lucide-react'
 import { SectionHeading } from '@/components/marketing/section-heading'
 
 const INTEGRATIONS = [
-  { icon: Plug, name: 'Slack', color: 'text-[#4A154B]' },
+  { icon: Zap, name: 'Claude AI', color: 'text-[#D97757]' },
+  { icon: Plug, name: 'Supabase', color: 'text-[#3ECF8E]' },
   { icon: Zap, name: 'Stripe', color: 'text-[#635BFF]' },
-  { icon: Globe, name: 'Google', color: 'text-[#4285F4]' },
-  { icon: Webhook, name: 'Webhooks', color: 'text-primary' },
+  { icon: Globe, name: 'Vercel', color: 'text-foreground' },
 ]
 
 export function IntegrationsSection() {
@@ -31,7 +31,7 @@ export function IntegrationsSection() {
           ))}
         </div>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
-          {['Notion', 'HubSpot', 'Linear', 'GitHub', 'Zapier', 'Figma'].map(
+          {['Resend', 'Telegram', 'GitHub', 'N8N', 'Zapier', 'Twilio'].map(
             (tool) => (
               <span
                 key={tool}

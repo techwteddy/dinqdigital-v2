@@ -88,7 +88,7 @@ export function HeroVisual() {
         </div>
       </div>
       <p className="mt-4 text-center text-sm text-muted-foreground transition-colors group-hover:text-primary">
-        Click to open the interactive demo dashboard →
+        Click to open the interactive DinqPlus dashboard →
       </p>
     </Link>
   )

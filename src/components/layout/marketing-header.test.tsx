@@ -9,13 +9,13 @@ describe('MarketingHeader', () => {
   it('renders navigation links', () => {
     render(<MarketingHeader />)
     expect(
-      screen.getAllByRole('link', { name: /features/i })[0]
+      screen.getAllByRole('link', { name: /services/i })[0]
     ).toHaveAttribute('href', '#features')
     expect(
-      screen.getAllByRole('link', { name: /live demo/i })[0]
+      screen.getAllByRole('link', { name: /view demo/i })[0]
     ).toHaveAttribute('href', '/demo')
     expect(
-      screen.getByRole('link', { name: /start free trial/i })
+      screen.getByRole('link', { name: /start a project/i })
     ).toHaveAttribute('href', '/auth/register')
   })
 
@@ -27,10 +27,10 @@ describe('MarketingHeader', () => {
     const [, mobileNav] = screen.getAllByRole('navigation')
     const mobile = within(mobileNav)
 
-    fireEvent.click(mobile.getByRole('link', { name: /^features$/i }))
+    fireEvent.click(mobile.getByRole('link', { name: /^services$/i }))
     fireEvent.click(screen.getByLabelText(/open menu/i))
 
-    fireEvent.click(mobile.getByRole('link', { name: /^product$/i }))
+    fireEvent.click(mobile.getByRole('link', { name: /^dinqplus$/i }))
     fireEvent.click(screen.getByLabelText(/open menu/i))
 
     fireEvent.click(mobile.getByRole('link', { name: /^pricing$/i }))
@@ -39,10 +39,10 @@ describe('MarketingHeader', () => {
     fireEvent.click(mobile.getByRole('link', { name: /^faq$/i }))
     fireEvent.click(screen.getByLabelText(/open menu/i))
 
-    fireEvent.click(mobile.getByRole('link', { name: /view live demo/i }))
+    fireEvent.click(mobile.getByRole('link', { name: /view demo/i }))
     fireEvent.click(screen.getByLabelText(/open menu/i))
 
-    fireEvent.click(mobile.getByRole('link', { name: /^sign in$/i }))
+    fireEvent.click(mobile.getByRole('link', { name: /client login/i }))
     fireEvent.click(screen.getByLabelText(/open menu/i))
     fireEvent.click(screen.getByLabelText(/close menu/i))
   })

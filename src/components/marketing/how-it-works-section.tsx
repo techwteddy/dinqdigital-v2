@@ -11,7 +11,7 @@ export function HowItWorksSection() {
         <SectionHeading
           eyebrow="How it works"
           title="Up and running in three simple steps"
-          description="Get your team onboarded quickly and start seeing results from day one."
+          description="From first conversation to live platform — we handle the build so you can focus on growth."
         />
 
         <div className="grid gap-8 md:grid-cols-3">

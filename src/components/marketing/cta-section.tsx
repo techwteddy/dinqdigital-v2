@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { ArrowRight, Play } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { APP_NAME, DEMO_DASHBOARD_PATH } from '@/lib/site'
+import { DEMO_DASHBOARD_PATH } from '@/lib/site'
 
 export function CtaSection() {
   return (
@@ -22,16 +22,16 @@ export function CtaSection() {
           />
           <div className="relative">
             <h2 className="text-balance text-3xl font-bold tracking-tight sm:text-4xl">
-              Ready to transform how your team works?
+              Ready to build something great?
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-muted-foreground">
-              Join thousands of teams using {APP_NAME}. Start your free trial or
-              explore the dashboard first — no signup required.
+              Start your project today or explore the DinqPlus dashboard first —
+              no signup required.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button size="lg" asChild>
                 <Link href="/auth/register">
-                  Start free trial
+                  Start a Project
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>

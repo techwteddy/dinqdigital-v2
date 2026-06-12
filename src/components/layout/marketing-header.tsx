@@ -40,7 +40,7 @@ export function MarketingHeader() {
           >
             <Link href={DEMO_DASHBOARD_PATH}>
               <Play className="h-3.5 w-3.5" />
-              Live demo
+              View Demo
             </Link>
           </Button>
           <Button
@@ -49,10 +49,10 @@ export function MarketingHeader() {
             className="hidden sm:inline-flex"
             asChild
           >
-            <Link href="/auth/login">Sign in</Link>
+            <Link href="/auth/login">Client Login</Link>
           </Button>
           <Button size="sm" asChild>
-            <Link href="/auth/register">Start free trial</Link>
+            <Link href="/auth/register">Start a Project</Link>
           </Button>
           <Button
             variant="ghost"
@@ -95,14 +95,14 @@ export function MarketingHeader() {
             onClick={() => setMobileOpen(false)}
             className="rounded-md px-3 py-2.5 text-sm font-medium text-primary"
           >
-            View live demo
+            View Demo
           </Link>
           <Link
             href="/auth/login"
             onClick={() => setMobileOpen(false)}
             className="rounded-md px-3 py-2.5 text-sm font-medium"
           >
-            Sign in
+            Client Login
           </Link>
         </nav>
       </div>

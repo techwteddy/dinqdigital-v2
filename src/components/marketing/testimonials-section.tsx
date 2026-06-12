@@ -1,7 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { SectionHeading } from '@/components/marketing/section-heading'
 import { TESTIMONIALS } from '@/lib/marketing'
-import { APP_NAME } from '@/lib/site'
 
 export function TestimonialsSection() {
   return (
@@ -10,7 +9,7 @@ export function TestimonialsSection() {
         <SectionHeading
           eyebrow="Testimonials"
           title="Trusted by founders who ship fast"
-          description={`Teams rely on ${APP_NAME} to unify operations, billing, and analytics in one workspace.`}
+          description="Businesses rely on Dinq Digital to build, launch, and grow their digital presence."
         />
 
         <div className="grid gap-6 md:grid-cols-3">

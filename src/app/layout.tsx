@@ -1,17 +1,10 @@
 import type { Metadata, Viewport } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
-import { DeveloperCredit } from '@/components/layout/developer-credit'
 import { SkipLink } from '@/components/layout/skip-link'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { Toaster } from '@/components/ui/toaster'
-import {
-  APP_DESCRIPTION,
-  APP_NAME,
-  APP_TAGLINE,
-  APP_URL,
-  DEVELOPER_NAME,
-} from '@/lib/site'
+import { APP_DESCRIPTION, APP_NAME, APP_TAGLINE, APP_URL } from '@/lib/site'
 import '@/styles/globals.css'
 
 export const metadata: Metadata = {
@@ -29,8 +22,8 @@ export const metadata: Metadata = {
     'subscription billing',
     'multi-tenant platform',
   ],
-  authors: [{ name: DEVELOPER_NAME, url: 'https://www.omarsharaf.me' }],
-  creator: DEVELOPER_NAME,
+  authors: [{ name: APP_NAME, url: APP_URL }],
+  creator: APP_NAME,
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -91,7 +84,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
           disableTransitionOnChange
         >
           <div className="flex flex-1 flex-col">{children}</div>
-          <DeveloperCredit variant="bar" />
           <Toaster />
         </ThemeProvider>
       </body>

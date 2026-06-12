@@ -24,7 +24,7 @@ export function PricingSection() {
         <SectionHeading
           eyebrow="Pricing"
           title="Simple, transparent pricing"
-          description="Start with a 14-day free trial on every plan. Upgrade when you are ready — no hidden fees."
+          description="Start with a free consultation on every project. No hidden fees."
         />
 
         <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-3">

@@ -16,8 +16,8 @@ export function FeaturesSection() {
     >
       <div className="container">
         <SectionHeading
-          eyebrow="Features"
-          title="Everything your team needs to move faster"
+          eyebrow="Services"
+          title="Everything your business needs to move faster"
           description="Powerful capabilities out of the box — so you can focus on growth, not tooling."
         />
 

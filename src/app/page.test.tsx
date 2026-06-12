@@ -11,12 +11,14 @@ describe('HomePage', () => {
 
     expect(
       screen.getByRole('heading', {
-        name: /the smarter way to run, grow, and scale your business/i,
+        name: /the smarter way to build, launch, and grow your business/i,
       })
     ).toBeInTheDocument()
-    expect(screen.getByText('Real-time analytics')).toBeInTheDocument()
-    expect(screen.getAllByText('Slack').length).toBeGreaterThan(0)
-    expect(screen.getByText('Create your workspace')).toBeInTheDocument()
-    expect(screen.getByText(/ready to transform/i)).toBeInTheDocument()
+    expect(screen.getByText('Premium Web Design')).toBeInTheDocument()
+    expect(screen.getAllByText('Claude AI').length).toBeGreaterThan(0)
+    expect(screen.getByText('Start your project')).toBeInTheDocument()
+    expect(
+      screen.getByText(/ready to build something great/i)
+    ).toBeInTheDocument()
   })
 })

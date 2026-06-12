@@ -4,10 +4,10 @@ function normalizeAppUrl(raw: string | undefined, fallback: string): string {
   return `https://${value.replace(/\/$/, '')}`
 }
 
-export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME ?? 'LaunchKit'
+export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME ?? 'Dinq Digital'
 export const APP_URL = normalizeAppUrl(
   process.env.NEXT_PUBLIC_APP_URL,
-  'https://launchkit.dev'
+  'https://dinqdigital.com'
 )
 export const AUTH_CALLBACK_URL = `${APP_URL}/api/auth/callback`
 export const APP_TAGLINE =
@@ -15,27 +15,28 @@ export const APP_TAGLINE =
   'The smarter way to run, grow, and scale your business.'
 export const APP_DESCRIPTION =
   process.env.NEXT_PUBLIC_APP_DESCRIPTION ??
-  `${APP_NAME} helps modern teams automate workflows, understand performance in real time, and collaborate without friction — so you can focus on what matters.`
+  'We build premium websites and intelligent AI systems for modern businesses worldwide.'
 
 export const PRODUCT_CATEGORY =
-  process.env.NEXT_PUBLIC_PRODUCT_CATEGORY ?? 'Business operations platform'
+  process.env.NEXT_PUBLIC_PRODUCT_CATEGORY ?? 'Web Agency · AI Systems'
 
 export const DEMO_DASHBOARD_PATH = '/demo'
 
 export const GITHUB_REPO =
   process.env.NEXT_PUBLIC_GITHUB_REPO ??
-  'https://github.com/OmarSharaf/launchkit'
-export const DOCS_URL = process.env.NEXT_PUBLIC_DOCS_URL ?? `${APP_URL}/demo`
+  'https://github.com/dinqdigital/dinqdigital-v2'
+export const DOCS_URL =
+  process.env.NEXT_PUBLIC_DOCS_URL ?? `${APP_URL}${DEMO_DASHBOARD_PATH}`
 export const DEMO_URL =
   process.env.NEXT_PUBLIC_DEMO_URL ?? `${APP_URL}${DEMO_DASHBOARD_PATH}`
 
-export const DEVELOPER_NAME = 'Omar S. M. Abdelfatah'
-export const DEVELOPER_URL = 'https://www.omarsharaf.me'
-export const DEVELOPER_GITHUB = 'https://github.com/OmarSharaf'
-export const DEVELOPER_LINKEDIN = 'https://www.linkedin.com/in/omarsharafaldin/'
+export const LINKEDIN_URL =
+  process.env.NEXT_PUBLIC_LINKEDIN_URL ?? 'https://www.linkedin.com'
+export const INSTAGRAM_URL =
+  process.env.NEXT_PUBLIC_INSTAGRAM_URL ?? 'https://www.instagram.com'
 
 export const SUPPORT_EMAIL =
-  process.env.NEXT_PUBLIC_SUPPORT_EMAIL ?? 'support@launchkit.dev'
+  process.env.NEXT_PUBLIC_SUPPORT_EMAIL ?? 'techwithteddy@gmail.com'
 
 export const EMAIL_FROM =
-  process.env.EMAIL_FROM ?? `${APP_NAME} <noreply@launchkit.dev>`
+  process.env.EMAIL_FROM ?? `${APP_NAME} <noreply@dinqdigital.com>`

@@ -14,9 +14,9 @@ export function ProductShowcase() {
     >
       <div className="container">
         <SectionHeading
-          eyebrow="Product"
-          title="See what your customers will experience"
-          description="A polished app surface — dashboard, billing, and settings — ready for your brand and your workflows."
+          eyebrow="DinqPlus"
+          title="See what your clients will experience"
+          description="A polished platform — dashboard, billing, and settings — ready for your brand and your workflows."
         />
 
         <div className="grid gap-6 lg:grid-cols-3">

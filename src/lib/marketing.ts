@@ -1,38 +1,37 @@
 import type { LucideIcon } from 'lucide-react'
 import {
   BarChart3,
-  Bell,
   Layers,
   LineChart,
   Lock,
   Plug,
   Users,
-  Workflow,
   Zap,
 } from 'lucide-react'
 import {
-  APP_NAME,
-  DEVELOPER_LINKEDIN,
-  DEVELOPER_URL,
   DEMO_DASHBOARD_PATH,
-  DOCS_URL,
+  GITHUB_REPO,
+  INSTAGRAM_URL,
+  LINKEDIN_URL,
   SUPPORT_EMAIL,
 } from '@/lib/site'
 
 export const STATS = [
-  { value: '12,000+', label: 'Teams worldwide' },
-  { value: '99.9%', label: 'Uptime SLA' },
-  { value: '4.9★', label: 'Average rating' },
-  { value: '2M+', label: 'Tasks automated monthly' },
+  { value: '25+', label: 'Verticals built' },
+  { value: '100%', label: 'Custom built' },
+  { value: '5★', label: 'Client rating' },
+  { value: '24/7', label: 'AI agents running' },
 ] as const
 
 export const LOGO_CLOUD = [
+  'Next.js',
+  'Supabase',
+  'Claude AI',
+  'Vercel',
   'Stripe',
-  'Notion',
-  'Linear',
-  'Slack',
-  'HubSpot',
-  'Figma',
+  'Resend',
+  'Tailwind CSS',
+  'TypeScript',
 ] as const
 
 export const FEATURES: {
@@ -41,40 +40,40 @@ export const FEATURES: {
   description: string
 }[] = [
   {
-    icon: LineChart,
-    title: 'Real-time analytics',
+    icon: Layers,
+    title: 'Premium Web Design',
     description:
-      'See what is happening across your business the moment it happens — dashboards that update live.',
+      'Custom websites engineered for conversion. No templates, no shortcuts. Built to represent your brand at its best.',
   },
   {
-    icon: Workflow,
-    title: 'Smart automation',
+    icon: Zap,
+    title: 'AI Agent Deployment',
     description:
-      'Build workflows in minutes. Trigger actions, send notifications, and eliminate repetitive work.',
+      'Deploy autonomous AI agents that qualify leads, answer questions, and capture clients 24/7 while you sleep.',
   },
   {
     icon: Users,
-    title: 'Team workspaces',
+    title: 'Client Portal',
     description:
-      'Invite your team, assign roles, and collaborate in shared spaces with full permission control.',
+      'Every client gets a dedicated portal. Project status, milestones, invoices, files, and messages — all in one place.',
   },
   {
     icon: Plug,
-    title: 'Integrations',
+    title: 'DinqPlus Integration',
     description:
-      'Connect the tools you already use. Sync data, webhooks, and API access included on every plan.',
+      'Connect your business to 25 vertical-specific modules. From bookings to payments — one platform for everything.',
   },
   {
     icon: Lock,
-    title: 'Enterprise security',
+    title: 'Enterprise Security',
     description:
-      'SOC 2-ready practices, encrypted data at rest and in transit, and audit logs for compliance.',
+      'Supabase-powered auth, encrypted data, role-based access, and audit logs built in.',
   },
   {
-    icon: Bell,
-    title: 'Actionable alerts',
+    icon: LineChart,
+    title: 'Real-time Analytics',
     description:
-      'Get notified when it matters. Custom thresholds, Slack and email delivery, and digest summaries.',
+      'Track your business performance in real time. Dashboards that update live across every vertical.',
   },
 ]
 
@@ -82,72 +81,75 @@ export const STEPS = [
   {
     step: '01',
     icon: Zap,
-    title: 'Create your workspace',
-    description: `Sign up in under a minute. No credit card required to explore ${APP_NAME}.`,
+    title: 'Start your project',
+    description:
+      "Tell us what you need. We'll scope, design, and build your custom solution from scratch. No templates.",
   },
   {
     step: '02',
     icon: Layers,
     title: 'Connect your stack',
     description:
-      'Import data from your existing tools or start fresh with our templates and guided setup.',
+      'We integrate your existing tools or set up a complete DinqPlus ecosystem tailored to your business vertical.',
   },
   {
     step: '03',
     icon: BarChart3,
     title: 'Grow with confidence',
     description:
-      'Track KPIs, automate workflows, and scale your team with insights you can act on today.',
+      'Track performance, deploy AI agents, and scale your business with real-time insights you can act on today.',
   },
 ] as const
 
 export const PLANS = [
   {
-    name: 'Starter',
-    price: '$9',
-    period: '/month',
-    description: 'For individuals and small teams getting started.',
+    name: 'Starter Website',
+    price: '$500',
+    period: ' one-time',
+    description:
+      'For small businesses getting their first professional website.',
     features: [
-      '1 workspace',
-      'Up to 3 team members',
-      'Core analytics',
-      '5 automations',
-      'Email support',
+      'Custom website design',
+      'Up to 5 pages',
+      'Mobile responsive',
+      'Basic SEO',
+      '1 month support',
     ],
-    cta: 'Start free trial',
+    cta: 'Start a Project',
     href: '/auth/register',
     highlighted: false,
   },
   {
-    name: 'Pro',
-    price: '$29',
-    period: '/month',
-    description: 'For growing teams that need more power.',
+    name: 'Pro Website',
+    price: '$1,200',
+    period: ' one-time',
+    description: 'For growing businesses that need more power.',
     features: [
-      'Unlimited workspaces',
-      'Up to 25 members',
-      'Advanced analytics',
-      'Unlimited automations',
-      'Priority support',
-      'API access',
+      'Custom website + animations',
+      'Up to 10 pages',
+      'DinqPlus integration',
+      'DinqAgent widget',
+      '3 months support',
+      'Client portal access',
     ],
-    cta: 'Start free trial',
+    cta: 'Start a Project',
     href: '/auth/register',
     highlighted: true,
   },
   {
-    name: 'Enterprise',
+    name: 'Enterprise / AI',
     price: 'Custom',
     period: '',
     description: 'For organizations with advanced needs.',
     features: [
-      'Unlimited everything',
-      'SSO / SAML',
-      'Dedicated success manager',
+      'Full DinqPlus setup',
+      'Custom AI agents',
+      'Multi-vertical deployment',
+      'Dedicated support',
       'Custom contracts & SLA',
       'Security review',
     ],
-    cta: 'Contact sales',
+    cta: 'Contact us',
     href: `mailto:${SUPPORT_EMAIL}`,
     highlighted: false,
   },
@@ -155,86 +157,90 @@ export const PLANS = [
 
 export const TESTIMONIALS = [
   {
-    quote: `${APP_NAME} replaced three tools we were duct-taping together. Our ops team finally has one source of truth.`,
-    author: 'Alex Chen',
-    role: 'Head of Operations',
-    company: 'Flowstack',
+    quote:
+      'Dinq Digital built our salon booking system from scratch. We went from pen and paper to a full digital operation in weeks.',
+    author: 'Nice Braids',
+    role: 'Salon Owner',
+    company: 'Seattle',
   },
   {
     quote:
-      'We cut reporting time by 70% in the first month. The dashboards are beautiful and actually useful.',
-    author: 'Sarah Mitchell',
-    role: 'VP Product',
-    company: 'Nimbus',
+      'The DinqShop system transformed how we manage our auto repair shop. Invoicing, scheduling, and client management all in one place.',
+    author: 'G&M Auto Repair',
+    role: 'Auto Repair Shop',
+    company: 'Seattle',
   },
   {
     quote:
-      'Onboarding new hires used to take days. Now they are productive on day one with clear workflows.',
-    author: 'James Okonkwo',
-    role: 'COO',
-    company: 'DataPulse',
+      'Tita PLC needed a factory management system built fast. Dinq delivered a full production tracking platform in record time.',
+    author: 'Tita PLC',
+    role: 'Polypropylene Manufacturer',
+    company: 'Ethiopia',
   },
 ] as const
 
 export const FAQ_ITEMS = [
   {
-    question: 'Is there a free trial?',
+    question: 'Do you build custom websites?',
     answer:
-      'Yes. Every plan includes a 14-day free trial with full access to Pro features. No credit card required to start.',
+      'Yes. Every website we build is 100% custom — no templates, no page builders. We design and develop from scratch using Next.js, Tailwind, and modern web technologies.',
   },
   {
-    question: 'Can I change plans later?',
+    question: 'What is DinqPlus?',
     answer:
-      'Absolutely. Upgrade or downgrade anytime from your billing settings. Changes take effect on your next billing cycle.',
+      'DinqPlus is our business operating system — a platform with 25 vertical-specific modules for salons, restaurants, auto shops, factories, and more. Every client site can connect to DinqPlus as a headless CMS and business management system.',
   },
   {
-    question: 'Do you offer demos for enterprise teams?',
-    answer: `Yes. Explore the live demo dashboard anytime, or contact us at ${SUPPORT_EMAIL} for a personalized walkthrough.`,
+    question: 'What is DinqAgent?',
+    answer:
+      'DinqAgent is our AI-powered chat widget that lives on your website. It answers visitor questions, qualifies leads, captures contact information, and escalates to you when needed — 24/7 without human input.',
   },
   {
-    question: 'How secure is my data?',
+    question: 'How long does a project take?',
     answer:
-      'We use industry-standard encryption, regular security audits, and never sell your data. Enterprise plans include SSO and advanced compliance options.',
+      'Most websites are delivered in 2–4 weeks depending on complexity. AI agent deployments typically take 1–2 weeks after the website is live.',
   },
 ] as const
 
 export const NAV_LINKS = [
-  { href: '#features', label: 'Features' },
-  { href: '#showcase', label: 'Product' },
+  { href: '#features', label: 'Services' },
+  { href: '#showcase', label: 'DinqPlus' },
   { href: '#pricing', label: 'Pricing' },
   { href: '#faq', label: 'FAQ' },
 ] as const
 
 export const FOOTER_LINKS = {
   product: [
-    { href: '#features', label: 'Features' },
-    { href: DEMO_DASHBOARD_PATH, label: 'Live demo' },
+    { href: '#features', label: 'Services' },
+    { href: '#showcase', label: 'DinqPlus' },
+    { href: DEMO_DASHBOARD_PATH, label: 'View Demo' },
     { href: '#pricing', label: 'Pricing' },
-    { href: DOCS_URL, label: 'Help center', external: true },
   ],
   company: [
     { href: '/terms', label: 'Terms' },
     { href: '/privacy', label: 'Privacy' },
   ],
   connect: [
-    { href: DEVELOPER_LINKEDIN, label: 'LinkedIn', external: true },
-    { href: DEVELOPER_URL, label: 'Contact', external: true },
+    { href: LINKEDIN_URL, label: 'LinkedIn', external: true },
+    { href: INSTAGRAM_URL, label: 'Instagram', external: true },
+    { href: GITHUB_REPO, label: 'GitHub', external: true },
+    { href: `mailto:${SUPPORT_EMAIL}`, label: 'Contact', external: true },
   ],
 } as const
 
 export const SHOWCASE_ITEMS = [
   {
-    title: 'Unified dashboard',
+    title: 'Unified Dashboard',
     description: 'Every metric and action in one place.',
     gradient: 'from-primary/20 to-blue-500/10',
   },
   {
-    title: 'Workflow builder',
-    description: 'Drag, drop, and automate in minutes.',
+    title: '25 Verticals',
+    description: 'From salons to factories, every business type covered.',
     gradient: 'from-violet-500/20 to-fuchsia-500/10',
   },
   {
-    title: 'Team insights',
+    title: 'AI Insights',
     description: 'Understand performance at a glance.',
     gradient: 'from-emerald-500/20 to-teal-500/10',
   },

@@ -13,24 +13,24 @@ import {
 
 describe('marketing content', () => {
   it('exports navigation and footer links', () => {
-    expect(NAV_LINKS.some((l) => l.label === 'Product')).toBe(true)
-    expect(FOOTER_LINKS.product.some((l) => l.label === 'Live demo')).toBe(true)
+    expect(NAV_LINKS.some((l) => l.label === 'DinqPlus')).toBe(true)
+    expect(FOOTER_LINKS.product.some((l) => l.label === 'View Demo')).toBe(true)
     expect(FOOTER_LINKS.connect.length).toBeGreaterThan(0)
   })
 
   it('exports stats, logos, features, and steps', () => {
     expect(STATS).toHaveLength(4)
-    expect(STATS[0].value).toBe('12,000+')
-    expect(LOGO_CLOUD).toContain('Stripe')
+    expect(STATS[0].value).toBe('25+')
+    expect(LOGO_CLOUD).toContain('Next.js')
     expect(FEATURES).toHaveLength(6)
-    expect(FEATURES[0].title).toBe('Real-time analytics')
-    expect(STEPS[0].title).toBe('Create your workspace')
+    expect(FEATURES[0].title).toBe('Premium Web Design')
+    expect(STEPS[0].title).toBe('Start your project')
   })
 
   it('exports pricing plans with highlighted tier', () => {
     expect(PLANS).toHaveLength(3)
     expect(PLANS.some((p) => p.highlighted)).toBe(true)
-    expect(PLANS.find((p) => p.name === 'Enterprise')?.href).toContain(
+    expect(PLANS.find((p) => p.name === 'Enterprise / AI')?.href).toContain(
       'mailto:'
     )
   })

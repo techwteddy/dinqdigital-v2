@@ -3,19 +3,18 @@ import { ArrowRight, Check, Play, Sparkles } from 'lucide-react'
 import { HeroVisual } from '@/components/marketing/hero-visual'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import {
-  APP_DESCRIPTION,
-  APP_NAME,
-  APP_TAGLINE,
-  DEMO_DASHBOARD_PATH,
-  PRODUCT_CATEGORY,
-} from '@/lib/site'
+import { APP_NAME, DEMO_DASHBOARD_PATH, PRODUCT_CATEGORY } from '@/lib/site'
+
+const HERO_HEADLINE =
+  'The smarter way to build, launch, and grow your business.'
+const HERO_SUBTEXT =
+  'We help modern businesses build premium websites, deploy AI agents, and manage operations — all in one ecosystem.'
 
 const TRUST_ITEMS = [
-  '14-day free trial',
-  'No credit card',
-  'Cancel anytime',
-  'SOC 2 ready',
+  'Custom built',
+  'No templates',
+  'AI powered',
+  'Client portal included',
 ]
 
 export function HeroSection() {
@@ -40,18 +39,18 @@ export function HeroSection() {
           </Badge>
 
           <h1 className="text-balance text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-            {APP_TAGLINE.split('.')[0]}
+            {HERO_HEADLINE.replace(/\.$/, '')}
             <span className="gradient-text">.</span>
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl">
-            {APP_DESCRIPTION}
+            {HERO_SUBTEXT}
           </p>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <Button size="lg" asChild>
               <Link href="/auth/register">
-                Start free trial
+                Start a Project
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
@@ -76,8 +75,8 @@ export function HeroSection() {
         <HeroVisual />
 
         <p className="mx-auto mt-8 max-w-lg text-center text-xs text-muted-foreground">
-          Trusted by teams who run on {APP_NAME}. Explore the product before you
-          commit.
+          Trusted by businesses who run on {APP_NAME}. Explore the platform
+          before you commit.
         </p>
       </div>
     </section>
