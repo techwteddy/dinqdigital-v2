@@ -14,10 +14,10 @@ const mockHandle = handleAuthCallback as jest.MockedFunction<
   typeof handleAuthCallback
 >
 
-describe('GET /api/auth/callback', () => {
+describe('GET /auth/callback', () => {
   it('delegates to shared auth callback handler', async () => {
     const request = new NextRequest(
-      new URL('http://localhost:3000/api/auth/callback?code=abc')
+      new URL('http://localhost:3000/auth/callback?token_hash=abc&type=signup')
     )
     mockHandle.mockResolvedValue(new Response(null, { status: 307 }) as never)
 

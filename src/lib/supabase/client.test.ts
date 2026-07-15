@@ -12,11 +12,17 @@ describe('supabase browser client', () => {
     mockCreateBrowserClient.mockReturnValue({ auth: {} })
   })
 
-  it('creates browser client with env keys', () => {
+  it('creates browser client with cookie storage options', () => {
     const client = createClient()
     expect(mockCreateBrowserClient).toHaveBeenCalledWith(
       process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+      {
+        cookieOptions: {
+          path: '/',
+          sameSite: 'lax',
+        },
+      }
     )
     expect(client).toEqual({ auth: {} })
   })

@@ -3,6 +3,8 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 const PROTECTED_PREFIXES = ['/dashboard', '/org', '/settings', '/billing']
 const AUTH_PREFIXES = ['/auth']
+/** Must not redirect away — email/OAuth callbacks need to complete first */
+const AUTH_CALLBACK_PATHS = ['/auth/callback', '/api/auth/callback']
 
 export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request })
@@ -40,6 +42,9 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   const pathname = request.nextUrl.pathname
+  const isAuthCallback = AUTH_CALLBACK_PATHS.some((path) =>
+    pathname.startsWith(path)
+  )
 
   const isProtected = PROTECTED_PREFIXES.some((prefix) =>
     pathname.startsWith(prefix)
@@ -55,7 +60,7 @@ export async function middleware(request: NextRequest) {
   const isAuthRoute = AUTH_PREFIXES.some((prefix) =>
     pathname.startsWith(prefix)
   )
-  if (isAuthRoute && user) {
+  if (isAuthRoute && user && !isAuthCallback) {
     const url = request.nextUrl.clone()
     url.pathname = '/dashboard'
     return NextResponse.redirect(url)

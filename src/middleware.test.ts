@@ -58,6 +58,14 @@ describe('middleware', () => {
     expect(response.headers.get('location')).toContain('/dashboard')
   })
 
+  it('allows auth callback routes even when a session already exists', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: '1' } } })
+    const response = await middleware(
+      createRequest('/auth/callback?token_hash=abc&type=signup')
+    )
+    expect(response.status).toBe(200)
+  })
+
   it('allows authenticated users on protected routes', async () => {
     mockGetUser.mockResolvedValue({ data: { user: { id: '1' } } })
     const response = await middleware(createRequest('/dashboard/billing'))

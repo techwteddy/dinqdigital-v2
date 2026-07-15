@@ -29,6 +29,9 @@ export function RegisterForm() {
       password: data.password,
       options: {
         data: { full_name: data.name },
+        // Also set Confirm signup email template in Supabase to:
+        // {{ .SiteURL }}/auth/callback?token_hash={{ .TokenHash }}&type=signup
+        // so confirmation works on any device (PKCE code links are same-browser only).
         emailRedirectTo: AUTH_CALLBACK_URL,
       },
     })
