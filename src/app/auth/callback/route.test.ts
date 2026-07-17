@@ -8,13 +8,18 @@ jest.mock('@/lib/auth/handle-callback', () => ({
 }))
 
 import { handleAuthCallback } from '@/lib/auth/handle-callback'
-import { GET } from './route'
+import { dynamic, GET, runtime } from './route'
 
 const mockHandle = handleAuthCallback as jest.MockedFunction<
   typeof handleAuthCallback
 >
 
 describe('GET /auth/callback', () => {
+  it('is always handled dynamically by the Node.js runtime', () => {
+    expect(dynamic).toBe('force-dynamic')
+    expect(runtime).toBe('nodejs')
+  })
+
   it('delegates to shared auth callback handler', async () => {
     const request = new NextRequest(
       new URL('http://localhost:3000/auth/callback?token_hash=abc&type=signup')
