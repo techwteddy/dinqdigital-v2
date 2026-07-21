@@ -1,9 +1,9 @@
 import { type EmailOtpType } from '@supabase/supabase-js'
 import { type NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-import { prisma } from '@/lib/prisma'
 import { getSafeRedirectPath } from '@/lib/safe-redirect'
 import { ensureDefaultOrganization } from '@/lib/organizations'
+import { upsertPrismaUser } from '@/lib/auth/sync-user'
 import { logger } from '@/lib/logger'
 
 async function syncAuthUser(user: {
@@ -12,30 +12,25 @@ async function syncAuthUser(user: {
   email_confirmed_at?: string | null
   user_metadata?: Record<string, unknown>
 }) {
-  const displayName =
-    (user.user_metadata?.full_name as string | undefined) ??
-    (user.user_metadata?.name as string | undefined) ??
-    null
+  const dbUser = await upsertPrismaUser(user)
+  await ensureDefaultOrganization(user.id, dbUser.name)
+  return dbUser
+}
 
-  await prisma.user.upsert({
-    where: { id: user.id },
-    create: {
-      id: user.id,
-      email: user.email!,
-      name: displayName,
-      avatarUrl: (user.user_metadata?.avatar_url as string | undefined) ?? null,
-      emailVerified: !!user.email_confirmed_at,
-    },
-    update: {
-      email: user.email!,
-      name: displayName ?? undefined,
-      avatarUrl:
-        (user.user_metadata?.avatar_url as string | undefined) ?? undefined,
-      emailVerified: !!user.email_confirmed_at,
-    },
-  })
-
-  await ensureDefaultOrganization(user.id, displayName)
+async function resolveAuthUser(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  user: {
+    id: string
+    email?: string | null
+    email_confirmed_at?: string | null
+    user_metadata?: Record<string, unknown>
+  } | null
+) {
+  if (user) return user
+  const {
+    data: { user: sessionUser },
+  } = await supabase.auth.getUser()
+  return sessionUser
 }
 
 function redirectAfterAuth(request: NextRequest, next: string) {
@@ -64,8 +59,7 @@ function redirectWithError(request: NextRequest, message: string) {
  * - OAuth / same-browser PKCE: ?code=...
  * - Email links on any device: ?token_hash=...&type=...
  *
- * token_hash + verifyOtp is required for confirmation links opened
- * outside the browser that started signup (PKCE verifier is local-only).
+ * Always upserts the authenticated user into Prisma before redirecting.
  */
 export async function handleAuthCallback(request: NextRequest) {
   const { searchParams } = new URL(request.url)
@@ -95,8 +89,20 @@ export async function handleAuthCallback(request: NextRequest) {
       return redirectWithError(request, otpError.message)
     }
 
-    if (data.user) {
-      await syncAuthUser(data.user)
+    try {
+      const authUser = await resolveAuthUser(supabase, data.user)
+      if (!authUser) {
+        return redirectWithError(
+          request,
+          'Authentication succeeded but no user was returned'
+        )
+      }
+      await syncAuthUser(authUser)
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : 'Failed to sync authenticated user'
+      logger.error('Auth user sync error', { message })
+      return redirectWithError(request, message)
     }
 
     return redirectAfterAuth(request, next)
@@ -112,8 +118,20 @@ export async function handleAuthCallback(request: NextRequest) {
       return redirectWithError(request, sessionError.message)
     }
 
-    if (data.user) {
-      await syncAuthUser(data.user)
+    try {
+      const authUser = await resolveAuthUser(supabase, data.user)
+      if (!authUser) {
+        return redirectWithError(
+          request,
+          'Authentication succeeded but no user was returned'
+        )
+      }
+      await syncAuthUser(authUser)
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : 'Failed to sync authenticated user'
+      logger.error('Auth user sync error', { message })
+      return redirectWithError(request, message)
     }
 
     return redirectAfterAuth(request, next)

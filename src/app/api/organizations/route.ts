@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { requireAuthApi } from '@/lib/auth'
+import { upsertPrismaUser } from '@/lib/auth/sync-user'
 import { createOrganizationSchema } from '@/lib/validations'
 import { createOrganization } from '@/lib/organizations'
 import { AuthError } from '@/lib/errors'
@@ -9,6 +10,10 @@ import { logger } from '@/lib/logger'
 export async function POST(request: NextRequest) {
   try {
     const user = await requireAuthApi()
+    // Auth user may exist in Supabase before Prisma `users` — sync first
+    // so organization_members_userId_fkey is satisfied.
+    await upsertPrismaUser(user)
+
     const body = await request.json()
     const input = createOrganizationSchema.parse(body)
 
