@@ -34,7 +34,6 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URL,
       ssl: { rejectUnauthorized: false },
-      family: 4,
     },
   }),
   sharp,
