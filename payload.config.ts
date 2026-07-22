@@ -32,9 +32,9 @@ export default buildConfig({
     // interactive "create or rename enum?" prompts during db push.
     schemaName: 'payload',
     pool: {
+      // IPv4 forced via DATABASE_URL session pooler
       connectionString: process.env.DATABASE_URL,
       ssl: { rejectUnauthorized: false },
-      family: 4,
     },
   }),
   sharp,
