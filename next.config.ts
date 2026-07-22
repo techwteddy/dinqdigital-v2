@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next'
+import { withPayload } from '@payloadcms/next/withPayload'
 
 const nextConfig: NextConfig = {
   // Enable React strict mode for catching bugs early
@@ -22,11 +23,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-
-  // Redirect root to dashboard for logged-in users (handled by middleware)
-  // async redirects() {
-  //   return []
-  // },
 
   // Security headers
   async headers() {
@@ -55,6 +51,7 @@ const nextConfig: NextConfig = {
               "font-src 'self' data:",
               "connect-src 'self' https://*.supabase.co https://api.stripe.com",
               'frame-src https://js.stripe.com https://hooks.stripe.com',
+              "worker-src 'self' blob:",
             ].join('; '),
           },
         ],
@@ -69,4 +66,4 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default nextConfig
+export default withPayload(nextConfig)

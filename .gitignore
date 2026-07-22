@@ -40,6 +40,10 @@ next-env.d.ts
 /prisma/migrations/dev.db
 /prisma/migrations/dev.db-journal
 
+# Payload CMS local uploads
+/media
+/public/media
+
 # Editor
 .idea
 .vscode/*
