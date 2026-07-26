@@ -1,6 +1,9 @@
+'use client'
+
 import Link from 'next/link'
 import { ArrowRight, Check, Play, Sparkles } from 'lucide-react'
 import { HeroVisual } from '@/components/marketing/hero-visual'
+import { useStartProject } from '@/components/marketing/start-project-provider'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { APP_NAME, DEMO_DASHBOARD_PATH, PRODUCT_CATEGORY } from '@/lib/site'
@@ -18,6 +21,8 @@ const TRUST_ITEMS = [
 ]
 
 export function HeroSection() {
+  const { openQuoteModal } = useStartProject()
+
   return (
     <section className="relative overflow-hidden border-b border-border/60">
       <div className="mesh-gradient absolute inset-0" aria-hidden />
@@ -48,11 +53,9 @@ export function HeroSection() {
           </p>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <Button size="lg" asChild>
-              <Link href="/auth/register">
-                Start a Project
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+            <Button size="lg" onClick={openQuoteModal}>
+              Start a Project
+              <ArrowRight className="h-4 w-4" />
             </Button>
             <Button size="lg" variant="outline" asChild>
               <Link href={DEMO_DASHBOARD_PATH}>

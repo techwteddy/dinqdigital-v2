@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Menu, Play, X } from 'lucide-react'
 import { BrandLogo } from '@/components/brand/brand-logo'
 import { ThemeToggle } from '@/components/layout/theme-toggle'
+import { useStartProject } from '@/components/marketing/start-project-provider'
 import { Button } from '@/components/ui/button'
 import { NAV_LINKS } from '@/lib/marketing'
 import { DEMO_DASHBOARD_PATH } from '@/lib/site'
@@ -12,6 +13,7 @@ import { cn } from '@/lib/utils'
 
 export function MarketingHeader() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { openQuoteModal } = useStartProject()
 
   return (
     <header className="glass sticky top-0 z-50">
@@ -51,8 +53,8 @@ export function MarketingHeader() {
           >
             <Link href="/auth/login">Client Login</Link>
           </Button>
-          <Button size="sm" asChild>
-            <Link href="/auth/register">Start a Project</Link>
+          <Button size="sm" onClick={openQuoteModal}>
+            Start a Project
           </Button>
           <Button
             variant="ghost"

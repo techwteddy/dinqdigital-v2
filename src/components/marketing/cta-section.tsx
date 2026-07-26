@@ -1,9 +1,14 @@
+'use client'
+
 import Link from 'next/link'
 import { ArrowRight, Play } from 'lucide-react'
+import { useStartProject } from '@/components/marketing/start-project-provider'
 import { Button } from '@/components/ui/button'
 import { DEMO_DASHBOARD_PATH } from '@/lib/site'
 
 export function CtaSection() {
+  const { openQuoteModal } = useStartProject()
+
   return (
     <section className="py-20 md:py-28">
       <div className="container">
@@ -29,11 +34,9 @@ export function CtaSection() {
               no signup required.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button size="lg" asChild>
-                <Link href="/auth/register">
-                  Start a Project
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
+              <Button size="lg" onClick={openQuoteModal}>
+                Start a Project
+                <ArrowRight className="h-4 w-4" />
               </Button>
               <Button size="lg" variant="outline" asChild>
                 <Link href={DEMO_DASHBOARD_PATH}>
