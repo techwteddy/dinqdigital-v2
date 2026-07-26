@@ -11,6 +11,8 @@ dns.setDefaultResultOrder('ipv4first')
 
 import { PayloadUsers } from './src/collections/PayloadUsers'
 import { AgencyQuotes } from './src/collections/AgencyQuotes'
+import { Clients } from './src/collections/Clients'
+import { Deals } from './src/collections/Deals'
 import { Posts } from './src/collections/Posts'
 import { Team } from './src/collections/Team'
 import { Media } from './src/collections/Media'
@@ -26,7 +28,15 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [PayloadUsers, AgencyQuotes, Posts, Team, Media],
+  collections: [
+    PayloadUsers,
+    AgencyQuotes,
+    Clients,
+    Deals,
+    Posts,
+    Team,
+    Media,
+  ],
   db: postgresAdapter({
     // Keep Payload tables/enums out of Prisma's public schema to avoid
     // interactive "create or rename enum?" prompts during db push.
