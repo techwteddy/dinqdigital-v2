@@ -59,6 +59,8 @@ export default buildConfig({
         select: true,
         message: false,
       },
+      // No Lexical editor — richText fields must be overridden to textarea
+      // or /api/forms and /api/form-submissions fail with MissingEditorProp.
     }),
   ],
 })

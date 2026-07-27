@@ -1,13 +1,22 @@
 import { fireEvent, render, screen, within } from '@testing-library/react'
+import { StartProjectProvider } from '@/components/marketing/start-project-provider'
 import { MarketingHeader } from './marketing-header'
 
 jest.mock('@/components/layout/theme-toggle', () => ({
   ThemeToggle: () => <button type="button">Theme</button>,
 }))
 
+function renderHeader() {
+  return render(
+    <StartProjectProvider>
+      <MarketingHeader />
+    </StartProjectProvider>
+  )
+}
+
 describe('MarketingHeader', () => {
   it('renders navigation links', () => {
-    render(<MarketingHeader />)
+    renderHeader()
     expect(
       screen.getAllByRole('link', { name: /services/i })[0]
     ).toHaveAttribute('href', '#features')
@@ -15,12 +24,21 @@ describe('MarketingHeader', () => {
       screen.getAllByRole('link', { name: /view demo/i })[0]
     ).toHaveAttribute('href', '/demo')
     expect(
-      screen.getByRole('link', { name: /start a project/i })
-    ).toHaveAttribute('href', '/auth/register')
+      screen.getByRole('button', { name: /start a project/i })
+    ).toBeInTheDocument()
+  })
+
+  it('opens quote modal from Start a Project', () => {
+    renderHeader()
+    fireEvent.click(screen.getByRole('button', { name: /start a project/i }))
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: /send my project details/i })
+    ).toBeInTheDocument()
   })
 
   it('toggles mobile navigation and closes via nav actions', () => {
-    render(<MarketingHeader />)
+    renderHeader()
     fireEvent.click(screen.getByLabelText(/open menu/i))
     expect(screen.getByLabelText(/close menu/i)).toBeInTheDocument()
 
