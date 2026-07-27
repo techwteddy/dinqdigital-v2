@@ -61,30 +61,6 @@ export default buildConfig({
       },
       // No Lexical editor — richText fields must be overridden to textarea
       // or /api/forms and /api/form-submissions fail with MissingEditorProp.
-      formOverrides: {
-        fields: ({ defaultFields }) =>
-          defaultFields.map((field) => {
-            if ('name' in field && field.name === 'confirmationMessage') {
-              return {
-                ...field,
-                type: 'textarea',
-              }
-            }
-
-            if ('name' in field && field.name === 'emails' && field.type === 'array') {
-              return {
-                ...field,
-                fields: field.fields?.map((emailField) =>
-                  'name' in emailField && emailField.name === 'message'
-                    ? { ...emailField, type: 'textarea' }
-                    : emailField
-                ),
-              }
-            }
-
-            return field
-          }),
-      },
     }),
   ],
 })
