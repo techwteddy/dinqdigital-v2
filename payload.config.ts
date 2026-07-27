@@ -13,6 +13,8 @@ import { PayloadUsers } from './src/collections/PayloadUsers'
 import { AgencyQuotes } from './src/collections/AgencyQuotes'
 import { Clients } from './src/collections/Clients'
 import { Deals } from './src/collections/Deals'
+import { Projects } from './src/collections/Projects'
+import { Milestones } from './src/collections/Milestones'
 import { Posts } from './src/collections/Posts'
 import { Team } from './src/collections/Team'
 import { Media } from './src/collections/Media'
@@ -36,6 +38,8 @@ export default buildConfig({
     AgencyQuotes,
     Clients,
     Deals,
+    Projects,
+    Milestones,
     Posts,
     Team,
     Media,
