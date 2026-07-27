@@ -22,6 +22,9 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || 'dinq-payload-secret',
+  routes: {
+    admin: '/cms',
+  },
   admin: {
     user: PayloadUsers.slug,
     importMap: {
@@ -58,9 +61,36 @@ export default buildConfig({
         textarea: true,
         select: true,
         message: false,
+        checkbox: false,
+        country: false,
+        state: false,
+        number: false,
       },
-      // No Lexical editor — richText fields must be overridden to textarea
-      // or /api/forms and /api/form-submissions fail with MissingEditorProp.
+      formOverrides: {
+        fields: ({ defaultFields }) =>
+          defaultFields
+            .filter(
+              (field) =>
+                !('name' in field && field.name === 'confirmationMessage')
+            )
+            .map((field) => {
+              // Email notification "message" is also richText and needs an editor.
+              if (
+                'name' in field &&
+                field.name === 'emails' &&
+                field.type === 'array'
+              ) {
+                return {
+                  ...field,
+                  fields: field.fields?.filter(
+                    (emailField) =>
+                      !('name' in emailField && emailField.name === 'message')
+                  ),
+                }
+              }
+              return field
+            }),
+      },
     }),
   ],
 })
