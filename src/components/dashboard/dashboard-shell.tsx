@@ -2,16 +2,20 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useState, type ComponentType } from 'react'
 import {
   ArrowLeft,
   BarChart3,
+  Briefcase,
   CreditCard,
+  FileText,
+  Handshake,
   LayoutDashboard,
   LogOut,
   Menu,
   Search,
   Settings,
+  Shield,
   Users,
   X,
 } from 'lucide-react'
@@ -22,9 +26,46 @@ import { Button } from '@/components/ui/button'
 import { DEMO_NOTIFICATIONS } from '@/lib/demo-data'
 import { cn } from '@/lib/utils'
 
-type BasePath = '/dashboard' | '/demo'
+type BasePath = '/dashboard' | '/demo' | '/admin'
 
-function getNavItems(basePath: BasePath) {
+type NavItem = {
+  href: string
+  label: string
+  icon: ComponentType<{ className?: string }>
+  exact: boolean
+}
+
+function getNavItems(basePath: BasePath): NavItem[] {
+  if (basePath === '/admin') {
+    return [
+      { href: '/admin', label: 'Overview', icon: LayoutDashboard, exact: true },
+      {
+        href: '/admin/quotes',
+        label: 'Quotes',
+        icon: FileText,
+        exact: false,
+      },
+      {
+        href: '/admin/clients',
+        label: 'Clients',
+        icon: Users,
+        exact: false,
+      },
+      {
+        href: '/admin/projects',
+        label: 'Projects',
+        icon: Briefcase,
+        exact: false,
+      },
+      {
+        href: '/admin/deals',
+        label: 'Deals',
+        icon: Handshake,
+        exact: false,
+      },
+    ]
+  }
+
   return [
     { href: basePath, label: 'Overview', icon: LayoutDashboard, exact: true },
     {
@@ -51,7 +92,7 @@ function getNavItems(basePath: BasePath) {
       icon: Settings,
       exact: false,
     },
-  ] as const
+  ]
 }
 
 interface DashboardShellProps {
@@ -62,6 +103,7 @@ interface DashboardShellProps {
   planName?: string
   basePath?: BasePath
   isDemo?: boolean
+  showAdminLink?: boolean
   signOutAction?: () => Promise<void>
 }
 
@@ -73,13 +115,26 @@ export function DashboardShell({
   planName,
   basePath = '/dashboard',
   isDemo = false,
+  showAdminLink = false,
   signOutAction,
 }: DashboardShellProps) {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
   const initials =
     userName[0]?.toUpperCase() ?? userEmail[0]?.toUpperCase() ?? 'U'
-  const navItems = getNavItems(basePath)
+  const navItems = [
+    ...getNavItems(basePath),
+    ...(showAdminLink
+      ? [
+          {
+            href: '/admin',
+            label: 'Admin',
+            icon: Shield,
+            exact: false,
+          } satisfies NavItem,
+        ]
+      : []),
+  ]
 
   const sidebar = (
     <>
@@ -102,7 +157,7 @@ export function DashboardShell({
           const active = exact ? pathname === href : pathname.startsWith(href)
           return (
             <Link
-              key={href}
+              key={`${label}-${href}`}
               href={href}
               onClick={() => setMobileOpen(false)}
               className={cn(
@@ -217,6 +272,14 @@ export function DashboardShell({
                 <span className="font-medium text-foreground">Live demo</span>
                 {' — '}
                 explore the full dashboard without signing in
+              </p>
+            ) : basePath === '/admin' ? (
+              <p className="truncate text-sm text-muted-foreground">
+                <span className="font-medium text-foreground">
+                  {orgName ?? 'Agency'}
+                </span>
+                {' · '}
+                Admin panel
               </p>
             ) : (
               <p className="truncate text-sm text-muted-foreground">

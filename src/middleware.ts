@@ -73,9 +73,9 @@ export const config = {
   matcher: [
     /*
      * Match all request paths except for:
-     * - Payload admin (/admin) — has its own auth
+     * - Payload CMS (/cms) — has its own auth
      * - _next/static, _next/image, favicon, public assets
      */
-    '/((?!admin|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    '/((?!cms|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 }

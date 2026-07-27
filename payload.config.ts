@@ -22,6 +22,9 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || 'dinq-payload-secret',
+  routes: {
+    admin: '/cms',
+  },
   admin: {
     user: PayloadUsers.slug,
     importMap: {

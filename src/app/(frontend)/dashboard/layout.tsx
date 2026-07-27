@@ -1,3 +1,4 @@
+import { TED_ADMIN_EMAIL } from '@/lib/admin'
 import { getDbUserWithMemberships, requireAuth } from '@/lib/auth'
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
@@ -29,6 +30,7 @@ export default async function DashboardLayout({
         userEmail={user.email ?? ''}
         orgName={org?.name}
         planName={org?.subscription?.plan?.name}
+        showAdminLink={user.email === TED_ADMIN_EMAIL}
         signOutAction={signOut}
       >
         {children}
