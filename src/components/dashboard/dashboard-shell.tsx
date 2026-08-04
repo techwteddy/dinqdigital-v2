@@ -7,12 +7,17 @@ import {
   ArrowLeft,
   BarChart3,
   Briefcase,
+  ClipboardList,
   CreditCard,
   FileText,
+  FolderOpen,
   Handshake,
   LayoutDashboard,
   LogOut,
   Menu,
+  MessageSquare,
+  Package,
+  Palette,
   Search,
   Settings,
   Shield,
@@ -61,6 +66,78 @@ function getNavItems(basePath: BasePath): NavItem[] {
         href: '/admin/deals',
         label: 'Deals',
         icon: Handshake,
+        exact: false,
+      },
+      {
+        href: '/admin/billing',
+        label: 'Billing',
+        icon: CreditCard,
+        exact: false,
+      },
+      {
+        href: '/admin/files',
+        label: 'Files',
+        icon: Package,
+        exact: false,
+      },
+    ]
+  }
+
+  if (basePath === '/dashboard') {
+    return [
+      { href: basePath, label: 'Overview', icon: LayoutDashboard, exact: true },
+      {
+        href: `${basePath}/projects`,
+        label: 'Projects',
+        icon: Briefcase,
+        exact: false,
+      },
+      {
+        href: `${basePath}/files`,
+        label: 'Files',
+        icon: FolderOpen,
+        exact: false,
+      },
+      {
+        href: `${basePath}/messages`,
+        label: 'Messages',
+        icon: MessageSquare,
+        exact: false,
+      },
+      {
+        href: `${basePath}/requests`,
+        label: 'Requests',
+        icon: ClipboardList,
+        exact: false,
+      },
+      {
+        href: `${basePath}/brand`,
+        label: 'Brand Kit',
+        icon: Palette,
+        exact: false,
+      },
+      {
+        href: `${basePath}/analytics`,
+        label: 'Analytics',
+        icon: BarChart3,
+        exact: false,
+      },
+      {
+        href: `${basePath}/team`,
+        label: 'Team',
+        icon: Users,
+        exact: false,
+      },
+      {
+        href: `${basePath}/billing`,
+        label: 'Billing',
+        icon: CreditCard,
+        exact: false,
+      },
+      {
+        href: `${basePath}/settings`,
+        label: 'Settings',
+        icon: Settings,
         exact: false,
       },
     ]
