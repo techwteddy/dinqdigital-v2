@@ -38,9 +38,13 @@ export function HeroSection() {
 
       <div className="container relative py-20 md:py-28 lg:py-32">
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-          <Badge variant="secondary" className="mb-6 gap-1.5 px-3 py-1">
+          <Badge variant="secondary" className="mb-2 gap-1.5 px-3 py-1">
             <Sparkles className="h-3 w-3 text-primary" />
             {PRODUCT_CATEGORY}
+          </Badge>
+
+          <Badge variant="secondary" className="mb-6 gap-1.5 px-3 py-1">
+            Now booking projects for August 2026
           </Badge>
 
           <h1 className="text-balance text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
