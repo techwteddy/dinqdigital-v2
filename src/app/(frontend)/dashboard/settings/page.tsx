@@ -46,7 +46,15 @@ export default async function SettingsPage() {
             <label htmlFor="name" className="text-sm font-medium">
               Full name
             </label>
-            <Input id="name" defaultValue={dbUser?.name ?? ''} readOnly />
+            <Input
+              id="name"
+              defaultValue={
+                typeof user.user_metadata?.full_name === 'string'
+                  ? user.user_metadata.full_name
+                  : (dbUser?.name ?? '')
+              }
+              readOnly
+            />
           </div>
           <div className="space-y-2">
             <label htmlFor="email" className="text-sm font-medium">

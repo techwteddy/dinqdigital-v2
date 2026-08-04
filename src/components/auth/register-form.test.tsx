@@ -48,7 +48,13 @@ describe('RegisterForm', () => {
     fireEvent.click(screen.getByRole('button', { name: /create account/i }))
 
     await waitFor(() => {
-      expect(signUp).toHaveBeenCalled()
+      expect(signUp).toHaveBeenCalledWith({
+        email: 'john@example.com',
+        password: 'Password1',
+        options: expect.objectContaining({
+          data: { full_name: 'John Doe' },
+        }),
+      })
       expect(screen.getByText(/check your email/i)).toBeInTheDocument()
     })
   })
