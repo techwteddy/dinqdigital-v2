@@ -424,3 +424,32 @@ tasks:
       push_comments: false
     created_at: 2026-08-04T05:08:00.000Z
     updated_at: 2026-08-04T05:08:00.000Z
+  - id: task_016
+    title: Projects access rules and admin Kanban board
+    description: Open public read/update on Projects collection and replace admin
+      projects page with a drag-and-drop Kanban board.
+    source_links: []
+    status: done
+    priority: P1
+    labels: []
+    repo_targets: []
+    acceptance_criteria: []
+    dependencies: []
+    planning:
+      split_status: pending
+      risk: medium
+    execution_defaults:
+      manual_approval_required: false
+      auto_commit: true
+      push_when_done: true
+      create_pr: false
+      merge_pr: false
+      worktree_mode: direct
+      preferred_agents: []
+      max_subagents: 5
+    sync:
+      source_of_truth: backlog
+      push_status: false
+      push_comments: false
+    created_at: 2026-08-05T22:10:00.000Z
+    updated_at: 2026-08-05T22:15:00.000Z

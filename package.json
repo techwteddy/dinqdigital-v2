@@ -61,6 +61,7 @@
     "prepare": "node -e \"if(process.env.HUSKY!=='0'&&process.env.CI!=='true'&&process.env.VERCEL!=='1'){require('child_process').execSync('husky install',{stdio:'inherit'})}\""
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
     "@hookform/resolvers": "^3.9.0",
     "@payloadcms/db-postgres": "3.86.0",
     "@payloadcms/next": "3.86.0",
