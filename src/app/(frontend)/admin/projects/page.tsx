@@ -2,21 +2,23 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
-  DragDropContext,
-  Draggable,
-  Droppable,
-  type DropResult,
-} from '@hello-pangea/dnd'
-import { Briefcase } from 'lucide-react'
+  DndContext,
+  PointerSensor,
+  closestCorners,
+  useDroppable,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from '@dnd-kit/core'
+import {
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 import { DashboardPageHeader } from '@/components/dashboard/dashboard-page-header'
 import { Badge } from '@/components/ui/badge'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 
 type ProjectStatus =
@@ -32,7 +34,6 @@ type ProjectCard = {
   clientName: string
   orgId: string
   status: ProjectStatus
-  startDate?: string | null
   value?: number | null
 }
 
@@ -45,6 +46,15 @@ const COLUMNS: Array<{ key: ProjectStatus; label: string }> = [
   { key: 'complete', label: 'Complete' },
 ]
 
+const STATUS_LABELS: Record<ProjectStatus, string> = {
+  discovery: 'Discovery',
+  design: 'Design',
+  dev: 'Dev',
+  qa: 'QA',
+  launch: 'Launch',
+  complete: 'Complete',
+}
+
 function formatValue(value?: number | null): string {
   if (value == null || Number.isNaN(value)) return '—'
   return new Intl.NumberFormat('en-US', {
@@ -54,17 +64,93 @@ function formatValue(value?: number | null): string {
   }).format(value)
 }
 
-function formatStartDate(date?: string | null): string {
-  if (!date) return '—'
-  return new Date(date).toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-  })
+function normalizeStatus(status?: string | null): ProjectStatus {
+  return COLUMNS.some((column) => column.key === status)
+    ? (status as ProjectStatus)
+    : 'discovery'
 }
 
-function normalizeStatus(status?: string | null): ProjectStatus {
-  const match = COLUMNS.find((column) => column.key === status)
-  return match?.key ?? 'discovery'
+function SortableProjectCard({ project }: { project: ProjectCard }) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: project.id })
+
+  return (
+    <Card
+      ref={setNodeRef}
+      style={{
+        transform: CSS.Transform.toString(transform),
+        transition,
+      }}
+      {...attributes}
+      {...listeners}
+      className={cn(
+        'cursor-grab touch-none transition-all hover:border-primary/20 hover:shadow-md active:cursor-grabbing',
+        isDragging && 'border-primary opacity-70 shadow-lg'
+      )}
+    >
+      <CardHeader className="pb-2">
+        <CardTitle className="text-base font-bold">
+          {project.clientName}
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-2">
+        <p className="text-sm font-semibold text-foreground">
+          {formatValue(project.value)}
+        </p>
+        <p className="truncate text-xs text-muted-foreground">{project.orgId}</p>
+        <Badge variant="secondary">{STATUS_LABELS[project.status]}</Badge>
+      </CardContent>
+    </Card>
+  )
+}
+
+function KanbanColumn({
+  status,
+  label,
+  projects,
+}: {
+  status: ProjectStatus
+  label: string
+  projects: ProjectCard[]
+}) {
+  const { setNodeRef, isOver } = useDroppable({ id: status })
+
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="flex items-center justify-between px-1">
+        <h2 className="text-sm font-semibold">{label}</h2>
+        <Badge variant="secondary">{projects.length}</Badge>
+      </div>
+      <SortableContext
+        items={projects.map((project) => project.id)}
+        strategy={verticalListSortingStrategy}
+      >
+        <div
+          ref={setNodeRef}
+          className={cn(
+            'flex min-h-[220px] flex-col gap-3 rounded-xl border border-border bg-muted/20 p-3 transition-colors',
+            isOver && 'border-primary/40 bg-primary/5'
+          )}
+        >
+          {projects.length === 0 ? (
+            <p className="px-1 py-8 text-center text-xs text-muted-foreground">
+              No projects
+            </p>
+          ) : (
+            projects.map((project) => (
+              <SortableProjectCard key={project.id} project={project} />
+            ))
+          )}
+        </div>
+      </SortableContext>
+    </div>
+  )
 }
 
 export default function AdminProjectsPage() {
@@ -72,11 +158,15 @@ export default function AdminProjectsPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 6 } })
+  )
+
   const loadProjects = useCallback(async () => {
     setLoading(true)
     setError(null)
     try {
-      const response = await fetch('/api/projects?limit=100&depth=0')
+      const response = await fetch('/api/projects?limit=100')
       if (!response.ok) throw new Error('Failed to load projects')
       const data = (await response.json()) as {
         docs?: Array<{
@@ -84,7 +174,6 @@ export default function AdminProjectsPage() {
           clientName?: string | null
           orgId?: string | null
           status?: string | null
-          startDate?: string | null
           value?: number | null
         }>
       }
@@ -95,7 +184,6 @@ export default function AdminProjectsPage() {
           clientName: doc.clientName?.trim() || 'Untitled project',
           orgId: doc.orgId?.trim() || '—',
           status: normalizeStatus(doc.status),
-          startDate: doc.startDate,
           value: doc.value,
         }))
       )
@@ -120,29 +208,30 @@ export default function AdminProjectsPage() {
     [projects]
   )
 
-  async function handleDragEnd(result: DropResult) {
-    const { destination, source, draggableId } = result
-    if (!destination) return
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return
-    }
+  async function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event
+    if (!over) return
 
-    const nextStatus = normalizeStatus(destination.droppableId)
+    const projectId = String(active.id)
+    const overId = String(over.id)
+    const nextStatus = COLUMNS.some((column) => column.key === overId)
+      ? normalizeStatus(overId)
+      : projects.find((project) => project.id === overId)?.status
+
+    if (!nextStatus) return
+
+    const current = projects.find((project) => project.id === projectId)
+    if (!current || current.status === nextStatus) return
+
     const previous = projects
-
-    setProjects((current) =>
-      current.map((project) =>
-        project.id === draggableId
-          ? { ...project, status: nextStatus }
-          : project
+    setProjects((items) =>
+      items.map((project) =>
+        project.id === projectId ? { ...project, status: nextStatus } : project
       )
     )
 
     try {
-      const response = await fetch(`/api/projects/${draggableId}`, {
+      const response = await fetch(`/api/projects/${projectId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: nextStatus }),
@@ -177,88 +266,23 @@ export default function AdminProjectsPage() {
             Loading projects…
           </CardContent>
         </Card>
-      ) : projects.length === 0 ? (
-        <Card className="border-dashed">
-          <CardContent className="flex flex-col items-center py-14 text-center">
-            <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
-              <Briefcase className="h-7 w-7 text-primary" />
-            </div>
-            <CardTitle className="mb-2">No projects yet</CardTitle>
-            <CardDescription className="max-w-md">
-              Create a project in Payload CMS to start tracking work on this
-              board.
-            </CardDescription>
-          </CardContent>
-        </Card>
       ) : (
-        <DragDropContext onDragEnd={handleDragEnd}>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCorners}
+          onDragEnd={handleDragEnd}
+        >
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
             {columns.map((column) => (
-              <div key={column.key} className="flex flex-col gap-3">
-                <div className="flex items-center justify-between px-1">
-                  <h2 className="text-sm font-semibold">{column.label}</h2>
-                  <Badge variant="secondary">{column.projects.length}</Badge>
-                </div>
-
-                <Droppable droppableId={column.key}>
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.droppableProps}
-                      className={cn(
-                        'flex min-h-[220px] flex-col gap-3 rounded-xl border border-border bg-muted/20 p-3 transition-colors',
-                        snapshot.isDraggingOver && 'border-primary/40 bg-primary/5'
-                      )}
-                    >
-                      {column.projects.length === 0 && (
-                        <p className="px-1 py-8 text-center text-xs text-muted-foreground">
-                          No projects
-                        </p>
-                      )}
-
-                      {column.projects.map((project, index) => (
-                        <Draggable
-                          key={project.id}
-                          draggableId={project.id}
-                          index={index}
-                        >
-                          {(dragProvided, dragSnapshot) => (
-                            <Card
-                              ref={dragProvided.innerRef}
-                              {...dragProvided.draggableProps}
-                              {...dragProvided.dragHandleProps}
-                              className={cn(
-                                'transition-all hover:border-primary/20 hover:shadow-md',
-                                dragSnapshot.isDragging &&
-                                  'border-primary shadow-lg'
-                              )}
-                            >
-                              <CardHeader className="pb-2">
-                                <CardTitle className="text-base font-bold">
-                                  {project.clientName}
-                                </CardTitle>
-                              </CardHeader>
-                              <CardContent className="space-y-1 text-xs text-muted-foreground">
-                                <p className="text-sm font-semibold text-foreground">
-                                  {formatValue(project.value)}
-                                </p>
-                                <p>{formatStartDate(project.startDate)}</p>
-                                <p className="truncate text-[11px] text-muted-foreground">
-                                  {project.orgId}
-                                </p>
-                              </CardContent>
-                            </Card>
-                          )}
-                        </Draggable>
-                      ))}
-                      {provided.placeholder}
-                    </div>
-                  )}
-                </Droppable>
-              </div>
+              <KanbanColumn
+                key={column.key}
+                status={column.key}
+                label={column.label}
+                projects={column.projects}
+              />
             ))}
           </div>
-        </DragDropContext>
+        </DndContext>
       )}
     </div>
   )
