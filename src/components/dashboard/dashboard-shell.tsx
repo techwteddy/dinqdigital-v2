@@ -57,6 +57,12 @@ function getNavItems(basePath: BasePath): NavItem[] {
         exact: false,
       },
       {
+        href: '/admin/messages',
+        label: 'Messages',
+        icon: MessageSquare,
+        exact: false,
+      },
+      {
         href: '/admin/projects',
         label: 'Projects',
         icon: Briefcase,
