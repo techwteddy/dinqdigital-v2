@@ -27,6 +27,7 @@ import {
 import { BrandLogo } from '@/components/brand/brand-logo'
 import { DashboardNotifications } from '@/components/dashboard/dashboard-notifications'
 import { ThemeToggle } from '@/components/layout/theme-toggle'
+import { NotificationBell } from '@/components/notifications/notification-bell'
 import { Button } from '@/components/ui/button'
 import { DEMO_NOTIFICATIONS } from '@/lib/demo-data'
 import { cn } from '@/lib/utils'
@@ -314,6 +315,26 @@ export function DashboardShell({
     </>
   )
 
+  const liveTopBarExtras = (
+    <>
+      <Button
+        variant="outline"
+        size="sm"
+        className="hidden gap-2 text-muted-foreground lg:flex"
+        type="button"
+        aria-label="Search dashboard"
+      >
+        <Search className="h-4 w-4" />
+        <span className="text-xs">Search…</span>
+        <kbd className="pointer-events-none ml-2 hidden rounded border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium sm:inline">
+          ⌘K
+        </kbd>
+      </Button>
+      <NotificationBell />
+      <ThemeToggle />
+    </>
+  )
+
   return (
     <div className="flex min-h-screen bg-background">
       <aside className="hidden w-64 flex-col border-r border-border bg-card/50 backdrop-blur md:flex">
@@ -324,7 +345,11 @@ export function DashboardShell({
         <header className="flex h-16 items-center justify-between gap-2 border-b border-border bg-card/50 px-4 backdrop-blur md:hidden">
           <BrandLogo size="sm" href={isDemo ? '/' : '/'} />
           <div className="flex items-center gap-1">
-            <DashboardNotifications items={DEMO_NOTIFICATIONS} />
+            {isDemo ? (
+              <DashboardNotifications items={DEMO_NOTIFICATIONS} />
+            ) : (
+              <NotificationBell />
+            )}
             <ThemeToggle />
             <Button
               variant="ghost"
@@ -380,7 +405,9 @@ export function DashboardShell({
               </p>
             )}
           </div>
-          <div className="flex shrink-0 items-center gap-2">{topBarExtras}</div>
+          <div className="flex shrink-0 items-center gap-2">
+            {isDemo ? topBarExtras : liveTopBarExtras}
+          </div>
         </div>
 
         <main className="flex-1 overflow-auto bg-gradient-to-b from-muted/20 to-background">
