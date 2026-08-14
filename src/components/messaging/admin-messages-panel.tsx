@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { TED_ADMIN_EMAIL } from '@/lib/admin'
+import { TED_ADMIN_EMAIL } from '@/lib/constants'
 import { formatRelativeDate, cn } from '@/lib/utils'
 
 type MessageItem = {
