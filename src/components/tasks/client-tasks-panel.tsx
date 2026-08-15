@@ -16,7 +16,7 @@ import {
 } from '@/lib/tasks'
 import { cn } from '@/lib/utils'
 
-const COLUMNS: TaskStatus[] = ['todo', 'in_progress', 'done']
+const COLUMNS: TaskStatus[] = ['todo', 'done']
 
 type ClientTasksPanelProps = {
   orgId: string
@@ -119,7 +119,7 @@ export function ClientTasksPanel({ orgId }: ClientTasksPanelProps) {
         </p>
       )}
 
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="grid gap-4 lg:grid-cols-2">
         {columns.map((column) => (
           <div key={column.status} className="flex flex-col gap-3">
             <div className="flex items-center justify-between px-1">
