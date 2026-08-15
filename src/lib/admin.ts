@@ -17,6 +17,8 @@ export type FormSubmissionDoc = {
 
 export type ClientDoc = {
   id: string | number
+  orgId?: string | null
+  dinqId?: string | null
   companyName?: string | null
   contactName?: string | null
   email?: string | null

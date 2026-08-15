@@ -18,6 +18,7 @@ import { Milestones } from './src/collections/Milestones'
 import { Posts } from './src/collections/Posts'
 import { Team } from './src/collections/Team'
 import { Media } from './src/collections/Media'
+import { notifyClientFromFormSubmission } from './src/lib/notify-client-from-submission'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -94,6 +95,22 @@ export default buildConfig({
               }
               return field
             }),
+      },
+      // Quote + service forms POST to Payload /api/form-submissions.
+      // After save, notify the matching DinqClaw client (fail silently).
+      formSubmissionOverrides: {
+        hooks: {
+          afterChange: [
+            async ({ doc, operation, req }) => {
+              if (operation !== 'create') return doc
+              void notifyClientFromFormSubmission({
+                payload: req.payload,
+                doc,
+              })
+              return doc
+            },
+          ],
+        },
       },
     }),
   ],
