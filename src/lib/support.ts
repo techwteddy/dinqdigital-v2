@@ -1,12 +1,11 @@
 export type SupportStatus = 'open' | 'in_progress' | 'resolved'
 export type SupportPriority = 'low' | 'medium' | 'high' | 'urgent'
 export type SupportCategory =
-  | 'general'
   | 'bug'
-  | 'feature'
+  | 'website_down'
+  | 'performance'
   | 'billing'
-  | 'design'
-  | 'content'
+  | 'general_help'
 
 export type SupportTicketItem = {
   id: string
@@ -35,12 +34,11 @@ export const SUPPORT_PRIORITY_LABELS: Record<SupportPriority, string> = {
 }
 
 export const SUPPORT_CATEGORY_LABELS: Record<SupportCategory, string> = {
-  general: 'General',
   bug: 'Bug Report',
-  feature: 'Feature Request',
+  website_down: 'Website Down',
+  performance: 'Performance Issue',
   billing: 'Billing',
-  design: 'Design',
-  content: 'Content',
+  general_help: 'General Help',
 }
 
 export function formatSupportDate(date?: string | null): string {

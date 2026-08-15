@@ -29,7 +29,7 @@ export default async function DashboardRequestsPage() {
     <div className="flex flex-col gap-8">
       <DashboardPageHeader
         title="Service Requests"
-        description="Submit bugs, features, content updates, and design changes."
+        description="Submit feature, content, design, page, and integration requests."
       />
 
       {!org ? (

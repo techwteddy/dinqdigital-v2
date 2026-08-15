@@ -13,7 +13,7 @@ const updateTicketSchema = z.object({
   status: z.enum(['open', 'in_progress', 'resolved']).optional(),
   priority: z.enum(['low', 'medium', 'high', 'urgent']).optional(),
   category: z
-    .enum(['general', 'bug', 'feature', 'billing', 'design', 'content'])
+    .enum(['bug', 'website_down', 'performance', 'billing', 'general_help'])
     .optional(),
 })
 

@@ -192,10 +192,11 @@ export async function ensureServiceRequestFormId(): Promise<string> {
           label: 'Request Type',
           required: true,
           options: [
-            { label: 'Bug Fix', value: 'Bug Fix' },
             { label: 'New Feature', value: 'New Feature' },
             { label: 'Content Update', value: 'Content Update' },
             { label: 'Design Change', value: 'Design Change' },
+            { label: 'Additional Page', value: 'Additional Page' },
+            { label: 'Integration Request', value: 'Integration Request' },
           ],
         },
         {

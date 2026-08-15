@@ -12,10 +12,11 @@ import {
 } from '@/components/ui/card'
 
 const REQUEST_TYPES = [
-  'Bug Fix',
   'New Feature',
   'Content Update',
   'Design Change',
+  'Additional Page',
+  'Integration Request',
 ] as const
 
 type ServiceRequestFormProps = {

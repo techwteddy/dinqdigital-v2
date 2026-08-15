@@ -12,7 +12,7 @@ const createTicketSchema = z.object({
   description: z.string().min(1).max(5000),
   priority: z.enum(['low', 'medium', 'high', 'urgent']).optional(),
   category: z
-    .enum(['general', 'bug', 'feature', 'billing', 'design', 'content'])
+    .enum(['bug', 'website_down', 'performance', 'billing', 'general_help'])
     .optional(),
 })
 
@@ -89,7 +89,7 @@ export async function POST(request: NextRequest) {
         title: input.title,
         description: input.description,
         priority: input.priority ?? 'medium',
-        category: input.category ?? 'general',
+        category: input.category ?? 'general_help',
       },
     })
 

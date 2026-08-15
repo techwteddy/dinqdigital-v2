@@ -45,7 +45,7 @@ type TicketFormState = {
 const EMPTY_FORM: TicketFormState = {
   title: '',
   description: '',
-  category: 'general',
+  category: 'general_help',
   priority: 'medium',
 }
 
@@ -157,7 +157,8 @@ export function ClientSupportPanel({ orgId }: ClientSupportPanelProps) {
           {tickets.map((ticket) => {
             const status = (ticket.status || 'open') as SupportStatus
             const priority = (ticket.priority || 'medium') as SupportPriority
-            const category = (ticket.category || 'general') as SupportCategory
+            const category = (ticket.category ||
+              'general_help') as SupportCategory
             return (
               <Card key={ticket.id}>
                 <CardHeader className="flex flex-row flex-wrap items-start justify-between gap-3 space-y-0 p-4 pb-2">

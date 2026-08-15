@@ -171,7 +171,7 @@ export function AdminSupportPanel() {
                 const priority = (ticket.priority ||
                   'medium') as SupportPriority
                 const category = (ticket.category ||
-                  'general') as SupportCategory
+                  'general_help') as SupportCategory
                 return (
                   <TableRow
                     key={ticket.id}
@@ -248,7 +248,7 @@ export function AdminSupportPanel() {
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary">
                   {SUPPORT_CATEGORY_LABELS[
-                    (selected.category || 'general') as SupportCategory
+                    (selected.category || 'general_help') as SupportCategory
                   ] ?? selected.category}
                 </Badge>
                 <Badge
