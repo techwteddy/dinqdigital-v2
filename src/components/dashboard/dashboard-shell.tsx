@@ -12,6 +12,7 @@ import {
   CreditCard,
   FileText,
   FolderOpen,
+  Globe,
   Handshake,
   LayoutDashboard,
   LifeBuoy,
@@ -41,6 +42,7 @@ type NavItem = {
   label: string
   icon: ComponentType<{ className?: string }>
   exact: boolean
+  external?: boolean
 }
 
 function getNavItems(basePath: BasePath): NavItem[] {
@@ -112,6 +114,13 @@ function getNavItems(basePath: BasePath): NavItem[] {
         label: 'Projects',
         icon: Briefcase,
         exact: false,
+      },
+      {
+        href: 'https://dinqdigital.com/cms',
+        label: 'Manage Website',
+        icon: Globe,
+        exact: false,
+        external: true,
       },
       {
         href: `${basePath}/tasks`,
@@ -232,7 +241,7 @@ export function DashboardShell({
   const [mobileOpen, setMobileOpen] = useState(false)
   const initials =
     userName[0]?.toUpperCase() ?? userEmail[0]?.toUpperCase() ?? 'U'
-  const navItems = [
+  const navItems: NavItem[] = [
     ...getNavItems(basePath),
     ...(showAdminLink
       ? [
@@ -263,12 +272,18 @@ export function DashboardShell({
       )}
 
       <nav className="flex-1 space-y-0.5 p-3" aria-label="Dashboard">
-        {navItems.map(({ href, label, icon: Icon, exact }) => {
-          const active = exact ? pathname === href : pathname.startsWith(href)
+        {navItems.map(({ href, label, icon: Icon, exact, external }) => {
+          const active = external
+            ? false
+            : exact
+              ? pathname === href
+              : pathname.startsWith(href)
           return (
             <Link
               key={`${label}-${href}`}
               href={href}
+              target={external ? '_blank' : undefined}
+              rel={external ? 'noopener noreferrer' : undefined}
               onClick={() => setMobileOpen(false)}
               className={cn(
                 'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
