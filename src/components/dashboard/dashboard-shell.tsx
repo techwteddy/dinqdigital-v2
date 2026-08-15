@@ -7,6 +7,7 @@ import {
   ArrowLeft,
   BarChart3,
   Briefcase,
+  CheckSquare,
   ClipboardList,
   CreditCard,
   FileText,
@@ -70,6 +71,12 @@ function getNavItems(basePath: BasePath): NavItem[] {
         exact: false,
       },
       {
+        href: '/admin/tasks',
+        label: 'Tasks',
+        icon: CheckSquare,
+        exact: false,
+      },
+      {
         href: '/admin/deals',
         label: 'Deals',
         icon: Handshake,
@@ -97,6 +104,12 @@ function getNavItems(basePath: BasePath): NavItem[] {
         href: `${basePath}/projects`,
         label: 'Projects',
         icon: Briefcase,
+        exact: false,
+      },
+      {
+        href: `${basePath}/tasks`,
+        label: 'Tasks',
+        icon: CheckSquare,
         exact: false,
       },
       {
