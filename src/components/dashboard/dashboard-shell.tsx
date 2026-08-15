@@ -21,6 +21,7 @@ import {
   MessageSquare,
   Package,
   Palette,
+  Receipt,
   Search,
   Settings,
   Shield,
@@ -83,6 +84,12 @@ function getNavItems(basePath: BasePath): NavItem[] {
         href: '/admin/support',
         label: 'Support',
         icon: LifeBuoy,
+        exact: false,
+      },
+      {
+        href: '/admin/invoices',
+        label: 'Invoices',
+        icon: Receipt,
         exact: false,
       },
       {
@@ -174,6 +181,12 @@ function getNavItems(basePath: BasePath): NavItem[] {
         href: `${basePath}/billing`,
         label: 'Billing',
         icon: CreditCard,
+        exact: false,
+      },
+      {
+        href: `${basePath}/invoices`,
+        label: 'Invoices',
+        icon: Receipt,
         exact: false,
       },
       {

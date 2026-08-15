@@ -276,3 +276,25 @@ model SupportTicket {
 
   @@map("support_tickets")
 }
+
+// ─────────────────────────────────────────────
+// INVOICES
+// ─────────────────────────────────────────────
+
+model Invoice {
+  id          String    @id @default(uuid())
+  orgId       String
+  clientEmail String
+  title       String
+  amount      Float
+  status      String    @default("pending")
+  type        String    @default("stripe")
+  stripeId    String?
+  notes       String?
+  dueDate     DateTime?
+  paidAt      DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("invoices")
+}
