@@ -14,6 +14,7 @@ import {
   FolderOpen,
   Handshake,
   LayoutDashboard,
+  LifeBuoy,
   LogOut,
   Menu,
   MessageSquare,
@@ -77,6 +78,12 @@ function getNavItems(basePath: BasePath): NavItem[] {
         exact: false,
       },
       {
+        href: '/admin/support',
+        label: 'Support',
+        icon: LifeBuoy,
+        exact: false,
+      },
+      {
         href: '/admin/deals',
         label: 'Deals',
         icon: Handshake,
@@ -128,6 +135,12 @@ function getNavItems(basePath: BasePath): NavItem[] {
         href: `${basePath}/requests`,
         label: 'Requests',
         icon: ClipboardList,
+        exact: false,
+      },
+      {
+        href: `${basePath}/support`,
+        label: 'Support',
+        icon: LifeBuoy,
         exact: false,
       },
       {
