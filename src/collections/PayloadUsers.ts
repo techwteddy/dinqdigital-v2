@@ -7,5 +7,24 @@ export const PayloadUsers: CollectionConfig = {
   admin: {
     useAsTitle: 'email',
   },
-  fields: [],
+  fields: [
+    {
+      name: 'role',
+      type: 'select',
+      options: [
+        { label: 'Admin', value: 'admin' },
+        { label: 'Editor', value: 'editor' },
+      ],
+      defaultValue: 'editor',
+      required: true,
+    },
+    {
+      name: 'orgId',
+      type: 'text',
+      label: 'Organization ID',
+      admin: {
+        description: 'Leave blank for admin users',
+      },
+    },
+  ],
 }

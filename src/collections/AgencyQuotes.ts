@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { adminOnlyAccess } from '@/lib/payload-access'
 
 export const AgencyQuotes: CollectionConfig = {
   slug: 'agency-quotes',
@@ -6,6 +7,7 @@ export const AgencyQuotes: CollectionConfig = {
     useAsTitle: 'clientName',
     defaultColumns: ['clientName', 'email', 'budgetTier', 'status', 'createdAt'],
   },
+  access: adminOnlyAccess,
   fields: [
     { name: 'clientName', type: 'text', required: true },
     { name: 'email', type: 'email', required: true },

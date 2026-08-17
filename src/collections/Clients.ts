@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { orgScopedAccess } from '@/lib/payload-access'
 
 export const Clients: CollectionConfig = {
   slug: 'clients',
@@ -6,6 +7,7 @@ export const Clients: CollectionConfig = {
     useAsTitle: 'companyName',
     defaultColumns: ['companyName', 'contactName', 'email', 'plan', 'status'],
   },
+  access: orgScopedAccess,
   fields: [
     { name: 'orgId', type: 'text' },
     { name: 'companyName', type: 'text', required: true },

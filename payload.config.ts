@@ -19,6 +19,7 @@ import { Posts } from './src/collections/Posts'
 import { Team } from './src/collections/Team'
 import { Media } from './src/collections/Media'
 import { notifyClientFromFormSubmission } from './src/lib/notify-client-from-submission'
+import { adminOnlyAccess } from './src/lib/payload-access'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -99,6 +100,7 @@ export default buildConfig({
       // Quote + service forms POST to Payload /api/form-submissions.
       // After save, notify the matching DinqClaw client (fail silently).
       formSubmissionOverrides: {
+        access: adminOnlyAccess,
         hooks: {
           afterChange: [
             async ({ doc, operation, req }) => {
