@@ -11,7 +11,11 @@ interface AdminLayoutProps {
 export default async function AdminLayout({ children }: AdminLayoutProps) {
   const user = await getUser()
 
-  if (!user || user.email !== TED_ADMIN_EMAIL) {
+  if (!user) {
+    redirect('/auth/login?redirect=/admin')
+  }
+
+  if (user.email !== TED_ADMIN_EMAIL) {
     redirect('/')
   }
 

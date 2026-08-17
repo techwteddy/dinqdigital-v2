@@ -41,8 +41,10 @@ export function LoginForm() {
 function LoginFormContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  // middleware sets ?redirectTo= when someone hits /dashboard while logged out
-  const redirectTo = getSafeRedirectPath(searchParams.get('redirectTo'))
+  // Prefer ?redirect= (admin), fall back to middleware ?redirectTo=
+  const redirectTo = getSafeRedirectPath(
+    searchParams.get('redirect') ?? searchParams.get('redirectTo')
+  )
   const authError = searchParams.get('error')
   const authMessage = searchParams.get('message')
   const [showPassword, setShowPassword] = useState(false)
