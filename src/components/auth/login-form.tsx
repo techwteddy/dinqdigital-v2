@@ -9,6 +9,7 @@ import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { AUTH_CALLBACK_URL } from '@/lib/site'
 import { signInSchema, type SignInInput } from '@/lib/validations'
+import { isTedAdmin } from '@/lib/constants'
 import { getSafeRedirectPath } from '@/lib/safe-redirect'
 
 function LoginFormFallback() {
@@ -80,7 +81,7 @@ function LoginFormContent() {
       return
     }
 
-    router.push(redirectTo)
+    router.push(isTedAdmin(data.email) ? '/admin' : redirectTo)
     router.refresh() // pick up the new session cookie on the server
   }
 

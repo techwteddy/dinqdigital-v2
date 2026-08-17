@@ -1,5 +1,6 @@
 import { type EmailOtpType } from '@supabase/supabase-js'
 import { type NextRequest, NextResponse } from 'next/server'
+import { isTedAdmin } from '@/lib/constants'
 import { createClient } from '@/lib/supabase/server'
 import { getSafeRedirectPath } from '@/lib/safe-redirect'
 import { ensureDefaultOrganization } from '@/lib/organizations'
@@ -98,14 +99,16 @@ export async function handleAuthCallback(request: NextRequest) {
         )
       }
       await syncAuthUser(authUser)
+      return redirectAfterAuth(
+        request,
+        isTedAdmin(authUser.email) ? '/admin' : next
+      )
     } catch (err) {
       const message =
         err instanceof Error ? err.message : 'Failed to sync authenticated user'
       logger.error('Auth user sync error', { message })
       return redirectWithError(request, message)
     }
-
-    return redirectAfterAuth(request, next)
   }
 
   // Same-browser PKCE / OAuth code exchange
@@ -127,14 +130,16 @@ export async function handleAuthCallback(request: NextRequest) {
         )
       }
       await syncAuthUser(authUser)
+      return redirectAfterAuth(
+        request,
+        isTedAdmin(authUser.email) ? '/admin' : next
+      )
     } catch (err) {
       const message =
         err instanceof Error ? err.message : 'Failed to sync authenticated user'
       logger.error('Auth user sync error', { message })
       return redirectWithError(request, message)
     }
-
-    return redirectAfterAuth(request, next)
   }
 
   return redirectWithError(request, 'No code provided')

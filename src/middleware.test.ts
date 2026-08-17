@@ -58,6 +58,24 @@ describe('middleware', () => {
     expect(response.headers.get('location')).toContain('/dashboard')
   })
 
+  it('redirects Ted from auth routes to /admin', async () => {
+    mockGetUser.mockResolvedValue({
+      data: { user: { id: '1', email: 'techwithteddy@gmail.com' } },
+    })
+    const response = await middleware(createRequest('/auth/login'))
+    expect(response.status).toBe(307)
+    expect(response.headers.get('location')).toContain('/admin')
+  })
+
+  it('redirects Ted away from /dashboard', async () => {
+    mockGetUser.mockResolvedValue({
+      data: { user: { id: '1', email: 'techwithteddy@gmail.com' } },
+    })
+    const response = await middleware(createRequest('/dashboard'))
+    expect(response.status).toBe(307)
+    expect(response.headers.get('location')).toContain('/admin')
+  })
+
   it('allows auth callback routes even when a session already exists', async () => {
     mockGetUser.mockResolvedValue({ data: { user: { id: '1' } } })
     const response = await middleware(

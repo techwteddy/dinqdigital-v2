@@ -1,4 +1,4 @@
-import { TED_ADMIN_EMAIL } from '@/lib/admin'
+import { isTedAdmin } from '@/lib/constants'
 import { getDbUserWithMemberships, requireAuth } from '@/lib/auth'
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
@@ -12,6 +12,9 @@ export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
   const user = await requireAuth()
+  if (isTedAdmin(user.email)) {
+    redirect('/admin')
+  }
   const dbUser = await getDbUserWithMemberships()
 
   const org = dbUser?.memberships[0]?.organization
@@ -30,7 +33,7 @@ export default async function DashboardLayout({
         userEmail={user.email ?? ''}
         orgName={org?.name}
         planName={org?.subscription?.plan?.name}
-        showAdminLink={user.email === TED_ADMIN_EMAIL}
+        showAdminLink={isTedAdmin(user.email)}
         signOutAction={signOut}
       >
         {children}

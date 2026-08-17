@@ -125,6 +125,21 @@ describe('LoginForm', () => {
     mockSearchParams.set('redirectTo', '/dashboard/settings')
   })
 
+  it('sends Ted to /admin after password login', async () => {
+    render(<LoginForm />)
+    fireEvent.change(screen.getByLabelText(/email/i), {
+      target: { value: 'techwithteddy@gmail.com' },
+    })
+    fireEvent.change(screen.getByLabelText(/^password$/i), {
+      target: { value: 'password' },
+    })
+    fireEvent.click(screen.getByRole('button', { name: /sign in/i }))
+
+    await waitFor(() => {
+      expect(mockPush).toHaveBeenCalledWith('/admin')
+    })
+  })
+
   it('initiates OAuth sign in', () => {
     render(<LoginForm />)
 

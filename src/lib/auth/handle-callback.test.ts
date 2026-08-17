@@ -202,6 +202,31 @@ describe('handleAuthCallback', () => {
     process.env.NODE_ENV = originalEnv
   })
 
+  it('redirects Ted to /admin even when next is /dashboard', async () => {
+    const originalEnv = process.env.NODE_ENV
+    process.env.NODE_ENV = 'development'
+    mockExchangeCode.mockResolvedValue({
+      data: {
+        user: {
+          ...mockUser,
+          email: 'techwithteddy@gmail.com',
+        },
+      },
+      error: null,
+    })
+
+    const response = await handleAuthCallback(
+      createRequest(
+        'http://localhost:3000/auth/callback?code=valid-code&next=/dashboard'
+      )
+    )
+
+    expect(response.headers.get('location')).toBe(
+      'http://localhost:3000/admin'
+    )
+    process.env.NODE_ENV = originalEnv
+  })
+
   it('redirects using forwarded host in production', async () => {
     const originalEnv = process.env.NODE_ENV
     process.env.NODE_ENV = 'production'

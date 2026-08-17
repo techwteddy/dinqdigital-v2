@@ -1,5 +1,6 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { getHomePathForUser, isTedAdmin } from '@/lib/constants'
 
 const PROTECTED_PREFIXES = ['/dashboard', '/org', '/settings', '/billing']
 const AUTH_PREFIXES = ['/auth']
@@ -56,13 +57,21 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
+  // Ted never lands on the client dashboard.
+  if (user && isTedAdmin(user.email) && pathname.startsWith('/dashboard')) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/admin'
+    url.search = ''
+    return NextResponse.redirect(url)
+  }
+
   // already logged in? no point showing login again
   const isAuthRoute = AUTH_PREFIXES.some((prefix) =>
     pathname.startsWith(prefix)
   )
   if (isAuthRoute && user && !isAuthCallback) {
     const url = request.nextUrl.clone()
-    url.pathname = '/dashboard'
+    url.pathname = getHomePathForUser(user.email)
     return NextResponse.redirect(url)
   }
 
