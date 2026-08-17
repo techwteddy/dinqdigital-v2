@@ -2,7 +2,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { formatRelativeDate } from '@/lib/utils'
 
-export const TED_ADMIN_EMAIL = 'techwithteddy@gmail.com'
+export { TED_ADMIN_EMAIL, formatPlanLabel } from '@/lib/constants'
 
 export type SubmissionDataItem = {
   field?: string | null
@@ -54,19 +54,6 @@ export function getSubmissionField(
     (item) => item.field === fieldName
   )
   return match?.value?.trim() || '—'
-}
-
-export function formatPlanLabel(plan?: string | null): string {
-  switch (plan) {
-    case '500':
-      return '$500'
-    case '1200':
-      return '$1,200'
-    case 'custom':
-      return 'Custom'
-    default:
-      return plan?.trim() || '—'
-  }
 }
 
 export function formatDealStage(stage?: string | null): string {

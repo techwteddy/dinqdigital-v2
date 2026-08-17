@@ -14,13 +14,22 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { formatPlanLabel, type ClientDoc } from '@/lib/admin'
+import { formatPlanLabel } from '@/lib/constants'
 
 const STATUS_VARIANT = {
   active: 'success',
   paused: 'secondary',
   completed: 'outline',
 } as const
+
+type ClientRow = {
+  id: string | number
+  companyName?: string | null
+  contactName?: string | null
+  email?: string | null
+  plan?: string | null
+  status?: string | null
+}
 
 type PortalUserRow = {
   id: string
@@ -30,7 +39,7 @@ type PortalUserRow = {
 }
 
 type AdminClientsTabsProps = {
-  clients: ClientDoc[]
+  clients: ClientRow[]
 }
 
 function formatJoinedDate(date: string) {
@@ -41,7 +50,7 @@ function formatJoinedDate(date: string) {
   })
 }
 
-function ClientsTable({ clients }: { clients: ClientDoc[] }) {
+function ClientsTable({ clients }: { clients: ClientRow[] }) {
   return (
     <div className="overflow-x-auto rounded-xl border border-border">
       <table className="w-full min-w-[640px] text-sm">
