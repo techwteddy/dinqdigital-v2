@@ -18,6 +18,7 @@ import { Milestones } from './src/collections/Milestones'
 import { Posts } from './src/collections/Posts'
 import { Team } from './src/collections/Team'
 import { Media } from './src/collections/Media'
+import { Events } from './src/collections/Events'
 import { notifyClientFromFormSubmission } from './src/lib/notify-client-from-submission'
 import { adminOnlyAccess } from './src/lib/payload-access'
 
@@ -45,6 +46,7 @@ export default buildConfig({
     Posts,
     Team,
     Media,
+    Events,
   ],
   db: postgresAdapter({
     // Keep Payload tables/enums out of Prisma's public schema to avoid
