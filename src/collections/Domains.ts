@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload'
-import { getCmsUser } from '@/lib/payload-access'
 
 export const Domains: CollectionConfig = {
   slug: 'domains',
@@ -9,9 +8,10 @@ export const Domains: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: ({ req }) => getCmsUser(req)?.role === 'admin',
-    update: ({ req }) => getCmsUser(req)?.role === 'admin',
-    delete: ({ req }) => getCmsUser(req)?.role === 'admin',
+    create: ({ req }) => Boolean(req.user),
+    update: ({ req }) => Boolean(req.user),
+    delete: ({ req }) =>
+      (req.user as { role?: string } | null | undefined)?.role === 'admin',
   },
   fields: [
     {
